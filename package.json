@@ -1,0 +1,26 @@
+{
+  "name": "lokaartmanagementsystem",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/weisenpang/LokaArtManagementSystem.git"
+  },
+  "keywords": [],
+  "type": "module",
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/weisenpang/LokaArtManagementSystem/issues"
+  },
+  "homepage": "https://github.com/weisenpang/LokaArtManagementSystem#readme",
+  "dependencies": {
+    "dotenv": "^17.2.1",
+    "express": "^5.1.0",
+    "nodemon": "^3.1.10"
+  }
+}
