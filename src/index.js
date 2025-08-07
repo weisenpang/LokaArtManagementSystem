@@ -1,17 +1,15 @@
 import express from "express";
 import dotenv from "dotenv";
 import {connectDB} from "./config/db.js";
-dotenv.config();
-const app = express()
+import signupRoutes from "./routes/signupRoutes.js"
+
+// Load environment variables
+dotenv.config(); // Load environment variables from .env file
 const PORT = process.env.PORT
 
-app.get('/', (req, res) => {
-  res.send('Hello World!')
-})
-
-app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`)
-})
+const app = express()
+app.use(express.urlencoded({ extended: true })); // For form data
+app.use("/api/guest", signupRoutes);// signup routes
 
 connectDB().then(()=>{
     app.listen(PORT, () => {
