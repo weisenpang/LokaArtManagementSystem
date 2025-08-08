@@ -11,6 +11,10 @@ const app = express()
 app.use(express.urlencoded({ extended: true })); // For form data
 app.use("/api/guest", signupRoutes);// signup routes
 
+app.use("/", async (req, res, next) => {
+    res.redirect("/api/guest");
+    next();
+});
 connectDB().then(()=>{
     app.listen(PORT, () => {
         console.log("server started on PORT:", PORT);
