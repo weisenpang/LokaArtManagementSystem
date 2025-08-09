@@ -174,12 +174,12 @@
       <p>Welcome to Loka Art! Enter your email to get started.</p>
       <form action="/api/guest/signup" method="POST">
         <div class="form-group">
-          <input type="text" placeholder="First Name" required />
-          <input type="text" placeholder="Last Name" required />
+          <input type="text" name = "firstname" placeholder="First Name" required />
+          <input type="text" name = "lastname" placeholder="Last Name" required />
         </div>
-        <input type="email" placeholder="Email" required />
+        <input type="email" name = "email" placeholder="Email" required />
         <div class="password-wrapper" style="margin-top: 20px;">
-            <input type="password" id="password" placeholder="Password" required />
+            <input type="password" name="password" id="password" placeholder="Password" required />
             <span class="toggle" onclick="togglePassword()"></span>
         </div>
         <div class="password-wrapper" style="margin-top: 20px;">

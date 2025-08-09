@@ -34,6 +34,24 @@ userSchema.methods.generateVerificationToken = function() {
   return this.verificationToken;
 };
 
-const User = mongoose.model("User", userSchema)
-
-export default User
+export const User = mongoose.model("User", userSchema)
+export const userVerify = async (email, token, res) => {
+    try{
+        const user = await User.findOne({ 
+            email, 
+            verificationToken: token, 
+            verificationTokenExpires: { $gt: Date.now() } 
+        });
+        console.log("user found", user);
+        if (!user) {
+            return res.status(400).json({ message: "Invalid or expired verification token." });
+        }
+        user.isVerified = true;
+        user.verificationToken = undefined;
+        user.verificationTokenExpires = undefined;
+        await user.save();
+    }catch (error) {
+        console.error("Error during verification:", error);
+    }
+    return res.sendStatus(200); // Respond with 200 OK
+}

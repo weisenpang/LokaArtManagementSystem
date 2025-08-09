@@ -1,4 +1,4 @@
-import User from "../models/User.js";
+import {User} from "../models/User.js";
 import nodemailer from "nodemailer";
 import dotenv from "dotenv";
 dotenv.config(); // Load environment variables
@@ -37,7 +37,8 @@ function createVerificationEmail(userEmail, token) {
 
 export async function createUser(req,res){
     try{
-        const {username,email,password} = req.body;
+        const {lastname, firstname,email,password} = req.body;
+        const username = `${firstname} ${lastname}`.trim();
         // Validate input
         if (!username || !email || !password) {
             return res.status(400).json({ error: "Missing fields!" });
@@ -66,6 +67,6 @@ export async function createUser(req,res){
     }catch(error){
         console.error("Error in createUser controller", error);
         res.status(500).json({message:"Internal server error"});
-
+        
     }
 }
