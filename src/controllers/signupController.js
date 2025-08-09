@@ -1,12 +1,13 @@
 import User from "../models/User.js";
 import nodemailer from "nodemailer";
-
+import dotenv from "dotenv";
+dotenv.config(); // Load environment variables
 var transport = nodemailer.createTransport({
   host: "sandbox.smtp.mailtrap.io",
   port: 2525,
   auth: {
-    user: "f9e1d548efa04c",
-    pass: "f9711d00c03dc2"
+    user: process.env.EMAIL_AUTH_USER,
+    pass: process.env.EMAIL_AUTH_PASSWORD
   }
 });
 
