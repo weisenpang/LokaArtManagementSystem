@@ -7,16 +7,16 @@ import {userVerify} from "../models/User.js";
 const app = express()
 app.use(express.static(filePathStatic)); 
 
-const router = express.Router();
-router.get("/", (req,res) => {
+const signupRouter = express.Router();
+signupRouter.get("/", (req,res) => {
     res.sendFile(filePath('guest-signup.html')); 
 });
 
-router.get('/verify', async (req, res) => {
+signupRouter.get('/verify', async (req, res) => {
     const { token, email } = req.query;
     userVerify(email, token, res);
 });
 
-router.post("/signup",createUser);
+signupRouter.post("/signup",createUser);
 
-export default router;
+export default signupRouter;
