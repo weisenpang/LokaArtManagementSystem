@@ -20,6 +20,9 @@ app.use(express.static(path.join(filePathStatic), {
     if (path.endsWith('.js')) {
         res.setHeader('Content-Type', 'text/javascript');
     }
+    if (path.endsWith('.avif')) {
+        res.setHeader('Content-Type', 'image/avif');
+    }
   }
 }));
 app.use("/guest", signupRoutes);// signup routes
