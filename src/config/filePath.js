@@ -8,4 +8,3 @@ export const filePathStatic = path.join(__dirname, '../../cozastore-master-templ
 export const filePath = (_path) => {
     return path.join(__dirname, '../../cozastore-master-template', _path);
 };
-

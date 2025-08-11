@@ -9,8 +9,6 @@ export async function verifyUser(req, res) {
             return res.status(400).json({ error: "Missing fields!" });
         }
 
-        
-
         // Find user by email
         const user = await User.findOne({ email, isVerified: true , password});
         if (!user) {
@@ -27,6 +25,6 @@ export async function verifyUser(req, res) {
 
     } catch (error) {
         console.error("Error during sign-in:", error);
-        res.status(500).json({ message: "Internal server error" });
+        
     }
 }

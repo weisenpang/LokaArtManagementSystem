@@ -44,14 +44,15 @@ export const userVerify = async (email, token, res) => {
         });
         console.log("user found", user);
         if (!user) {
-            return res.status(400).json({ message: "Invalid or expired verification token." });
+            console.log("User not found or token expired");
+            return false; // User not found or token expired
         }
         user.isVerified = true;
         user.verificationToken = undefined;
         user.verificationTokenExpires = undefined;
         await user.save();
+        return true
     }catch (error) {
         console.error("Error during verification:", error);
     }
-    return res.sendStatus(200); // Respond with 200 OK
 }

@@ -1,39 +1,5 @@
 import {User} from "../models/User.js";
-import nodemailer from "nodemailer";
-import dotenv from "dotenv";
-dotenv.config(); // Load environment variables
-var transport = nodemailer.createTransport({
-  host: "sandbox.smtp.mailtrap.io",
-  port: 2525,
-  auth: {
-    user: process.env.EMAIL_AUTH_USER,
-    pass: process.env.EMAIL_AUTH_PASSWORD
-  }
-});
-
-function createVerificationEmail(userEmail, token) {
-    const verificationLink = `http://localhost:3000/api/guest/verify?token=${token}&email=${userEmail}`;
-    return {
-        from: 'smtp@mailtrap.io',
-        to: userEmail,
-        subject: 'Please verify your email',
-        html: `
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-            <h2>Welcome to Our App!</h2>
-            <p>Please click the button below to verify your email address:</p>
-            <a href="${verificationLink}" 
-            style="display: inline-block; padding: 10px 20px; background-color: #4CAF50; 
-            color: white; text-decoration: none; border-radius: 5px;">
-            Verify Email
-            </a>
-            <p>Or copy this link into your browser:</p>
-            <p>${verificationLink}</p>
-            <p>If you didn't request this, please ignore this email.</p>
-        </div>
-        `,
-        text: `Please verify your email by visiting this link: ${verificationLink}`
-  };
-}
+import {transport, createVerificationEmail} from "../Utils/Email.js";
 
 export async function createUser(req,res){
     try{
