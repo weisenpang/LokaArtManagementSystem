@@ -1,2 +1,6 @@
 #ignoring specific files and directories
 .env
+cozastore-master-template/images/slide-01.jpg
+cozastore-master-template/images/slide-02.jpg
+cozastore-master-template/images/slide-03.jpg
+cozastore-master-template/images/slide-04.jpg
