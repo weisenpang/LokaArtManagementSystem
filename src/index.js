@@ -4,8 +4,8 @@ import {connectDB} from "./config/db.js";
 import signupRoutes from "./routes/signupRoutes.js"
 import userSignInRouter from "./routes/userSigninRoutes.js";
 import {filePathStatic} from './config/filePath.js';
-import { uploadArtwork,getArtwork, findArtwork } from "./Utils/Gridfs.js";
 import { updateHomepage } from "./controllers/homepageController.js";
+import { uploadArtwork,retrieveImage, findArtwork } from "./Utils/Bson.js"; // Import the uploadArtwork function
 // Load environment variables
 dotenv.config(); // Load environment variables from .env file
 const PORT = process.env.PORT
@@ -13,17 +13,17 @@ const PORT = process.env.PORT
 const app = express()
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true })); // For form data
-app.use("/", async (req, res,next) => {
-  try {
-      console.log("Homepage accessed");
-      await updateHomepage(); // Update the homepage
-  }catch (error) {
-    console.error("Error in homepage middleware:", error);
-    res.status(500).send("Internal Server Error");
-  }
-    next();
+app.get('/', async (req, res, next) => {
+    try {
+        console.log("Updating homepage... 💖");
+        await updateHomepage(); // Update the homepage
+        res.redirect('/homepage'); // Redirect to the homepage after updating
+    } catch (error) {
+      console.error("Error in homepage route:", error);
+    }
+    
 });
-app.use(express.static(filePathStatic, {
+app.use('/homepage',express.static(filePathStatic, {
   setHeaders: (res, path) => {
     if (path.endsWith('.css')) {
       res.setHeader('Content-Type', 'text/css');
@@ -45,7 +45,24 @@ app.use(express.static(filePathStatic, {
 app.use("/guest", signupRoutes);// signup routes
 app.use("/user", userSignInRouter);// signin routes
 
+app.post('/upload', async (req, res) => {
+  try {
+    //await uploadSingleDocument(req.body); // Reuse our safe function
+    await uploadArtwork(); // Call the uploadArtwork function
+    res.send("Success! 💖");
+  } catch (error) {
+    res.status(500).send("Error uploading, pookie! 😢");
+  }
+});
 
+app.get('/retrieve', async (req, res) => {
+  try {
+    const data = await findArtwork(3); // Call the uploadArtwork function
+    res.send(data);
+  } catch (error) {
+    res.status(500).send("Error uploading, pookie! 😢");
+  }
+});
 
 connectDB().then(()=>{
     app.listen(PORT, () => {
@@ -53,3 +70,4 @@ connectDB().then(()=>{
         console.log("server started on PORT:", PORT);
     });
 });
+
