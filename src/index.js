@@ -13,17 +13,17 @@ const PORT = process.env.PORT
 const app = express()
 app.use(express.json()); // For parsing application/json
 app.use(express.urlencoded({ extended: true })); // For form data
-app.get('/', async (req, res, next) => {
-    try {
-        console.log("Updating homepage... 💖");
-        await updateHomepage(); // Update the homepage
-        res.redirect('/homepage'); // Redirect to the homepage after updating
-    } catch (error) {
-      console.error("Error in homepage route:", error);
-    }
+// app.get('/', async (req, res, next) => {
+//     try {
+//         console.log("Updating homepage... 💖");
+//         await updateHomepage(); // Update the homepage
+//         res.redirect('/homepage'); // Redirect to the homepage after updating
+//     } catch (error) {
+//       console.error("Error in homepage route:", error);
+//     }
     
-});
-app.use('/homepage',express.static(filePathStatic, {
+// });
+app.use('/',express.static(filePathStatic, {
   setHeaders: (res, path) => {
     if (path.endsWith('.css')) {
       res.setHeader('Content-Type', 'text/css');

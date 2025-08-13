@@ -3,8 +3,8 @@ import dotenv from "dotenv";
 dotenv.config(); // Load environment variables
 
 export var transport = nodemailer.createTransport({
-  host: "sandbox.smtp.mailtrap.io",
-  port: 2525,
+  host: "smtp.hostinger.com",
+  port:  465,
   auth: {
     user: process.env.EMAIL_AUTH_USER,
     pass: process.env.EMAIL_AUTH_PASSWORD
@@ -14,7 +14,7 @@ export var transport = nodemailer.createTransport({
 export function createVerificationEmail(userEmail, token) {
     const verificationLink = `http://localhost:3000/guest/verify?token=${token}&email=${userEmail}`;
     return {
-        from: 'smtp@mailtrap.io',
+        from: 'artloka@lokaart.space',
         to: userEmail,
         subject: 'Please verify your email',
         html: `
@@ -38,7 +38,7 @@ export function createVerificationEmail(userEmail, token) {
 export function createForgotPasswordEmail(userEmail, token) {
     const verificationLink = `http://localhost:3000/user/reset-password?token=${token}&email=${userEmail}`;
     return {
-        from: 'smtp@mailtrap.io',
+        from: 'artloka@lokaart.space',
         to: userEmail,
         subject: 'Verify your email to reset your password',
         html: `
