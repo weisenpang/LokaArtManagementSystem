@@ -36,7 +36,47 @@
 <!--===============================================================================================-->
 </head>
 <body class="animsition">
-	
+    <style>
+        .signin-modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);}
+
+        .signin-content {
+            background-color: #fff;
+            margin: 10% auto;
+            padding: 20px;
+            width: 300px;
+            border-radius: 10px;
+            position: relative;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);}
+        
+        .close-btn {
+			position: absolute;
+			top: 10px; right: 15px;
+			cursor: pointer;
+			font-size: 20px;}
+
+		.close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            margin-top: -10px;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+
+
 	<!-- Header -->
 	<header>
 		<!-- Header desktop -->
@@ -53,9 +93,12 @@
 							Help & FAQs
 						</a>
 
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							My Account
-						</a>
+						<a href="#" class="flex-c-m trans-04 p-lr-25" onclick="toggleSigninModal()">My Account</a>
+
+						<div class="dropdown-menu">
+		                    <a class="dropdown-item" href="signin.html">Sign In</a>
+							<a class="dropdown-item" href="guest-signup.html">Sign Up</a>
+						</div>
 
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
 							EN
@@ -70,6 +113,88 @@
 
 			<div class="wrap-menu-desktop">
 				<nav class="limiter-menu-desktop container">
+
+<!-- Sign In Modal -->
+<div id="signinModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;">
+    <div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md" style="background-color:#fff;">
+        <span class="close" id="closeModalBtn">&times;</span>
+
+		<form method="POST" action="/user/signin">
+            <h4 class="mtext-105 cl2 txt-center p-b-30">Sign In to LokaArt</h4>
+
+            <!-- Email -->
+            <div class="bor8 m-b-20 how-pos4-parent">
+                <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
+                       type="email" name="email" placeholder="Email" required>
+            </div>
+
+            <!-- Password -->
+            <div class="bor8 m-b-20 how-pos4-parent">
+                <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
+                       type="password" name="password" placeholder="Password" required>
+            </div>
+
+            <!-- Role Selector -->
+            <div class="bor8 m-b-20 how-pos4-parent">
+                <select class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
+                        name="role" required>
+                    <option value="" disabled selected>Select your role</option>
+                    <option value="user">User</option>
+                    <option value="staff">Staff</option>
+                    <option value="admin">Admin</option>
+                </select>
+            </div>
+
+            <!-- Forgot Password -->
+            <div class="m-b-20">
+                <a href="forgotpassword.html" class="stext-115 cl6 hov-cl1 trans-04">
+                    Forgot password?
+                </a>
+            </div>
+
+            <!-- Submit Button -->
+            <button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+                Sign In
+            </button>
+
+            <!-- Link to Signup -->
+            <div class="m-t-20 txt-center">
+                <span class="stext-112 cl6">Don’t have an account?</span>
+                <a href="guest-signup.html" class="stext-112 cl1 hov-cl1">Sign up now</a>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<!-- JavaScript to control modal -->
+<script>
+    window.onload = function() {
+        const modal = document.getElementById("signinModal");
+        const closeBtn = document.getElementById("closeModalBtn");
+
+        document.querySelectorAll('[onclick="toggleSigninModal()"]').forEach(btn => {
+            btn.onclick = function () {
+                modal.style.display = "flex";
+            };
+        });
+
+        closeBtn.onclick = function () {
+            modal.style.display = "none";
+        };
+
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+            }
+        };
+    };
+</script>
+
+
+
+
+
 					
 					<!-- Logo desktop -->		
 					<a href="#" class="logo">
@@ -174,9 +299,8 @@
 							Help & FAQs
 						</a>
 
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							My Account
-						</a>
+					<div class="dropdown">
+						<a href="#" class="flex-c-m trans-04 p-lr-25" onclick="openSignin()">My Account</a>
 
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
 							EN
@@ -355,6 +479,8 @@
 						</div>
 					</div>
 				</div>
+				
+				
 
 				<div class="item-slick1" style="background-image: url(images/slide-02.jpg);">
 					<div class="container h-full">

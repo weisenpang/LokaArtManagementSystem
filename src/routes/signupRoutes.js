@@ -1,17 +1,22 @@
 import express from "express";
 import { createUser } from "../controllers/signupController.js";
-import path from 'path';
-import { fileURLToPath } from 'url';
+import {filePath, filePathStatic} from '../config/filePath.js';
+import {userVerify} from "../models/User.js";
 
-const __filename = fileURLToPath(import.meta.url); // Gets the current file's absolute path
-const __dirname = path.dirname(__filename); // Gets the directory name
+
 const app = express()
-app.use(express.static(path.join(__dirname, 'cozastore-master-template'))); 
+app.use(express.static(filePathStatic)); 
 
-const router = express.Router();
-router.get("/", (req,res) => {
-    res.sendFile(path.join(__dirname,'../../cozastore-master-template', 'guest-signup.html')); 
+const signupRouter = express.Router();
+signupRouter.get("/", (req,res) => {
+    res.sendFile(filePath('guest-signup.html')); 
 });
-router.post("/signup",createUser);
 
-export default router;
+signupRouter.get('/verify', async (req, res) => {
+    const { token, email } = req.query;
+    userVerify(email, token, res);
+});
+
+signupRouter.post("/signup",createUser);
+
+export default signupRouter;

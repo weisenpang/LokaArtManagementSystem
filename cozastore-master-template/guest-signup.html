@@ -1,17 +1,206 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Sign Up Form</title>
+  <title>LokaArt Signup</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <!--===============================================================================================-->	
+	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+<!--===============================================================================================-->	
+	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+<!--===============================================================================================-->
+	<link rel="stylesheet" type="text/css" href="css/util.css">
+	<link rel="stylesheet" type="text/css" href="css/main.css">
+<!--===============================================================================================-->
+
+  <link rel="stylesheet" type="text/css" href="css/main.css">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #f5f7f9;
+    }
+
+    .container {
+      display: flex;
+      background: #fff;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border-radius: 12px;
+      overflow: hidden;
+      max-width: 1000px;
+      width: 100%;
+    }
+
+    .illustration {
+      flex: 1;
+      background: #f0f4f8;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 40px;
+    }
+
+    .illustration img {
+      width: 100%;
+      max-width: 500px;
+    }
+
+    .form-container {
+      flex: 1;
+      padding: 60px 40px;
+    }
+
+    .form-container h2 {
+      font-size: 28px;
+      color: #1e293b;
+      margin-bottom: 10px;
+    }
+
+    .form-container p {
+      font-size: 16px;
+      color: #64748b;
+      margin-bottom: 30px;
+    }
+
+    .form-group {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .form-group input,
+    .form-container input {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #cbd5e1;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    .form-container input[type="password"] {
+      position: relative;
+    }
+
+    .form-container button {
+      width: 100%;
+      padding: 14px;
+      background-color: #6c7ae0;
+      color: #fff;
+      font-size: 16px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+      margin-top: 10px;
+    }
+
+    .form-container button:hover {
+      background-color: #6c7ae0;
+    }
+
+    .terms {
+      font-size: 14px;
+      color: #64748b;
+      text-align: center;
+      margin-top: 16px;
+    }
+
+    .terms a {
+      color: #6c7ae0;
+      text-decoration: none;
+    }
+
+    .password-wrapper {
+      position: relative;
+      margin-top: 20px; /* spacing between each password field */
+    }
+
+    .password-wrapper input {
+      width: 100%;
+    }
+
+    .password-wrapper .toggle {
+      position: absolute;
+      right: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      cursor: pointer;
+      color: #64748b;
+    }
+
+            .back-link {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .back-link a {
+            color: #6c7ae0;
+            text-decoration: none;
+        }
+  </style>
 </head>
 <body>
-    <h1>Sign Up, Pookie! 💖</h1>
-    
-    <!-- Form submits to /signup (POST) -->
-    <form action="/api/guest/signup" method="POST">
-        <input type="text" name="username" placeholder="Username" required> <br>
-        <input type="email" name="email" placeholder="Email" required> <br>
-        <input type="password" name="password" placeholder="Password" required> <br>
-        <button type="submit">Sign Up</button>
-    </form>
+  <!--<div class="container"></div>!-->
+    <div class="illustration">
+      <img src="images\signUp Image.png" alt="Illustration" />
+    </div>
+    <div class="form-container">
+      <h2>Get Start Shopping</h2>
+      <p>Welcome to Loka Art! Enter your email to get started.</p>
+      <form action="/guest/signup" method="POST">
+        <div class="form-group">
+          <input type="text" name = "firstname" placeholder="First Name" required />
+          <input type="text" name = "lastname" placeholder="Last Name" required />
+        </div>
+        <input type="email" name = "email" placeholder="Email" required />
+        <div class="password-wrapper" style="margin-top: 20px;">
+            <input type="password" name="password" id="password" placeholder="Password" required />
+            <span class="toggle" onclick="togglePassword()"></span>
+        </div>
+        <div class="password-wrapper" style="margin-top: 20px;">
+            <input type="password" name="confirm_password" placeholder="Confirm Password" required />
+        </div>
+
+        <button type="submit">Register</button>
+        <p class="terms">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
+      </form>
+      <div class="back-link">
+            Already have an account? <a href="userSignIn.html">Sign in</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword() {
+      const passwordInput = document.getElementById("password");
+      const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
+      passwordInput.setAttribute("type", type);
+    }
+  </script>
 </body>
 </html>
