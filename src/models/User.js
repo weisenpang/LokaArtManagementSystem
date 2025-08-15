@@ -23,7 +23,9 @@ const userSchema = new mongoose.Schema(
             default: false 
         },
         verificationToken: String,
-        verificationTokenExpires: Date
+        verificationTokenExpires: Date,
+        sessionToken: String,
+        sessionTokenExpires: Date
     },
     {timestamps: true}
 );
@@ -34,8 +36,14 @@ userSchema.methods.generateVerificationToken = function() {
   return this.verificationToken;
 };
 
+userSchema.methods.generateSessionToken = function() {
+  this.sessionToken = randomBytes(20).toString('hex');
+  this.sessionTokenExpires = Date.now() + 24 * 60 * 60 * 1000; // 24h
+  return this.sessionToken;
+};
+
 export const User = mongoose.model("User", userSchema)
-export const userVerify = async (email, token, res) => {
+export const userVerify = async (email, token) => {
     try{
         const user = await User.findOne({ 
             email, 
@@ -54,5 +62,24 @@ export const userVerify = async (email, token, res) => {
         return true
     }catch (error) {
         console.error("Error during verification:", error);
+    }
+}
+
+export const UserTokenTerminate = async (user_id) => {
+    try {
+        const user = await User.findOne({ 
+            _id: user_id, 
+            sessionTokenExpires: { $gt: Date.now() }
+        });
+        if (!user) {
+            console.log("User not found or token invalid");
+            return false; // User not found or token invalid
+        }
+        user.sessionToken = undefined;
+        user.sessionTokenExpires = undefined;
+        await user.save();
+        return true
+    } catch (error) {
+        console.error("Error during token termination:", error);
     }
 }

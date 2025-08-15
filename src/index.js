@@ -6,6 +6,7 @@ import userSignInRouter from "./routes/userSigninRoutes.js";
 import {filePathStatic} from './config/filePath.js';
 import { updateHomepage } from "./controllers/homepageController.js";
 import { uploadArtwork,retrieveImage, findArtwork } from "./Utils/Bson.js"; // Import the uploadArtwork function
+import { User, UserTokenTerminate } from "./models/User.js";
 // Load environment variables
 dotenv.config(); // Load environment variables from .env file
 const PORT = process.env.PORT
@@ -44,6 +45,15 @@ app.use('/',express.static(filePathStatic, {
 
 app.use("/guest", signupRoutes);// signup routes
 app.use("/user", userSignInRouter);// signin routes
+
+app.post('/userSignOut.html/:id', async (req, res) => {
+  try {
+    UserTokenTerminate(req.params.id); // Terminate the session token
+    res.status(200).json({ message: "sign out successful" });
+  }catch (error) {
+    res.status(500).send("Error, pookie! 😢");
+  }
+});
 
 app.post('/upload', async (req, res) => {
   try {
