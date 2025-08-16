@@ -30,6 +30,9 @@ userSignInRouter.post("/reset-password", async (req, res) => {
         return res.status(400).json({ message: "Passwords match." });
     }
 });
+userSignInRouter.get("/staff", async (req, res) => {
+    res.sendFile(filePath('home-03.html')); // Serve the staff dashboard
+});
 console.log(path.join(filePathStatic, 'css/main.css')); // Verify the path
 
 

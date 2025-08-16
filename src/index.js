@@ -7,6 +7,7 @@ import {filePathStatic} from './config/filePath.js';
 import { updateHomepage } from "./controllers/homepageController.js";
 import { uploadArtwork,retrieveImage, findArtwork } from "./Utils/Bson.js"; // Import the uploadArtwork function
 import { User, UserTokenTerminate } from "./models/User.js";
+import { filePath } from "./config/filePath.js";
 // Load environment variables
 dotenv.config(); // Load environment variables from .env file
 const PORT = process.env.PORT
@@ -41,10 +42,49 @@ app.use('/',express.static(filePathStatic, {
   }
 }));
 
+app.use('/staff',express.static(filePathStatic, {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css');
+    }
+    if (path.endsWith('.js')) {
+        res.setHeader('Content-Type', 'text/javascript');
+    }
+    if (path.endsWith('.avif')) {
+        res.setHeader('Content-Type', 'image/avif');
+    }
+    if (path.endsWith('.png')) {
+        res.setHeader('Content-Type', 'image/png');
+    }
+  }
+}));
 
 
 app.use("/guest", signupRoutes);// signup routes
 app.use("/user", userSignInRouter);// signin routes
+app.use("/staff/:id", async (req, res, next) => {
+    try {
+      const user = await User.findById(req.params.id);
+      if (!user) {
+        res.status(404).send("Unauthorized User! 😢");
+      }
+      console.log("User found:", user);
+    }
+    catch (error) {
+      console.error("Error in staff route:", error);  
+      res.status(500).send("Error loading staff dashboard, pookie! 😢")
+    }
+    next();
+});
+app.get("/staff/:id", async (req, res) => {
+  try{
+    res.sendFile(filePath('home-03.html')); // Serve the staff dashboard
+  }
+  catch (error) {
+    res.status(500).send("Error loading staff dashboard, pookie! 😢");
+    console.error("Error loading staff dashboard:", error);
+  }
+});
 
 app.post('/userSignOut.html/:id', async (req, res) => {
   try {

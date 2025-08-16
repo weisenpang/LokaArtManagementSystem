@@ -22,6 +22,11 @@ const userSchema = new mongoose.Schema(
             type: Boolean, 
             default: false 
         },
+        role: {
+            type: String,
+            enum: ['user','staff', 'admin'],
+            default: 'user'
+        },
         verificationToken: String,
         verificationTokenExpires: Date,
         sessionToken: String,

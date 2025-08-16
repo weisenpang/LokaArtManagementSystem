@@ -24,7 +24,8 @@ export async function verifyUser(req, res) {
         const sessionToken = user.generateSessionToken();
         console.log("Session token generated:", sessionToken);
         await user.save();
-        res.status(200).json({ message: "Login successful", user: { username: user.username, email: user.email } });
+        const user_id = Object(user._id);
+        res.redirect(301, `/staff/${user_id}`); // Redirect to dashboard after successful login
 
     } catch (error) {
         console.error("Error during sign-in:", error);
