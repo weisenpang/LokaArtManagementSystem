@@ -6,15 +6,15 @@ import { resetPassword } from "../controllers/userResetPasswordController.js";
 import path from 'path';
 import { User } from "../models/User.js";
 
-const userSignInRouter = express.Router();
+const signInRouter = express.Router();
 
-userSignInRouter.get("/", (req,res) => {
+signInRouter.get("/signin", (req,res) => {
     res.sendFile(filePath('signIn.html')); 
 });
-userSignInRouter.post("/signin",verifyUser);
-userSignInRouter.post("/forgot-password",forgotPassword);
-userSignInRouter.get("/reset-password",resetPassword);
-userSignInRouter.post("/reset-password", async (req, res) => {
+signInRouter.post("/signin",verifyUser);
+signInRouter.post("/forgot-password",forgotPassword);
+signInRouter.get("/reset-password",resetPassword);
+signInRouter.post("/reset-password", async (req, res) => {
     const { password, confirmPassword } = req.body;
 
     const email = req.body.email; // Assuming email is sent in the request body
@@ -30,12 +30,10 @@ userSignInRouter.post("/reset-password", async (req, res) => {
         return res.status(400).json({ message: "Passwords match." });
     }
 });
-userSignInRouter.get("/staff", async (req, res) => {
-    res.sendFile(filePath('home-03.html')); // Serve the staff dashboard
-});
+
 console.log(path.join(filePathStatic, 'css/main.css')); // Verify the path
 
 
 
 
-export default userSignInRouter;
+export default signInRouter;
