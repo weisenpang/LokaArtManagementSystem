@@ -36,7 +36,7 @@ export function createVerificationEmail(userEmail, token) {
 }
 
 export function createForgotPasswordEmail(userEmail, token) {
-    const verificationLink = `http://localhost:3000/user/reset-password?token=${token}&email=${userEmail}`;
+    const verificationLink = `http://localhost:3000/reset-password?token=${token}&email=${userEmail}`;
     return {
         from: 'artloka@lokaart.space',
         to: userEmail,

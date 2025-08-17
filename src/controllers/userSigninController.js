@@ -25,7 +25,7 @@ export async function verifyUser(req, res) {
         console.log("Session token generated:", sessionToken);
         await user.save();
         const user_id = Object(user._id);
-        res.redirect(301, `/staff/${user_id}`); // Redirect to dashboard after successful login
+        res.redirect(301, `/${user.role}/${user_id}`); // Redirect to dashboard after successful login
 
     } catch (error) {
         console.error("Error during sign-in:", error);
