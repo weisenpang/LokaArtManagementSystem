@@ -1,5 +1,5 @@
 import express from "express";
-import { filePath, filePathStatic } from "../config/filePath.js";
+import { filePath, filePathStatic, filePathStaticDashboard } from "../config/filePath.js";
 import { User } from "../models/User.js";
 import { UserTokenTerminate } from "../models/User.js";
 const staffRouter = express.Router();

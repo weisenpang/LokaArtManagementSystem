@@ -42,7 +42,7 @@ app.use('/',express.static(filePathStatic, {
   }
 }));
 
-app.use("/guest", signupRoutes);// signup routes
+app.use("/", signupRoutes);// signup routes
 app.use("/", signInRouter);// signin routes
 app.use("/staff", staffRouter); // staff routes
 app.use("/admin", adminRouter); // admin routes

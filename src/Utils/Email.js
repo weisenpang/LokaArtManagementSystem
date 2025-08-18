@@ -12,7 +12,7 @@ export var transport = nodemailer.createTransport({
 });
 
 export function createVerificationEmail(userEmail, token) {
-    const verificationLink = `http://localhost:3000/guest/verify?token=${token}&email=${userEmail}`;
+    const verificationLink = `http://localhost:3000/verify?token=${token}&email=${userEmail}`;
     return {
         from: 'artloka@lokaart.space',
         to: userEmail,

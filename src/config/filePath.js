@@ -8,3 +8,8 @@ export const filePathStatic = path.join(__dirname, '../../cozastore-master-templ
 export const filePath = (_path) => {
     return path.join(__dirname, '../../cozastore-master-template', _path);
 };
+
+export const filePathStaticDashboard = path.join(__dirname, '../../Dashboard-template');
+export const filePathAdminDashboard = (_path) => {
+    return path.join(__dirname, '../../Dashboard-template', _path);
+};
