@@ -1,10 +1,10 @@
 import express from "express";
-import { filePath, filePathStatic, filePathStaticDashboard } from "../config/filePath.js";
+import { filePath, filePathAdminDashboard, filePathStaticDashboard } from "../config/filePath.js";
 import { User } from "../models/User.js";
 import { UserTokenTerminate } from "../models/User.js";
 const staffRouter = express.Router();
 
-staffRouter.use('/',express.static(filePathStatic, {
+staffRouter.use('/',express.static(filePathStaticDashboard, {
   setHeaders: (res, path) => {
     if (path.endsWith('.css')) {
       res.setHeader('Content-Type', 'text/css');
@@ -43,7 +43,7 @@ staffRouter.use("/:id", async (req, res, next) => {
 
 staffRouter.get("/:id", async (req, res) => {
   try{
-    res.sendFile(filePath('home-03.html')); // Serve the staff dashboard
+    res.sendFile(filePathAdminDashboard('index.html')); // Serve the staff dashboard
   }
   catch (error) {
     res.status(500).send("Error loading staff dashboard, pookie! 😢");

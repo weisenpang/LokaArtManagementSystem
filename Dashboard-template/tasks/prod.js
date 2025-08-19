@@ -20,7 +20,7 @@ module.exports = conf => {
   // -------------------------------------------------------------------------------
   const prodRenameTasks = function () {
     return src(`${buildPath}/**/*`)
-      .pipe(replace('../../assets', 'assets'))
+      .pipe(replace('../assets', 'assets'))
       .pipe(dest(`${buildPath}`));
   };
 
