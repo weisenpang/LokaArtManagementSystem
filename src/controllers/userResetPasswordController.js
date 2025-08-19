@@ -12,7 +12,7 @@ export const resetPassword = async (req, res) => {
         const isVerified = await userVerify(email, token); // Call verifyUser to handle the request
         
         if (!isVerified) {
-            console.log("isVerified:", isVerified); // Log the verification status
+            
             return res.status(400).json({ message: "Invalid or expired verification token." }); // Respond with an error if verification fails
         }
 

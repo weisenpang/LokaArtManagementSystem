@@ -64,7 +64,7 @@ export const userVerify = async (email, token, res) => {
         user.verificationToken = undefined;
         user.verificationTokenExpires = undefined;
         await user.save();
-        res.status(200).send("Email verified successfully! You can now sign in."); 
+        return true; // Verification successful
     }catch (error) {
         console.error("Error during verification:", error);
     }
