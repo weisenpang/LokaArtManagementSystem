@@ -9,7 +9,10 @@ export async function createUser(req,res){
         if (!username || !email || !password) {
             return res.status(400).json({ error: "Missing fields!" });
         }
-
+        const existingUser = await User.findOne({ email });
+        if (existingUser) {
+            return res.status(400).json({ error: "Email already exists!" });
+        }
         const user = new User({username,email,password});
         await user.save();
         

@@ -27,7 +27,7 @@ signInRouter.post("/reset-password", async (req, res) => {
     }else {
         user.password = password; // Update the user's password
         await user.save(); // Save the updated user document
-        return res.status(400).json({ message: "Passwords match." });
+        return res.redirect('/'); // Redirect to the sign-in page after successful password reset
     }
 });
 
