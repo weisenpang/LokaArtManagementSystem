@@ -43,7 +43,7 @@ adminRouter.use("/:id", async (req, res, next) => {
 
 adminRouter.get("/:id", async (req, res) => {
   try{
-    res.sendFile(filePathAdminDashboard('index.html')); // Serve the staff dashboard
+    res.sendFile(filePathAdminDashboard('indexDashboard.html')); // Serve the staff dashboard
   }
   catch (error) {
     res.status(500).send("Error loading staff dashboard, pookie! 😢");
