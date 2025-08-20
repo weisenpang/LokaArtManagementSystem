@@ -57,7 +57,7 @@ export const userVerify = async (email, token, res) => {
         });
         console.log("user found", user);
         if (!user) {
-            res.status(400).send("Email verification failed. Please try again."); 
+            res.status(400).send("Email verification failed or already registered. Please try again."); 
             return false; // User not found or token expired
         }
         user.isVerified = true;
