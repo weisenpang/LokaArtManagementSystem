@@ -27,7 +27,7 @@ export async function createUser(req,res){
             await user.save();
             
             await transport.sendMail(createVerificationEmail(user.email, token));
-            res.sendStatus(200); // Respond with 200 OK
+            res.status(200).json({ success: true, message: "Signup successful. Please verify your email." });
             return true;
         }catch(error){
             console.error("Error generating verification token:", error);

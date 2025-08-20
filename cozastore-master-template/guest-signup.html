@@ -172,21 +172,30 @@
     <div class="form-container">
       <h2>Get Start Shopping</h2>
       <p>Welcome to Loka Art! Enter your email to get started.</p>
-      <form action="/signup" method="POST">
+      <form id="signupForm" >
         <div class="form-group">
           <input type="text" name = "firstname" placeholder="First Name" required />
           <input type="text" name = "lastname" placeholder="Last Name" required />
         </div>
-        <input type="email" name = "email" placeholder="Email" required />
-        <div class="password-wrapper" style="margin-top: 20px;">
-            <input type="password" name="password" id="password" placeholder="Password" required />
-            <span class="toggle" onclick="togglePassword()"></span>
-        </div>
-        <div class="password-wrapper" style="margin-top: 20px;">
-            <input type="password" name="confirm_password" placeholder="Confirm Password" required />
-        </div>
-
-        <button type="submit">Register</button>
+         <input type="email" name="email" id="email" placeholder="Email" required />
+   <div class="password-wrapper">
+    <input type="password" name="password" id="password" placeholder="Password" required />
+    <span class="toggle" onclick="togglePassword('password')">👁</span>
+  </div>
+   <div class="password-wrapper">
+    <input type="password" name="confirm_password" id="confirm_password" placeholder="Confirm Password" required />
+    <span class="toggle" onclick="togglePassword('confirm_password')">👁</span>
+  </div>
+  <small id="passwordError" style="color:red; display:none;"></small>
+  <ul id="passwordCriteria" style="font-size:14px; color:#64748b; margin:10px 0; list-style:none;">
+    <li id="len" style="color:red;">✖ Minimum 8 characters</li>
+    <li id="upper" style="color:red;">✖ At least one uppercase</li>
+    <li id="lower" style="color:red;">✖ At least one lowercase</li>
+    <li id="num" style="color:red;">✖ At least one number</li>
+    <li id="special" style="color:red;">✖ At least one special character</li>
+    <li id="match" style="color:red;">✖ Passwords match</li>
+  </ul>
+   <button type="submit" id="registerBtn" disabled>Register</button>
         <p class="terms">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
       </form>
       <div class="back-link">
@@ -201,6 +210,98 @@
       const type = passwordInput.getAttribute("type") === "password" ? "text" : "password";
       passwordInput.setAttribute("type", type);
     }
+     const signupForm = document.getElementById("signupForm");
+  const emailInput = document.getElementById("email");
+  const passwordInput = document.getElementById("password");
+  const confirmInput = document.getElementById("confirm_password");
+  const registerBtn = document.getElementById("registerBtn");
+
+  const checks = {
+    len: document.getElementById("len"),
+    upper: document.getElementById("upper"),
+    lower: document.getElementById("lower"),
+    num: document.getElementById("num"),
+    special: document.getElementById("special"),
+    match: document.getElementById("match")
+  };
+
+  function validatePassword() {
+  const password = passwordInput.value;
+  const confirm = confirmInput.value;
+
+  const validations = {
+    len: { rule: password.length >= 8, text: "Minimum 8 characters" },
+    upper: { rule: /[A-Z]/.test(password), text: "At least one uppercase" },
+    lower: { rule: /[a-z]/.test(password), text: "At least one lowercase" },
+    num: { rule: /\d/.test(password), text: "At least one number" },
+    special: { rule: /[!@#$%^&*(),.?\":{}|<>]/.test(password), text: "At least one special character" },
+    match: { rule: password && confirm && password === confirm, text: "Passwords match" }
+  };
+
+  let allValid = true;
+  for (let key in validations) {
+    if (validations[key].rule) {
+      checks[key].style.color = "green";
+      checks[key].textContent = "✔ " + validations[key].text;
+    } else {
+      checks[key].style.color = "red";
+      checks[key].textContent = "✖ " + validations[key].text;
+      allValid = false;
+    }
+  }
+  registerBtn.disabled = !allValid;
+}
+
+  function validateEmail() {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(emailInput.value);
+  }
+
+  passwordInput.addEventListener("input", validatePassword);
+  confirmInput.addEventListener("input", validatePassword);
+
+  emailInput.addEventListener("input", () => {
+    if (!validateEmail()) {
+      emailInput.style.borderColor = "red";
+      registerBtn.disabled = true;
+    } else {
+      emailInput.style.borderColor = "#cbd5e1";
+    }
+  });
+
+  // Toggle password visibility
+  function togglePassword(id) {
+    const field = document.getElementById(id);
+    field.type = field.type === "password" ? "text" : "password";
+  }
+
+  signupForm.addEventListener("submit", async function(e) {
+    e.preventDefault(); // stop normal form submit
+
+    const formData = new FormData(signupForm);
+    const data = Object.fromEntries(formData);
+
+    try {
+      const res = await fetch("/signup", {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify(data)
+      });
+
+      const result = await res.json();
+
+      if (res.ok && result.success) {
+        // ✅ Show popup first
+        alert("✅ Signup successful! Please verify your email before signing in.");
+        // Redirect after popup closes
+        window.location.href = "userSignIn.html";
+      } else {
+        alert("❌ " + (result.error || "Signup failed."));
+      }
+    } catch (err) {
+      alert("⚠️ Network error. Try again later.");
+    }
+  });
   </script>
 </body>
 </html>
