@@ -693,8 +693,8 @@
                       <div class="dropdown-divider my-1"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="javascript:void(0);">
-                        <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Log Out</span>
+                      <a class="dropdown-item" href="javascript:signout();">
+                        <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Sign Out</span>
                       </a>
                     </li>
                   </ul>
@@ -1342,5 +1342,11 @@
 
     <!-- Place this tag before closing body tag for github widget button. -->
     <script async defer src="https://buttons.github.io/buttons.js"></script>
+    <script>
+      function signout(){
+        window.location.replace(window.location + "/signout");
+        
+      }
+    </script>
   </body>
 </html>

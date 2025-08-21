@@ -12,10 +12,7 @@ signupRouter.get("/", (req,res) => {
     res.sendFile(filePath('guest-signup.html')); 
 });
 
-signupRouter.get('/verify', async (req, res) => {
-    const { token, email } = req.query;
-    userVerify(email, token, res);
-});
+signupRouter.get('/verify', userVerify);
 
 signupRouter.post("/signup",createUser);
 

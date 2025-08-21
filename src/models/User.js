@@ -48,8 +48,9 @@ userSchema.methods.generateSessionToken = function() {
 };
 
 export const User = mongoose.model("User", userSchema)
-export const userVerify = async (email, token, res) => {
+export const userVerify = async (req, res) => {
     try{
+        const { token, email } = req.query;
         const user = await User.findOne({ 
             email, 
             verificationToken: token, 
@@ -64,6 +65,7 @@ export const userVerify = async (email, token, res) => {
         user.verificationToken = undefined;
         user.verificationTokenExpires = undefined;
         await user.save();
+        res.status(200).send("Email verified successfully! You can now log in.");
         return true; // Verification successful
     }catch (error) {
         console.error("Error during verification:", error);
