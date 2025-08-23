@@ -17,7 +17,7 @@ export const resetPassword = async (req, res) => {
         }
 
         console.log("isVerified:", isVerified); 
-        res.sendFile(filePath('reset-password.html'));
+        res.sendFile(filePath('ResetPassword.html'));
         
     }catch (error) {
         console.error("Error during password reset:", error);
