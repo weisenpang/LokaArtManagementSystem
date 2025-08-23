@@ -8,9 +8,9 @@ import { filePath } from '../config/filePath.js';
 export const resetPassword = async (req, res) => {
     try {
         const {token, email} = req.query;
-
-        const isVerified = await userVerify(email, token); // Call verifyUser to handle the request
         
+        const isVerified = await userVerify(email, token); // Call verifyUser to handle the request
+        console.log("isVerified from query:", isVerified);
         if (!isVerified) {
             
             return res.status(400).json({ message: "Invalid or expired verification token." }); // Respond with an error if verification fails

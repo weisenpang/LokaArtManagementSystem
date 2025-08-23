@@ -19,6 +19,7 @@ export const forgotPassword = async (req, res) => {
         
         // Generate a password reset token
         const token = user.generateVerificationToken();
+        console.log("Generated token:", token);
         await user.save();
         await transport.sendMail(createForgotPasswordEmail(user.email, token));
         res.status(200).json({ message: "Password reset link sent to your email." });
