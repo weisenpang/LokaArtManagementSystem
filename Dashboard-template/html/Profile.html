@@ -1,177 +1,1186 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>User Profile</title>
-<style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Loka Art - Profile Page</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* Base Styles */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+    
     body {
-        font-family: 'Segoe UI', sans-serif;
-        margin: 0;
-        padding: 0;
-        background-color: #f5f6fa;
+      font-family: 'Poppins', sans-serif;
+      background: #f8f9fa;
+      color: #333;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-y: auto;
     }
-
-    .profile-header {
-        background: linear-gradient(135deg, #6a11cb, #2575fc);
-        height: 200px;
-        position: relative;
-        border-bottom-left-radius: 20px;
-        border-bottom-right-radius: 20px;
-        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    
+    .container {
+      max-width: 100%;
+      background: #fff;
+      overflow: hidden;
     }
-
-    .profile-avatar {
-        position: absolute;
-        bottom: -60px;
-        left: 50%;
-        transform: translateX(-50%);
-        border: 5px solid #fff;
-        border-radius: 50%;
+    
+    /* Header Top */
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 15px 30px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+    }
+    
+    .back-button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #555;
+      font-size: 20px;
+      transition: color 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+    }
+    
+    .back-button:hover {
+      color: #6c7ae0;
+      background: #f0f0f0;
+    }
+    
+    .search-bar {
+      flex-grow: 1;
+      max-width: 500px;
+      margin: 0 auto;
+      position: relative;
+    }
+    
+    .search-bar input {
+      width: 100%;
+      padding: 10px 15px 10px 40px;
+      border: 1px solid #ddd;
+      border-radius: 30px;
+      font-size: 14px;
+      background: #f5f5f5;
+      transition: all 0.3s;
+    }
+    
+    .search-bar input:focus {
+      outline: none;
+      border-color: #6c7ae0;
+      background: #fff;
+      box-shadow: 0 0 0 2px rgba(108, 122, 224, 0.2);
+    }
+    
+    .search-bar i {
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #888;
+    }
+    
+    .icons {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+    
+    .icons button {
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #555;
+      font-size: 18px;
+      transition: color 0.3s;
+    }
+    
+    .icons button:hover {
+      color: #6c7ae0;
+    }
+    
+    .profile-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      background: linear-gradient(45deg, #6c7ae0, #8d68c5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-weight: 600;
+      cursor: pointer;
+    }
+    
+    /* Cover Section */
+    .header {
+      height: 300px;
+      background: linear-gradient(45deg, #6c7ae0, #8d68c5);
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+    }
+    
+    .cover-buttons {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      display: flex;
+      gap: 10px;
+      z-index: 2;
+    }
+    
+    .cover-buttons button {
+      padding: 8px 15px;
+      border: none;
+      border-radius: 4px;
+      background: rgba(255, 255, 255, 0.9);
+      color: #333;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+    
+    .cover-buttons button:hover {
+      background: #fff;
+      box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+    }
+    
+    /* Profile Section */
+    .profile-section {
+      display: flex;
+      padding: 0 30px;
+      margin-top: -75px;
+      position: relative;
+      z-index: 3;
+      flex-wrap: wrap;
+      gap: 25px;
+      align-items: flex-start;
+    }
+    
+    .profile-pic {
+      position: relative;
+      width: 150px;
+      height: 150px;
+      cursor: pointer;
+      border-radius: 12px;
+      overflow: hidden;
+      border: 5px solid #fff;
+      background: #eee;
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+      flex-shrink: 0;
+      margin-top: 20px;
+    }
+    
+    .profile-pic img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    
+    .profile-pic .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+      background: rgba(0, 0, 0, 0.5);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+    }
+    
+    .profile-pic:hover .overlay {
+      opacity: 1;
+    }
+    
+    .profile-pic .overlay i {
+      font-size: 28px;
+    }
+    
+    /* Profile Details */
+    .profile-details {
+      flex: 1;
+      min-width: 300px;
+      padding-bottom: 15px;
+    }
+    
+    .profile-details h2 {
+      margin: 15px 0 8px 0;
+      font-size: 38px;
+      color: #333;
+      font-weight: 700;
+    }
+    
+    .profile-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      margin-bottom: 15px;
+      color: #666;
+      font-size: 15px;
+    }
+    
+    .profile-meta i {
+      margin-right: 8px;
+      color: #6c7ae0;
+      width: 16px;
+      text-align: center;
+    }
+    
+    .bio {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.6;
+      width: 100%;
+      max-width: none;
+      background: #f9f9f9;
+      padding: 15px;
+      border-radius: 8px;
+      border-left: 4px solid #6c7ae0;
+      margin-bottom: 15px;
+    }
+    
+    /* Social Media Links */
+    .social-links {
+      display: flex;
+      gap: 12px;
+      margin-top: 10px;
+    }
+    
+    .social-links a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: #f0f0f0;
+      color: #555;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    
+    .social-links a:hover {
+      background: #6c7ae0;
+      color: #fff;
+      transform: translateY(-2px);
+    }
+    
+    /* Content Tabs */
+    .tabs {
+      display: flex;
+      justify-content: center;
+      border-bottom: 1px solid #eee;
+      background: #fff;
+      margin-top: 20px;
+      position: sticky;
+      top: 71px;
+      z-index: 99;
+      overflow-x: auto;
+      white-space: nowrap;
+    }
+    
+    .tabs button {
+      padding: 16px 20px;
+      border: none;
+      background: none;
+      cursor: pointer;
+      font-size: 14px;
+      text-transform: uppercase;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      color: #777;
+      transition: all 0.3s;
+    }
+    
+    .tabs button:hover {
+      color: #6c7ae0;
+      background: rgba(108, 122, 224, 0.05);
+    }
+    
+    .tabs button.active {
+      color: #6c7ae0;
+      border-bottom: 3px solid #6c7ae0;
+    }
+    
+    /* Content Sections */
+    .section {
+      padding: 30px;
+      display: none;
+      background: #fff;
+      min-height: 500px;
+    }
+    
+    .section.active {
+      display: block;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    
+    .section h3 {
+      margin-top: 0;
+      color: #333;
+      font-size: 22px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #f0f0f0;
+      margin-bottom: 25px;
+    }
+    
+    /* Profile Info Section */
+    .profile-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 25px;
+    }
+    
+    .info-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .info-card h4 {
+      margin: 0 0 15px;
+      color: #333;
+      font-size: 18px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+    
+    .info-item {
+      display: flex;
+      margin-bottom: 12px;
+    }
+    
+    .info-label {
+      font-weight: 600;
+      color: #555;
+      min-width: 120px;
+    }
+    
+    .info-value {
+      color: #666;
+      flex: 1;
+    }
+    
+    /* Contact Information Social Links */
+    .contact-social {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 5px;
+    }
+    
+    .contact-social a {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      background: #f0f8ff;
+      color: #6c7ae0;
+      transition: all 0.3s;
+      text-decoration: none;
+    }
+    
+    .contact-social a:hover {
+      background: #6c7ae0;
+      color: #fff;
+    }
+    
+    /* Purchase History Section */
+    .purchase-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+    
+    .purchase-table th,
+    .purchase-table td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #eee;
+    }
+    
+    .purchase-table th {
+      background-color: #f8f9fa;
+      font-weight: 600;
+      color: #555;
+    }
+    
+    .purchase-table tr:hover {
+      background-color: #f9f9f9;
+    }
+    
+    .status {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    
+    .status.completed {
+      background-color: #e6f7ff;
+      color: #0091d1;
+    }
+    
+    .status.pending {
+      background-color: #fff2e6;
+      color: #ff7700;
+    }
+    
+    .status.cancelled {
+      background-color: #ffe6e6;
+      color: #e74c3c;
+    }
+    
+    /* Posts Grid */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 15px;
+    }
+    
+    .grid img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      border-radius: 8px;
+      transition: transform 0.3s;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .grid img:hover {
+      transform: scale(1.03);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    /* Teams Section */
+    .teams {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 25px;
+    }
+    
+    .team-card {
+      background: #fff;
+      border: 1px solid #eee;
+      border-radius: 12px;
+      padding: 20px;
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.05);
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+    
+    .team-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    }
+    
+    .team-card h3 {
+      margin: 0 0 12px;
+      color: #333;
+      font-size: 18px;
+      border-bottom: none;
+      padding-bottom: 0;
+    }
+    
+    .team-card p {
+      font-size: 14px;
+      color: #666;
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    
+    .tags span {
+      display: inline-block;
+      background: #f0f8ff;
+      padding: 5px 10px;
+      margin: 0 8px 8px 0;
+      border-radius: 20px;
+      font-size: 12px;
+      color: #4a8afb;
+      font-weight: 500;
+    }
+    
+    .tags span.tag1 { background: #e6f7ff; color: #0091d1; }
+    .tags span.tag2 { background: #f0e6ff; color: #7e57c2; }
+    .tags span.tag3 { background: #fff2e6; color: #ff7700; }
+    
+    .members {
+      margin-top: 15px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    
+    .members img {
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 2px solid #fff;
+      box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+    
+    .buy-btn {
+      margin-top: 15px;
+      padding: 10px 18px;
+      border: none;
+      background: #6c7ae0;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+      font-weight: 500;
+      transition: background 0.3s;
+    }
+    
+    .buy-btn:hover {
+      background: #5b6ad0;
+    }
+    
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .profile-section {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        padding: 0 15px;
+        margin-top: -60px;
+      }
+      
+      .profile-pic {
         width: 120px;
         height: 120px;
-        object-fit: cover;
-        background: #fff;
-    }
-
-    .profile-info {
-        margin-top: 80px;
-        text-align: center;
-    }
-
-    .profile-info h2 {
-        margin: 10px 0 5px;
-        font-size: 1.8rem;
-    }
-
-    .profile-info p {
-        color: #666;
-        font-size: 1rem;
-    }
-
-    .tabs {
-        display: flex;
+        margin-top: 0;
+      }
+      
+      .profile-details {
+        width: 100%;
+        padding-bottom: 15px;
+      }
+      
+      .profile-details h2 {
+        margin: 10px 0 8px 0;
+      }
+      
+      .profile-meta {
         justify-content: center;
-        margin: 20px 0;
-        gap: 15px;
+      }
+      
+      .section {
+        padding: 20px 15px;
+      }
+      
+      .teams {
+        grid-template-columns: 1fr;
+      }
+      
+      .tabs button {
+        padding: 12px 10px;
+        font-size: 12px;
+      }
+      
+      .tabs {
+        top: 61px;
+      }
+      
+      .purchase-table {
+        display: block;
+        overflow-x: auto;
+      }
     }
-
-    .tabs button {
-        background: #fff;
-        border: none;
-        padding: 10px 20px;
-        border-radius: 20px;
-        cursor: pointer;
-        font-weight: 500;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.1);
-        transition: 0.3s;
-    }
-
-    .tabs button:hover {
-        background: #2575fc;
-        color: white;
-    }
-
-    .profile-content {
-        display: grid;
-        grid-template-columns: 1fr 2fr;
-        gap: 20px;
-        padding: 20px;
-        max-width: 1100px;
-        margin: auto;
-    }
-
-    .card {
-        background: white;
-        border-radius: 15px;
-        padding: 20px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-    }
-
-    .card h3 {
+    
+    @media (max-width: 480px) {
+      .header-top {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+      }
+      
+      .search-bar {
+        width: 100%;
+        max-width: none;
+      }
+      
+      .tabs {
+        flex-wrap: wrap;
+        top: 112px;
+      }
+      
+      .tabs button {
+        flex: 1;
+        min-width: 33%;
+        padding: 10px 5px;
+        font-size: 11px;
+      }
+      
+      .profile-info {
+        grid-template-columns: 1fr;
+      }
+      
+      .info-item {
+        flex-direction: column;
         margin-bottom: 15px;
-        font-size: 1.2rem;
-        border-bottom: 2px solid #f0f0f0;
-        padding-bottom: 5px;
+      }
+      
+      .info-label {
+        min-width: 100%;
+        margin-bottom: 5px;
+      }
     }
-
-    .about p {
-        margin: 8px 0;
-        color: #555;
-    }
-
-    .skills span {
-        display: inline-block;
-        background: #e4e6eb;
-        color: #333;
-        padding: 6px 12px;
-        border-radius: 20px;
-        margin: 5px;
-        font-size: 0.9rem;
-    }
-
-    .activity ul {
-        list-style: none;
-        padding: 0;
-    }
-
-    .activity li {
-        padding: 10px 0;
-        border-bottom: 1px solid #f0f0f0;
-        font-size: 0.95rem;
-        color: #444;
-    }
-
-    @media (max-width: 768px) {
-        .profile-content {
-            grid-template-columns: 1fr;
-        }
-    }
-</style>
+  </style>
 </head>
 <body>
-
-<div class="profile-header">
-    <img src="ProfileImage.webp" alt="Profile" class="profile-avatar">
+  <div class="container">
+<!-- Top Navigation Bar -->
+<div class="header-top">
+  <div class="nav-left">
+    <button class="back-button" onclick="goBack()">
+      <i class="fas fa-arrow-left"></i>
+    </button>
+    <div class="search-bar">
+      <i class="fas fa-search"></i>
+      <input type="text" placeholder="Search artists, artworks, collections...">
+    </div>
+  </div>
+  <div class="icons">
+    <button><i class="fas fa-sun" style="color: #f39c12;"></i></button>
+    <button><i class="fas fa-star" style="color: #f1c40f;"></i></button>
+    <button><i class="fas fa-bell" style="color: #e74c3c;"></i></button>
+    <div class="profile-icon">JD</div>
+  </div>
 </div>
 
-<div class="profile-info">
-    <h2>John Doe</h2>
-    <p>Web Developer</p>
-</div>
+    <!-- Cover Section -->
+    <div class="header" id="header">
+      <div class="cover-buttons">
+        <button id="uploadCoverBtn"><i class="fas fa-camera"></i> Change Cover</button>
+        <button id="removeCoverBtn" style="display:none;"><i class="fas fa-trash"></i> Remove</button>
+        <input type="file" id="cover-input" accept="image/*" style="display:none">
+      </div>
+    </div>
 
-<div class="tabs">
-    <button>Profile</button>
-    <button>Teams</button>
-    <button>Projects</button>
-    <button>Connections</button>
-</div>
-
-<div class="profile-content">
-    <div class="card about">
-        <h3>About</h3>
-        <p><strong>Email:</strong> johndoe@example.com</p>
-        <p><strong>Phone:</strong> +123 456 789</p>
-        <p><strong>Location:</strong> Kuala Lumpur, Malaysia</p>
-        <h3>Skills</h3>
-        <div class="skills">
-            <span>HTML</span>
-            <span>CSS</span>
-            <span>JavaScript</span>
-            <span>React</span>
+    <!-- Profile Section -->
+    <div class="profile-section">
+      <!-- Profile Image with Upload Functionality -->
+      <div class="profile-pic" id="profile-pic-container">
+        <img id="profile-img" src="https://via.placeholder.com/150/6c7ae0/ffffff?text=JD" alt="Profile">
+        <div class="overlay"><i class="fa fa-camera"></i></div>
+        <input type="file" id="profile-input" accept="image/*" style="display:none">
+      </div>
+      
+      <!-- Profile Details and Bio -->
+      <div class="profile-details">
+        <h2>John Doe</h2>
+        <div class="profile-meta">
+          <span><i class="fas fa-briefcase" style="color: #6c7ae0;"></i> UI/UX Designer</span>
+          <span><i class="fas fa-map-marker-alt" style="color: #e74c3c;"></i> San Francisco, CA</span>
+          <span><i class="far fa-calendar-alt" style="color: #2ecc71;"></i> Member since April 2021</span>
         </div>
+        <div class="bio">
+          Passionate about art & design 💬 | Building digital experiences 💮 | Coffee lover 💯 | Exploring the intersection of technology and creativity at Loka Art Management System.
+        </div>
+        <div class="social-links">
+          <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+          <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+          <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+          <a href="#" title="Behance"><i class="fab fa-behance"></i></a>
+          <a href="#" title="Dribbble"><i class="fab fa-dribbble"></i></a>
+        </div>
+      </div>
     </div>
 
-    <div class="card activity">
-        <h3>Recent Activity</h3>
-        <ul>
-            <li>Joined "UI/UX Design Team"</li>
-            <li>Completed Project Alpha</li>
-            <li>Updated profile picture</li>
-            <li>Added new skills to profile</li>
-        </ul>
+    <!-- Content Tabs -->
+    <div class="tabs">
+      <button class="active" onclick="showTab(event,'profile')">Profile</button>
+      <button onclick="showTab(event,'posts')">Posts</button>
+      <button onclick="showTab(event,'products')">Products</button>
+      <button onclick="showTab(event,'artworks')">Artworks</button>
+      <button onclick="showTab(event,'purchase-history')">Purchase History</button>
     </div>
-</div>
 
+    <!-- Profile Section -->
+    <div id="profile" class="section active">
+      <h3>Personal Information</h3>
+      <div class="profile-info">
+        <div class="info-card">
+          <h4>Basic Information</h4>
+          <div class="info-item">
+            <span class="info-label">ID:</span>
+            <span class="info-value">ART-2021-0012</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Full Name:</span>
+            <span class="info-value">John Doe</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Username:</span>
+            <span class="info-value">johndoe_art</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Nationality:</span>
+            <span class="info-value">American</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Gender:</span>
+            <span class="info-value">Male</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Date of Birth:</span>
+            <span class="info-value">March 15, 1985</span>
+          </div>
+        </div>
+        
+        <div class="info-card">
+          <h4>Contact Information</h4>
+          <div class="info-item">
+            <span class="info-label">Email:</span>
+            <span class="info-value">john.doe@example.com</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Phone:</span>
+            <span class="info-value">+1 (555) 123-4567</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Address:</span>
+            <span class="info-value">123 Art Street, San Francisco, CA 94102</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Website:</span>
+            <span class="info-value">www.johndoe-art.com</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Social Media:</span>
+            <span class="info-value">
+              <div class="contact-social">
+                <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
+                <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+                <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" title="Behance"><i class="fab fa-behance"></i></a>
+                <a href="#" title="Dribbble"><i class="fab fa-dribbble"></i></a>
+              </div>
+            </span>
+          </div>
+        </div>
+        
+        <div class="info-card">
+          <h4>Professional Details</h4>
+          <div class="info-item">
+            <span class="info-label">Occupation:</span>
+            <span class="info-value">UI/UX Designer</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Company:</span>
+            <span class="info-value">Loka Art Management System</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Education:</span>
+            <span class="info-value">BFA in Design, California College of the Arts</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Skills:</span>
+            <span class="info-value">UI/UX Design, Illustration, Digital Art, Photography</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Languages:</span>
+            <span class="info-value">English (Native), Spanish (Intermediate)</span>
+          </div>
+        </div>
+        
+        <div class="info-card">
+          <h4>Bio</h4>
+          <p>Passionate about art and design with over 10 years of experience in the creative industry. Specializing in digital experiences that blend aesthetics with functionality. Coffee enthusiast and occasional photographer. Believer in the power of art to transform and inspire.</p>
+          <p>Currently exploring the intersection of technology and creativity at Loka Art Management System, where we're building the future of digital art curation and management.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Posts Section -->
+    <div id="posts" class="section">
+      <h3>Recent Posts</h3>
+      <div class="grid">
+        <img src="https://via.placeholder.com/300/6c7ae0/ffffff?text=Art+1" alt="Artwork">
+        <img src="https://via.placeholder.com/300/8d68c5/ffffff?text=Art+2" alt="Artwork">
+        <img src="https://via.placeholder.com/300/45b7d1/ffffff?text=Art+3" alt="Artwork">
+        <img src="https://via.placeholder.com/300/96ceb4/ffffff?text=Art+4" alt="Artwork">
+        <img src="https://via.placeholder.com/300/feca57/ffffff?text=Art+5" alt="Artwork">
+        <img src="https://via.placeholder.com/300/ff9ff3/ffffff?text=Art+6" alt="Artwork">
+        <img src="https://via.placeholder.com/300/6c7ae0/ffffff?text=Art+7" alt="Artwork">
+        <img src="https://via.placeholder.com/300/8d68c5/ffffff?text=Art+8" alt="Artwork">
+        <img src="https://via.placeholder.com/300/45b7d1/ffffff?text=Art+9" alt="Artwork">
+      </div>
+    </div>
+
+    <!-- Products Section -->
+    <div id="products" class="section">
+      <h3>My Products</h3>
+      <div class="teams">
+        <div class="team-card">
+          <h3>Digital Art Prints</h3>
+          <p>High-quality prints of my digital artwork, available in various sizes and formats.</p>
+          <div class="tags">
+            <span class="tag1">Digital</span>
+            <span class="tag2">Prints</span>
+          </div>
+          <div class="members">
+            <span>15 products</span>
+          </div>
+          <button class="buy-btn">View Products</button>
+        </div>
+        <div class="team-card">
+          <h3>Custom Commissions</h3>
+          <p>Personalized artwork created specifically for your needs and preferences.</p>
+          <div class="tags">
+            <span class="tag3">Custom</span>
+            <span class="tag1">Commission</span>
+          </div>
+          <div class="members">
+            <span>8 options</span>
+          </div>
+          <button class="buy-btn">Learn More</button>
+        </div>
+        <div class="team-card">
+          <h3>Design Resources</h3>
+          <p>UI kits, icons, and other design resources for fellow creatives.</p>
+          <div class="tags">
+            <span class="tag2">Resources</span>
+            <span class="tag3">UI/UX</span>
+          </div>
+          <div class="members">
+            <span>22 items</span>
+          </div>
+          <button class="buy-btn">Browse Resources</button>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Artworks Section -->
+    <div id="artworks" class="section">
+      <h3>My Artworks</h3>
+      <div class="grid">
+        <img src="https://via.placeholder.com/300/6c7ae0/ffffff?text=Digital" alt="Digital Art">
+        <img src="https://via.placeholder.com/300/8d68c5/ffffff?text=Painting" alt="Painting">
+        <img src="https://via.placeholder.com/300/45b7d1/ffffff?text=Sculpture" alt="Sculpture">
+        <img src="https://via.placeholder.com/300/96ceb4/ffffff?text=Photography" alt="Photography">
+        <img src="https://via.placeholder.com/300/feca57/ffffff?text=Sketch" alt="Sketch">
+        <img src="https://via.placeholder.com/300/ff9ff3/ffffff?text=Mixed+Media" alt="Mixed Media">
+        <img src="https://via.placeholder.com/300/6c7ae0/ffffff?text=Abstract" alt="Abstract Art">
+        <img src="https://via.placeholder.com/300/8d68c5/ffffff?text=Portrait" alt="Portrait">
+        <img src="https://via.placeholder.com/300/45b7d1/ffffff?text=Landscape" alt="Landscape">
+      </div>
+    </div>
+    
+    <!-- Purchase History Section -->
+    <div id="purchase-history" class="section">
+      <h3>Purchase History</h3>
+      <table class="purchase-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Date</th>
+            <th>Items</th>
+            <th>Total</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>#ART-78901</td>
+            <td>Oct 15, 2023</td>
+            <td>Abstract Digital Print (Large)</td>
+            <td>$145.00</td>
+            <td><span class="status completed">Completed</span></td>
+          </tr>
+          <tr>
+            <td>#ART-78892</td>
+            <td>Oct 10, 2023</td>
+            <td>Watercolor Brush Set (Premium)</td>
+            <td>$89.99</td>
+            <td><span class="status completed">Completed</span></td>
+          </tr>
+          <tr>
+            <td>#ART-78845</td>
+            <td>Oct 5, 2023</td>
+            <td>Custom Portrait Commission</td>
+            <td>$350.00</td>
+            <td><span class="status pending">In Progress</span></td>
+          </tr>
+          <tr>
+            <td>#ART-78781</td>
+            <td>Sep 28, 2023</td>
+            <td>Art Book: Modern Masters</td>
+            <td>$45.50</td>
+            <td><span class="status completed">Completed</span></td>
+          </tr>
+          <tr>
+            <td>#ART-78720</td>
+            <td>Sep 20, 2023</td>
+            <td>Digital Art Course Subscription</td>
+            <td>$120.00</td>
+            <td><span class="status completed">Completed</span></td>
+          </tr>
+          <tr>
+            <td>#ART-78655</td>
+            <td>Sep 12, 2023</td>
+            <td>Limited Edition Print (Framed)</td>
+            <td>$210.00</td>
+            <td><span class="status cancelled">Cancelled</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    // DOM Content Loaded Event
+    document.addEventListener("DOMContentLoaded", function() {
+      // Initialize page elements and load saved data
+      initProfilePage();
+    });
+    
+    /**
+     * Initialize the profile page
+     * Load saved images and set up event listeners
+     */
+    function initProfilePage() {
+      // Get DOM elements
+      const header = document.getElementById("header");
+      const uploadCoverBtn = document.getElementById("uploadCoverBtn");
+      const removeCoverBtn = document.getElementById("removeCoverBtn");
+      const coverInput = document.getElementById("cover-input");
+      const profileImg = document.getElementById("profile-img");
+      const profileInput = document.getElementById("profile-input");
+      const profilePicContainer = document.getElementById("profile-pic-container");
+      
+      // Load saved images from localStorage
+      const savedCover = localStorage.getItem("lokaArtProfileCover");
+      const savedProfile = localStorage.getItem("lokaArtProfilePicture");
+      
+      if (savedCover) {
+        header.style.backgroundImage = `url(${savedCover})`;
+        removeCoverBtn.style.display = "inline-block";
+      }
+      
+      if (savedProfile) {
+        profileImg.src = savedProfile;
+      }
+      
+      // Set up cover image upload functionality
+      uploadCoverBtn.addEventListener("click", function() {
+        coverInput.click();
+      });
+      
+      coverInput.addEventListener("change", function(event) {
+        handleCoverUpload(event);
+      });
+      
+      removeCoverBtn.addEventListener("click", function() {
+        removeCoverImage();
+      });
+      
+      // Set up profile image upload functionality
+      profilePicContainer.addEventListener("click", function() {
+        profileInput.click();
+      });
+      
+      profileInput.addEventListener("change", function(event) {
+        handleProfileUpload(event);
+      });
+      
+      // Set up tab navigation
+      setupTabNavigation();
+    }
+    
+    /**
+     * Handle cover image upload
+     * @param {Event} event - File input change event
+     */
+    function handleCoverUpload(event) {
+      const file = event.target.files[0];
+      const header = document.getElementById("header");
+      const removeCoverBtn = document.getElementById("removeCoverBtn");
+      
+      if (file && file.type.match('image.*')) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          const imageUrl = e.target.result;
+          header.style.backgroundImage = `url(${imageUrl})`;
+          localStorage.setItem("lokaArtProfileCover", imageUrl);
+          removeCoverBtn.style.display = "inline-block";
+          showNotification("Cover image updated successfully!");
+        };
+        
+        reader.readAsDataURL(file);
+      } else {
+        showNotification("Please select a valid image file.", "error");
+      }
+    }
+    
+    /**
+     * Remove cover image and reset to default gradient
+     */
+    function removeCoverImage() {
+      const header = document.getElementById("header");
+      const removeCoverBtn = document.getElementById("removeCoverBtn");
+      
+      header.style.backgroundImage = "";
+      localStorage.removeItem("lokaArtProfileCover");
+      removeCoverBtn.style.display = "none";
+      showNotification("Cover image removed.");
+    }
+    
+    /**
+     * Handle profile image upload
+     * @param {Event} event - File input change event
+     */
+    function handleProfileUpload(event) {
+      const file = event.target.files[0];
+      const profileImg = document.getElementById("profile-img");
+      
+      if (file && file.type.match('image.*')) {
+        const reader = new FileReader();
+        
+        reader.onload = function(e) {
+          const imageUrl = e.target.result;
+          profileImg.src = imageUrl;
+          localStorage.setItem("lokaArtProfilePicture", imageUrl);
+          showNotification("Profile image updated successfully!");
+        };
+        
+        reader.readAsDataURL(file);
+      } else {
+        showNotification("Please select a valid image file.", "error");
+      }
+    }
+    
+    /**
+     * Set up tab navigation
+     */
+    function setupTabNavigation() {
+      const tabButtons = document.querySelectorAll('.tabs button');
+      
+      tabButtons.forEach(button => {
+        button.addEventListener('click', function(e) {
+          // Remove active class from all buttons
+          tabButtons.forEach(btn => btn.classList.remove('active'));
+          
+          // Add active class to clicked button
+          this.classList.add('active');
+        });
+      });
+    }
+    
+
+    /**
+     * Show tab content
+     * @param {Event} event - Click event
+     * @param {string} tabId - ID of the tab to show
+     */
+    function showTab(event, tabId) {
+      // Hide all sections
+      document.querySelectorAll('.section').forEach(sec => {
+        sec.classList.remove('active');
+      });
+      
+      // Show selected section
+      document.getElementById(tabId).classList.add('active');
+      
+      // Update tab buttons
+      document.querySelectorAll('.tabs button').forEach(btn => {
+        btn.classList.remove('active');
+      });
+      
+      event.target.classList.add('active');
+    }
+    
+    /**
+     * Show notification message
+     * @param {string} message - The message to display
+     * @param {string} type - Type of notification (default, error, success)
+     */
+    function showNotification(message, type = "default") {
+      // Create notification element
+      const notification = document.createElement('div');
+      notification.textContent = message;
+      notification.style.position = 'fixed';
+      notification.style.bottom = '20px';
+      notification.style.right = '20px';
+      notification.style.padding = '12px 20px';
+      notification.style.borderRadius = '5px';
+      notification.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+      notification.style.zIndex = '1000';
+      notification.style.opacity = '0';
+      notification.style.transition = 'opacity 0.3s';
+      notification.style.color = '#fff';
+      notification.style.fontWeight = '500';
+      
+      // Set background color based on type
+      if (type === "error") {
+        notification.style.backgroundColor = '#e74c3c';
+      } else if (type === "success") {
+        notification.style.backgroundColor = '#2ecc71';
+      } else {
+        notification.style.backgroundColor = '#6c7ae0';
+      }
+      
+      document.body.appendChild(notification);
+      
+      // Fade in
+      setTimeout(() => {
+        notification.style.opacity = '1';
+      }, 10);
+      
+      // Remove after 3 seconds
+      setTimeout(() => {
+        notification.style.opacity = '0';
+        setTimeout(() => {
+          document.body.removeChild(notification);
+        }, 300);
+      }, 3000);
+    }
+
+    /** * Go back to previous page */
+function goBack() {
+  window.history.back();
+}
+  </script>
 </body>
 </html>
