@@ -510,9 +510,9 @@
                       <div class="dropdown-divider my-1"></div>
                     </li>
                     <li>
-                                        <a class="dropdown-item" href="javascript:void(0);" onclick="showProfile()">
-                                            <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
-                                        </a>
+                      <a class="dropdown-item" href="#">
+                        <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
+                      </a>
                     </li>
                     <li>
                       <a class="dropdown-item" href="#">
@@ -525,6 +525,16 @@
                     <li>
                       <a class="dropdown-item" href="javascript:signout();">
                         <i class="icon-base bx bx-power-off icon-md me-3"></i><span>Sign Out</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:about();">
+                        <i class="icon-base bx bx-user icon-md me-3"></i><span>About Us</span>
+                      </a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" href="javascript:contact();">
+                        <i class="icon-base bx bx-user icon-md me-3"></i><span>Contact Us</span>
                       </a>
                     </li>
                   </ul>
@@ -1049,47 +1059,10 @@
     <script async defer src="https://buttons.github.io/buttons.js"></script>
     <!-- Profile Modal Script -->
     <script>
-        // Function to show profile content
-        function showProfile() {
-            document.querySelector('.dashboard-content').classList.remove('active');
-            document.querySelector('.profile-content').classList.add('active');
-        }
+      function signout(){
+        window.location.replace(window.location + "/signout");
         
-        // Function to show dashboard content
-        function showDashboard() {
-            document.querySelector('.profile-content').classList.remove('active');
-            document.querySelector('.dashboard-content').classList.add('active');
-        }
-        
-        // Handle form submission
-        document.getElementById("profileForm").onsubmit = function(event) {
-            event.preventDefault();
-            // Here you would typically send the data to the server
-            alert("Profile updated successfully!");
-            showDashboard();
-        }
-        
-        // Handle avatar upload
-        document.getElementById("avatarUpload").onchange = function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                if (file.size > 800000) {
-                    alert("File size must be less than 800KB");
-                    return;
-                }
-                
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    document.querySelector(".profile-avatar").src = e.target.result;
-                }
-                reader.readAsDataURL(file);
-            }
-        }
-        
-        // Function to sign out
-        function signout(){
-            window.location.replace(window.location + "/signout");
-        }
+      }
     </script>
   </body>
 </html>

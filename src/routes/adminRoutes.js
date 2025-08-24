@@ -1,27 +1,11 @@
 import express from "express";
-import { filePath, filePathAdminDashboard, filePathStaticDashboard } from "../config/filePath.js";
+import { filePath, filePathAdminDashboard, filePathStatic, filePathStaticDashboard } from "../config/filePath.js";
 import { User } from "../models/User.js";
 import { UserTokenTerminate } from "../models/User.js";
 const adminRouter = express.Router();
 
-adminRouter.use('/',express.static(filePathStaticDashboard, {
-  setHeaders: (res, path) => {
-    if (path.endsWith('.css')) {
-      res.setHeader('Content-Type', 'text/css');
-    }
-    if (path.endsWith('.js')) {
-        res.setHeader('Content-Type', 'text/javascript');
-    }
-    if (path.endsWith('.avif')) {
-        res.setHeader('Content-Type', 'image/avif');
-    }
-    if (path.endsWith('.png')) {
-        res.setHeader('Content-Type', 'image/png');
-    }
-  }
-}));
-
 adminRouter.use("/:id", async (req, res, next) => {
+    
     try {
         const user = await User.findOne({ _id: req.params.id, role: 'admin' , sessionToken: { $exists: true } });
         if (!user) {
@@ -41,6 +25,43 @@ adminRouter.use("/:id", async (req, res, next) => {
     next();
 });
 
+
+adminRouter.use(express.static(filePathStaticDashboard, {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css');
+    }
+    if (path.endsWith('.js')) {
+        res.setHeader('Content-Type', 'text/javascript');
+    }
+    if (path.endsWith('.avif')) {
+        res.setHeader('Content-Type', 'image/avif');
+    }
+    if (path.endsWith('.png')) {
+        res.setHeader('Content-Type', 'image/png');
+    }
+  }
+}));
+
+adminRouter.use('/:id',express.static(filePathStaticDashboard, {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css');
+    }
+    if (path.endsWith('.js')) {
+        res.setHeader('Content-Type', 'text/javascript');
+    }
+    if (path.endsWith('.avif')) {
+        res.setHeader('Content-Type', 'image/avif');
+    }
+    if (path.endsWith('.png')) {
+        res.setHeader('Content-Type', 'image/png');
+    }
+  }
+}));
+
+
+
 adminRouter.get("/:id", async (req, res) => {
   try{
     res.sendFile(filePathAdminDashboard('indexDashboard.html')); // Serve the staff dashboard
@@ -57,6 +78,36 @@ adminRouter.get("/:id/signout", async (req, res) => {
     res.redirect("/");
   }catch (error) {
     res.status(500).send("Error, pookie! 😢" + error);
+  }
+});
+
+adminRouter.get("/:id/profile", async (req, res) => {
+  try{
+    res.sendFile(filePathAdminDashboard('Profile.html')); // Serve the staff dashboard
+  }
+  catch (error) {
+    res.status(500).send("Error loading user profile, pookie! 😢");
+    console.error("Error loading user profile:", error);
+  }
+});
+
+adminRouter.get("/:id/about", async (req, res) => {
+  try{
+    res.sendFile(filePathAdminDashboard('about.html')); 
+  }
+  catch (error) {
+    res.status(500).send("Error loading user profile, pookie! 😢");
+    console.error("Error loading user profile:", error);
+  }
+});
+
+adminRouter.get("/:id/contact", async (req, res) => {
+  try{
+    res.sendFile(filePathAdminDashboard('contact.html')); // Serve the staff dashboard
+  }
+  catch (error) {
+    res.status(500).send("Error loading user profile, pookie! 😢");
+    console.error("Error loading user profile:", error);
   }
 });
 
