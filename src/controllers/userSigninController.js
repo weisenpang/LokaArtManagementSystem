@@ -13,10 +13,7 @@ export async function verifyUser(req, res) {
         const user = await User.findOne({ email });
         
         if (!user) {
-            return res.status(404).json({ 
-                error: "No account found with this email address",
-                redirectTo: "guest-signup.html"
-            });
+            return res.redirect('/guest-signup.html');
         }
 
         // Check if user is verified
