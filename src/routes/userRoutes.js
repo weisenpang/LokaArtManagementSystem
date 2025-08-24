@@ -4,6 +4,77 @@ import { User } from "../models/User.js";
 import { UserTokenTerminate } from "../models/User.js";
 const userRouter = express.Router();
 
+
+
+
+userRouter.get("/:id", async (req, res) => {
+  try{
+    res.sendFile(filePath('home-03.html')); // Serve the staff dashboard
+  }
+  catch (error) {
+    res.status(500).send("Error loading staff dashboard, pookie! 😢");
+    console.error("Error loading staff dashboard:", error);
+  }
+});
+
+
+userRouter.get("/:id/signout", async (req, res) => {
+  try {
+    UserTokenTerminate(req.params.id); // Terminate the session token
+    res.redirect("/");
+  }catch (error) {
+    res.status(500).send("Error, pookie! 😢" + error);
+  }
+});
+
+userRouter.get("/:id/profile", async (req, res) => {
+  try{
+    res.sendFile(filePath('Profile.html')); // Serve the staff dashboard
+  }
+  catch (error) {
+    res.status(500).send("Error loading user profile, pookie! 😢");
+    console.error("Error loading user profile:", error);
+  }
+});
+
+userRouter.get("/:id/about", async (req, res) => {
+  try{
+    res.sendFile(filePath('about.html')); // Serve the staff dashboard
+  }
+  catch (error) {
+    res.status(500).send("Error loading user profile, pookie! 😢");
+    console.error("Error loading user profile:", error);
+  }
+});
+
+userRouter.get("/:id/contact", async (req, res) => {
+  try{
+    res.sendFile(filePath('contact.html')); // Serve the staff dashboard
+  }
+  catch (error) {
+    res.status(500).send("Error loading user profile, pookie! 😢");
+    console.error("Error loading user profile:", error);
+  }
+});
+
+
+userRouter.use('/:id',express.static(filePathStatic, {
+  setHeaders: (res, path) => {
+    if (path.endsWith('.css')) {
+      res.setHeader('Content-Type', 'text/css');
+    }
+    if (path.endsWith('.js')) {
+        res.setHeader('Content-Type', 'text/javascript');
+    }
+    if (path.endsWith('.avif')) {
+        res.setHeader('Content-Type', 'image/avif');
+    }
+    if (path.endsWith('.png')) {
+        res.setHeader('Content-Type', 'image/png');
+    }
+  }
+}));
+
 userRouter.use('/',express.static(filePathStatic, {
   setHeaders: (res, path) => {
     if (path.endsWith('.css')) {
@@ -21,7 +92,18 @@ userRouter.use('/',express.static(filePathStatic, {
   }
 }));
 
+
 userRouter.use("/:id", async (req, res, next) => {
+    if (req.path.includes('/vendor/') || 
+        req.path.includes('/css/') || 
+        req.path.includes('/js/') ||
+        req.path.includes('/img/') ||
+        req.path.includes('/images/') || 
+        req.path.includes('/png/') ||
+        req.path.includes('/jpg/')) {
+          
+        return next();
+    }
     
     // Validate that the ID is a proper MongoDB ObjectId (24 hex characters)
     if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
@@ -48,33 +130,6 @@ userRouter.use("/:id", async (req, res, next) => {
     next();
 });
 
-userRouter.get("/:id", async (req, res) => {
-  try{
-    res.sendFile(filePath('home-03.html')); // Serve the staff dashboard
-  }
-  catch (error) {
-    res.status(500).send("Error loading staff dashboard, pookie! 😢");
-    console.error("Error loading staff dashboard:", error);
-  }
-});
 
-userRouter.get("/:id/signout", async (req, res) => {
-  try {
-    UserTokenTerminate(req.params.id); // Terminate the session token
-    res.redirect("/");
-  }catch (error) {
-    res.status(500).send("Error, pookie! 😢" + error);
-  }
-});
-
-userRouter.get("/:id/profile", async (req, res) => {
-  try{
-    res.sendFile(filePath('Profile.html')); // Serve the staff dashboard
-  }
-  catch (error) {
-    res.status(500).send("Error loading user profile, pookie! 😢");
-    console.error("Error loading user profile:", error);
-  }
-});
 
 export default userRouter;
