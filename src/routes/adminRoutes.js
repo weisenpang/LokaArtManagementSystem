@@ -83,7 +83,7 @@ adminRouter.get("/:id/signout", async (req, res) => {
 
 adminRouter.get("/:id/profile", async (req, res) => {
   try{
-    res.sendFile(filePathAdminDashboard('Profile.html')); // Serve the staff dashboard
+    res.sendFile(filePathAdminDashboard('/html/Profile.html')); // Serve the staff dashboard
   }
   catch (error) {
     res.status(500).send("Error loading user profile, pookie! 😢");

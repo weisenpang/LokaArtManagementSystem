@@ -510,7 +510,7 @@
                       <div class="dropdown-divider my-1"></div>
                     </li>
                     <li>
-                      <a class="dropdown-item" href="#">
+                      <a class="dropdown-item" href="javascript:profile();">
                         <i class="icon-base bx bx-user icon-md me-3"></i><span>My Profile</span>
                       </a>
                     </li>
@@ -1060,9 +1060,21 @@
     <!-- Profile Modal Script -->
     <script>
       function signout(){
-        window.location.replace(window.location + "/signout");
+        window.location.replace(window.location + "signout");
         
       }
+      function profile(){
+			  window.location.href = window.location + "profile";
+			
+		  }
+      function about(){
+			  window.location.href = window.location + "about";
+			
+		  }
+      function contact(){
+			  window.location.href = window.location + "contact";
+			
+		  }
     </script>
   </body>
 </html>
