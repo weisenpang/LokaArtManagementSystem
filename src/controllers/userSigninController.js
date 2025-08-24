@@ -42,11 +42,7 @@ export async function verifyUser(req, res) {
         const user_id = Object(user._id);
         
         // Return success with redirect URL instead of direct redirect
-        return res.status(200).json({
-            success: true,
-            message: "Login successful",
-            redirectTo: `/${user.role}/${user_id}`
-        });
+        res.redirect(301, `/${user.role}/${user_id}`);
 
     } catch (error) {
         console.error("Error during sign-in:", error);
