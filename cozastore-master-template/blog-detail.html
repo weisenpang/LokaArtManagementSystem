@@ -62,7 +62,7 @@
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li>
-								<a href="home-03.html">Home</a>
+								<a href="homeLink">Home</a>
 							</li>
 
 							<li>
@@ -159,7 +159,7 @@
 
 			<ul class="main-menu-m">
 				<li>
-					<a href="home-03.html">Home</a>
+					<a href="homeLink">Home</a>
 				</li>
 
 				<li>
@@ -290,7 +290,7 @@
 	<!-- breadcrumb -->
 	<div class="container">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-			<a href="index.html" class="stext-109 cl8 hov-cl1 trans-04">
+			<a href="homeLink" class="stext-109 cl8 hov-cl1 trans-04">
 				Home
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
@@ -822,6 +822,24 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 				ps.update();
 			})
 		});
+	</script>
+<!--===============================================================================================-->
+	<script>
+	// Check if user is signed in
+	function isUserSignedIn() {
+	    // Example: Check for auth token, session, etc.
+	    return localStorage.getItem('authToken') !== null;
+	}
+
+	// Set the home link based on auth status
+	document.addEventListener('DOMContentLoaded', function() {
+	    const homeLink = document.getElementById('homeLink');
+	    if (isUserSignedIn()) {
+	        homeLink.href = 'index.html';
+	    } else {
+	        homeLink.href = 'home-03.html';
+	    }
+	});
 	</script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>

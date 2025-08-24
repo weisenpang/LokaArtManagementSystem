@@ -66,7 +66,7 @@
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li>
-								<a href="home-03.html">Home</a>
+								<a href="homeLink">Home</a>
 							</li>
 
 							<li>
@@ -164,7 +164,7 @@
 
 			<ul class="main-menu-m">
 				<li>
-					<a href="index.html">Home</a>
+					<a href="homeLink">Home</a>
 				</li>
 
 				<li>
@@ -921,6 +921,24 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 				ps.update();
 			})
 		});
+	</script>
+<!--===============================================================================================-->
+	<script>
+	// Check if user is signed in
+	function isUserSignedIn() {
+	    // Example: Check for auth token, session, etc.
+	    return localStorage.getItem('authToken') !== null;
+	}
+
+	// Set the home link based on auth status
+	document.addEventListener('DOMContentLoaded', function() {
+	    const homeLink = document.getElementById('homeLink');
+	    if (isUserSignedIn()) {
+	        homeLink.href = 'index.html';
+	    } else {
+	        homeLink.href = 'home-03.html';
+	    }
+	});
 	</script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
