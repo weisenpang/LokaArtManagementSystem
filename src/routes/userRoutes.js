@@ -61,4 +61,14 @@ userRouter.get("/:id/signout", async (req, res) => {
   }
 });
 
+userRouter.get("/:id/profile", async (req, res) => {
+  try{
+    res.sendFile(filePath('Profile.html')); // Serve the staff dashboard
+  }
+  catch (error) {
+    res.status(500).send("Error loading user profile, pookie! 😢");
+    console.error("Error loading user profile:", error);
+  }
+});
+
 export default userRouter;

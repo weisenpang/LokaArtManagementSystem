@@ -13,3 +13,4 @@ export const filePathStaticDashboard = path.join(__dirname, '../../Dashboard-tem
 export const filePathAdminDashboard = (_path) => {
     return path.join(__dirname, '../../Dashboard-template', _path);
 };
+
