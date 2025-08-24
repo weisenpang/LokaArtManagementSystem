@@ -5,37 +5,53 @@ export async function createUser(req,res){
     try{
         const {lastname, firstname,email,password} = req.body;
         const username = `${firstname} ${lastname}`.trim();
+        
         // Validate input
         if (!username || !email || !password) {
             return res.status(400).json({ error: "Missing fields!" });
         }
+        
+        // Check if user already exists
         const existingUser = await User.findOne({ email });
         if (existingUser) {
-            return res.status(400).json({ error: "Email already exists!" });
+            return res.status(400).json({ error: "Email already exists! Please try signing in instead." });
         }
+        
+        // Create user
         const user = new User({username,email,password});
         await user.save();
         
-        console.log("user created", req.body);
+        console.log("User created:", email);
+        
+        // Send verification email
         try{
-            const user = await User.findOne({email});
-            if (!user) {
-                return res.status(404).json({message: "User not found"});
+            const savedUser = await User.findOne({email});
+            if (!savedUser) {
+                return res.status(404).json({error: "User creation failed"});
             }
 
-            const token = user.generateVerificationToken();
-            await user.save();
+            const token = savedUser.generateVerificationToken();
+            await savedUser.save();
             
-            await transport.sendMail(createVerificationEmail(user.email, token));
-            res.status(200).json({ success: true, message: "Signup successful. Please verify your email." });
-            return true;
-        }catch(error){
-            console.error("Error generating verification token:", error);
-            return res.status(500).json({message:"Internal server error"});
+            await transport.sendMail(createVerificationEmail(savedUser.email, token));
+            
+            // Send success response immediately
+            return res.status(201).json({ 
+                success: true, 
+                message: "Account created successfully! Please check your email to verify your account." 
+            });
+            
+        }catch(emailError){
+            console.error("Error sending verification email:", emailError);
+            // Even if email fails, don't fail the signup
+            return res.status(201).json({ 
+                success: true, 
+                message: "Account created successfully! Please contact support if you don't receive a verification email." 
+            });
         }
-    }catch(error){
-        console.error("Error in createUser controller", error);
-        res.status(500).json({message:"Internal server error"});
         
+    }catch(error){
+        console.error("Error in createUser controller:", error);
+        return res.status(500).json({error: "Internal server error. Please try again later."});
     }
 }

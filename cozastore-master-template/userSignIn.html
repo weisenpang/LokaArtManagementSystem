@@ -171,10 +171,19 @@
           <span class="toggle" onclick="togglePassword()">👁</span>
         </div>
         <div class="form-options">
-          <label><input type="checkbox" /> Remember me</label>
           <a href="forgotpassword.html">Forgot password? <strong>Reset It</strong></a>
         </div>
-        <button type="submit">Sign In</button>
+        <button type="submit" id="signinBtn">
+          <span id="signinText">Sign In</span>
+          <span id="signinSpinner" style="display: none;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-dasharray="31.416" stroke-dashoffset="31.416">
+                <animate attributeName="stroke-dasharray" dur="2s" values="0 31.416;15.708 15.708;0 31.416" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+            Signing in...
+          </span>
+        </button>
         <p class="form-footer">Don't have an account? <a href="guest-signup.html">Sign Up</a></p>
       </form>
     </div>
@@ -193,48 +202,112 @@
     toggle.textContent = "👁";
   }
 }
+function setSigninLoading(isLoading) {
+      const signinText = document.getElementById("signinText");
+      const signinSpinner = document.getElementById("signinSpinner");
+      const signinBtn = document.getElementById("signinBtn");
+      
+      if (isLoading) {
+        signinText.style.display = "none";
+        signinSpinner.style.display = "inline-flex";
+        signinBtn.disabled = true;
+        signinBtn.style.opacity = "0.7";
+      } else {
+        signinText.style.display = "inline";
+        signinSpinner.style.display = "none";
+        signinBtn.disabled = false;
+        signinBtn.style.opacity = "1";
+      }
+    }
 
-const userSigninForm = document.getElementById("userSigninForm");
+    function showMessage(message, type = 'error') {
+      // Remove existing messages
+      const existingMessage = document.querySelector('.message');
+      if (existingMessage) existingMessage.remove();
+      
+      const messageDiv = document.createElement('div');
+      messageDiv.className = 'message';
+      
+      const colors = {
+        error: { bg: '#fef2f2', border: '#fecaca', text: '#dc2626' },
+        success: { bg: '#f0f9ff', border: '#bae6fd', text: '#0369a1' },
+        warning: { bg: '#fffbeb', border: '#fed7aa', text: '#d97706' }
+      };
+      
+      const color = colors[type] || colors.error;
+      
+      messageDiv.style.cssText = `
+        background: ${color.bg}; 
+        border: 1px solid ${color.border}; 
+        color: ${color.text}; 
+        padding: 12px; 
+        border-radius: 8px; 
+        margin: 10px 0; 
+        text-align: center;
+        font-size: 14px;
+      `;
+      messageDiv.textContent = message;
+      
+      userSigninForm.appendChild(messageDiv);
+      
+      setTimeout(() => {
+        if (messageDiv.parentNode) messageDiv.remove();
+      }, 6000);
+    }
 
-userSigninForm.addEventListener("submit", async function(e) {
-  e.preventDefault();
+    userSigninForm.addEventListener("submit", async function(e) {
+      e.preventDefault();
+      
+      if (signinBtn.disabled) return;
+      
+      setSigninLoading(true);
 
-  const formData = new FormData(userSigninForm);
-  const data = Object.fromEntries(formData);
+      const formData = new FormData(userSigninForm);
+      const data = Object.fromEntries(formData);
 
-  try {
-    const res = await fetch("/signin", {
-      method: "POST",
-      body: new URLSearchParams(data)
+      try {
+        const res = await fetch("/signin", {
+          method: "POST",
+          headers: {"Content-Type": "application/json"},
+          body: JSON.stringify(data)
+        });
+        
+        const result = await res.json();
+
+        if (res.ok && result.success) {
+          localStorage.setItem('isLoggedIn', 'true');
+          localStorage.setItem('userEmail', data.email);
+          
+          showMessage("✅ Login successful! Redirecting...", 'success');
+          
+          setTimeout(() => {
+            window.location.href = result.redirectTo || "home-03.html";
+          }, 1000);
+          
+        } else {
+          setSigninLoading(false);
+          
+          // Handle different error types
+          if (result.type === 'unverified') {
+            showMessage("📧 " + result.error, 'warning');
+          } else if (result.redirectTo === 'guest-signup.html') {
+            showMessage("❌ " + result.error + " Would you like to create an account?", 'error');
+            setTimeout(() => {
+              const goToSignup = confirm("Would you like to create a new account?");
+              if (goToSignup) {
+                window.location.href = "guest-signup.html";
+              }
+            }, 2000);
+          } else {
+            showMessage("❌ " + (result.error || "Login failed"), 'error');
+          }
+        }
+      } catch (err) {
+        setSigninLoading(false);
+        console.error("Login error:", err);
+        showMessage("🌐 Connection error. Please check your internet and try again.", 'error');
+      }
     });
-    
-    if (res.redirected) {
-      // Store login status when redirect happens
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('userEmail', data.email);
-      
-      alert("✅ Login successful! Redirecting...");
-      window.location.href = res.url;
-      return;
-    }
-
-    const result = await res.json();
-
-    if (res.ok && result.success) {
-      // Store login status when login is successful
-      localStorage.setItem('isLoggedIn', 'true');
-      localStorage.setItem('userEmail', data.email);
-      
-      alert("✅ Login successful! Redirecting to dashboard...");
-      window.location.href = "home-03.html"; // This will be the logged-in homepage
-    } else {
-      alert("❌ " + (result.error || "Login failed."));
-    }
-  } catch (err) {
-    console.error("Login error:", err);
-    alert("❌ Connection error. Please try again.");
-  }
-});
   </script>
 </body>
 </html>

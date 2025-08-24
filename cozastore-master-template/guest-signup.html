@@ -245,8 +245,18 @@
           <li id="special" style="color:red;">✖ At least one special character</li>
           <li id="match" style="color:red;">✖ Passwords match</li>
         </ul>
-        
-        <button type="submit" id="registerBtn" disabled>Register</button>
+        <button type="submit" id="registerBtn" disabled>
+          <span id="buttonText">Register</span>
+          <span id="loadingSpinner" style="display: none;">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" stroke-dasharray="31.416" stroke-dashoffset="31.416">
+                <animate attributeName="stroke-dasharray" dur="2s" values="0 31.416;15.708 15.708;0 31.416" repeatCount="indefinite"/>
+                <animate attributeName="stroke-dashoffset" dur="2s" values="0;-15.708;-31.416" repeatCount="indefinite"/>
+              </circle>
+            </svg>
+            Processing...
+          </span>
+        </button>
         <p class="terms">By continuing, you agree to our <a href="#">Terms of Service</a> & <a href="#">Privacy Policy</a></p>
       </form>
       <div class="back-link">
@@ -266,6 +276,24 @@
       } else {
         passwordInput.setAttribute("type", "password");
         toggleElement.textContent = "👁";
+      }
+    }
+     // Add loading state management
+    function setLoadingState(isLoading) {
+      const buttonText = document.getElementById("buttonText");
+      const loadingSpinner = document.getElementById("loadingSpinner");
+      const registerBtn = document.getElementById("registerBtn");
+      
+      if (isLoading) {
+        buttonText.style.display = "none";
+        loadingSpinner.style.display = "inline-flex";
+        registerBtn.disabled = true;
+        registerBtn.style.opacity = "0.7";
+      } else {
+        buttonText.style.display = "inline";
+        loadingSpinner.style.display = "none";
+        registerBtn.disabled = false;
+        registerBtn.style.opacity = "1";
       }
     }
 
@@ -330,6 +358,11 @@
 
     signupForm.addEventListener("submit", async function(e) {
       e.preventDefault();
+      
+      // Prevent double submission
+      if (registerBtn.disabled) return;
+      
+      setLoadingState(true);
 
       const formData = new FormData(signupForm);
       const data = Object.fromEntries(formData);
@@ -344,13 +377,69 @@
         const result = await res.json();
 
         if (res.ok && result.success) {
-          alert("✅ Signup successful! Please verify your email before signing in.");
-          window.location.href = "userSignIn.html";
+          // Show success message with better UX
+          const successHtml = `
+            <div style="text-align: center; color: #10b981; margin: 20px 0;">
+              <div style="font-size: 48px; margin-bottom: 16px;">✅</div>
+              <h3 style="color: #10b981; margin-bottom: 8px;">Account Created Successfully!</h3>
+              <p style="color: #64748b; margin-bottom: 16px;">Please check your email to verify your account.</p>
+              <p style="color: #64748b; font-size: 14px;">Redirecting to sign in page in <span id="countdown">3</span> seconds...</p>
+            </div>
+          `;
+          
+          signupForm.innerHTML = successHtml;
+          
+          // Countdown redirect
+          let countdown = 3;
+          const countdownElement = document.getElementById("countdown");
+          const interval = setInterval(() => {
+            countdown--;
+            if (countdownElement) countdownElement.textContent = countdown;
+            if (countdown <= 0) {
+              clearInterval(interval);
+              window.location.href = "userSignIn.html";
+            }
+          }, 1000);
+          
         } else {
-          alert("❌ " + (result.error || "Signup failed."));
+          throw new Error(result.error || "Signup failed");
         }
       } catch (err) {
-        alert("⚠️ Network error. Try again later.");
+        setLoadingState(false);
+        
+        // Show user-friendly error
+        let errorMessage = "⚠️ Something went wrong. Please try again.";
+        
+        if (err.message.includes("Email already exists")) {
+          errorMessage = "📧 This email is already registered. Try signing in instead.";
+        } else if (err.message.includes("Network")) {
+          errorMessage = "🌐 Connection error. Please check your internet and try again.";
+        }
+        
+        // Show error in a better way
+        const errorDiv = document.createElement('div');
+        errorDiv.style.cssText = `
+          background: #fef2f2; 
+          border: 1px solid #fecaca; 
+          color: #dc2626; 
+          padding: 12px; 
+          border-radius: 8px; 
+          margin: 10px 0; 
+          text-align: center;
+        `;
+        errorDiv.textContent = errorMessage;
+        
+        // Remove existing error if any
+        const existingError = document.querySelector('.error-message');
+        if (existingError) existingError.remove();
+        
+        errorDiv.className = 'error-message';
+        signupForm.appendChild(errorDiv);
+        
+        // Auto-remove error after 5 seconds
+        setTimeout(() => {
+          if (errorDiv.parentNode) errorDiv.remove();
+        }, 5000);
       }
     });
   </script>
