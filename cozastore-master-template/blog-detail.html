@@ -62,15 +62,11 @@
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li>
-								<a href="homeLink">Home</a>
+								<a href="index.html" id="navHomeLink">Home</a>
 							</li>
 
 							<li>
 								<a href="product.html">Shop</a>
-							</li>
-
-							<li class="label1" data-label1="hot">
-								<a href="shoping-cart.html">Features</a>
 							</li>
 
 							<li class="active-menu">
@@ -151,23 +147,19 @@
 							Help & FAQs
 						</a>
 
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							My Account
+						<a href="#" class="flex-c-m trans-04 p-lr-25">
+							My Profile
 						</a>
 				</li>
 			</ul>
 
 			<ul class="main-menu-m">
 				<li>
-					<a href="homeLink">Home</a>
+					<a href="index.html" id="navHomeLink">Home</a>
 				</li>
 
 				<li>
 					<a href="product.html">Shop</a>
-				</li>
-
-				<li>
-					<a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
 				</li>
 
 				<li>
@@ -290,7 +282,7 @@
 	<!-- breadcrumb -->
 	<div class="container">
 		<div class="bread-crumb flex-w p-l-25 p-r-15 p-t-30 p-lr-0-lg">
-			<a href="homeLink" class="stext-109 cl8 hov-cl1 trans-04">
+			<a href="index.html" id="navHomeLink" class="stext-109 cl8 hov-cl1 trans-04">
 				Home
 				<i class="fa fa-angle-right m-l-9 m-r-10" aria-hidden="true"></i>
 			</a>
@@ -824,22 +816,46 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		});
 	</script>
 <!--===============================================================================================-->
-	<script>
+<script>
 	// Check if user is signed in
-	function isUserSignedIn() {
-	    // Example: Check for auth token, session, etc.
-	    return localStorage.getItem('authToken') !== null;
-	}
+function isUserSignedIn() {
+  return localStorage.getItem('isLoggedIn') === 'true';
+}
 
-	// Set the home link based on auth status
-	document.addEventListener('DOMContentLoaded', function() {
-	    const homeLink = document.getElementById('homeLink');
-	    if (isUserSignedIn()) {
-	        homeLink.href = 'index.html';
-	    } else {
-	        homeLink.href = 'home-03.html';
-	    }
-	});
+function updateNavigation() {
+  const homeLink = document.getElementById('navHomeLink'); // Changed ID name
+  if (homeLink) {
+    if (isUserSignedIn()) {
+      // User is logged in - go to member area 
+      homeLink.href = 'home-03.html'; 
+    } else {
+      // User is not logged in - go to public homepage
+      homeLink.href = 'index.html'; 
+    }
+  }
+}
+
+function logout() {
+  // Clear login status
+  localStorage.removeItem('isLoggedIn');
+  localStorage.removeItem('userEmail');
+  
+  // Redirect to public homepage
+  alert('Logged out successfully!');
+  window.location.href = 'index.html';
+}
+
+// Update navigation when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  updateNavigation();
+});
+
+// Optional: Update navigation when auth status changes
+window.addEventListener('storage', function(e) {
+  if (e.key === 'isLoggedIn') {
+    updateNavigation();
+  }
+});
 	</script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>

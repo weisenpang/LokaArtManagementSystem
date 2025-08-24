@@ -182,49 +182,59 @@
 
   <script>
     function togglePassword() {
-      const passwordInput = document.getElementById("password");
-      const toggle = document.querySelector(".toggle");
+  const passwordInput = document.getElementById("password");
+  const toggle = document.querySelector(".toggle");
+  
+  if (passwordInput.getAttribute("type") === "password") {
+    passwordInput.setAttribute("type", "text");
+    toggle.textContent = "⌣";
+  } else {
+    passwordInput.setAttribute("type", "password");
+    toggle.textContent = "👁";
+  }
+}
+
+const userSigninForm = document.getElementById("userSigninForm");
+
+userSigninForm.addEventListener("submit", async function(e) {
+  e.preventDefault();
+
+  const formData = new FormData(userSigninForm);
+  const data = Object.fromEntries(formData);
+
+  try {
+    const res = await fetch("/signin", {
+      method: "POST",
+      body: new URLSearchParams(data)
+    });
+    
+    if (res.redirected) {
+      // Store login status when redirect happens
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userEmail', data.email);
       
-      if (passwordInput.getAttribute("type") === "password") {
-        passwordInput.setAttribute("type", "text");
-        toggle.textContent = "⌣";
-      } else {
-        passwordInput.setAttribute("type", "password");
-        toggle.textContent = "👁";
-      }
+      alert("✅ Login successful! Redirecting...");
+      window.location.href = res.url;
+      return;
     }
 
-    const userSigninForm = document.getElementById("userSigninForm");
+    const result = await res.json();
 
-    userSigninForm.addEventListener("submit", async function(e) {
-      e.preventDefault();
-
-      const formData = new FormData(userSigninForm);
-      const data = Object.fromEntries(formData);
-
-      try {
-        const res = await fetch("/signin", {
-          method: "POST",
-          body: new URLSearchParams(data)
-        });
-        
-        if (res.redirected) {
-          alert("✅ Login successful! Redirecting...");
-          window.location.href = res.url;
-        }
-
-        const result = await res.json();
-
-        if (res.ok && result.success) {
-          alert("✅ Login successful! Redirecting to homepage...");
-          window.location.href = "index.html";
-        } else {
-          alert("❌ " + (result.error || "Login failed."));
-        }
-      } catch (err) {
-        console.error("Login error:", err);
-      }
-    });
+    if (res.ok && result.success) {
+      // Store login status when login is successful
+      localStorage.setItem('isLoggedIn', 'true');
+      localStorage.setItem('userEmail', data.email);
+      
+      alert("✅ Login successful! Redirecting to dashboard...");
+      window.location.href = "home-03.html"; // This will be the logged-in homepage
+    } else {
+      alert("❌ " + (result.error || "Login failed."));
+    }
+  } catch (err) {
+    console.error("Login error:", err);
+    alert("❌ Connection error. Please try again.");
+  }
+});
   </script>
 </body>
 </html>

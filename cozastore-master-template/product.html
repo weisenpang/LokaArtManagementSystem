@@ -54,17 +54,8 @@
 						</a>
 
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							My Account
+							My Profile
 						</a>
-
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							EN
-						</a>
-
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							USD
-						</a>
-					</div>
 				</div>
 			</div>
 
@@ -80,15 +71,11 @@
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li>
-								<a href="homeLink">Home</a>
+								<a href="index.html" id="navHomeLink">Home</a>
 							</li>
 
 							<li class="active-menu">
 								<a href="product.html">Shop</a>
-							</li>
-
-							<li class="label1" data-label1="hot">
-								<a href="shoping-cart.html">Features</a>
 							</li>
 
 							<li>
@@ -168,17 +155,9 @@
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
 							Help & FAQs
 						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							My Account
-						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							EN
-						</a>
-
-						<a href="#" class="flex-c-m p-lr-10 trans-04">
-							USD
+	
+						<a href="#" class="flex-c-m trans-04 p-lr-25">
+							My Profile
 						</a>
 					</div>
 				</li>
@@ -186,15 +165,11 @@
 
 			<ul class="main-menu-m">
 				<li>
-					<a href="homeLink">Home</a>
+					<a href="index.html" id="navHomeLink">Home</a>
 				</li>
 
 				<li>
 					<a href="product.html">Shop</a>
-				</li>
-
-				<li>
-					<a href="shoping-cart.html" class="label1 rs1" data-label1="hot">Features</a>
 				</li>
 
 				<li>
@@ -1505,19 +1480,43 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 	<script>
 	// Check if user is signed in
 	function isUserSignedIn() {
-	    // Example: Check for auth token, session, etc.
-	    return localStorage.getItem('authToken') !== null;
-	}
+  return localStorage.getItem('isLoggedIn') === 'true';
+}
 
-	// Set the home link based on auth status
-	document.addEventListener('DOMContentLoaded', function() {
-	    const homeLink = document.getElementById('homeLink');
-	    if (isUserSignedIn()) {
-	        homeLink.href = 'index.html';
-	    } else {
-	        homeLink.href = 'home-03.html';
-	    }
-	});
+function updateNavigation() {
+  const homeLink = document.getElementById('navHomeLink'); // Changed ID name
+  if (homeLink) {
+    if (isUserSignedIn()) {
+      // User is logged in - go to member area 
+      homeLink.href = 'home-03.html'; 
+    } else {
+      // User is not logged in - go to public homepage
+      homeLink.href = 'index.html'; 
+    }
+  }
+}
+
+function logout() {
+  // Clear login status
+  localStorage.removeItem('isLoggedIn');
+  localStorage.removeItem('userEmail');
+  
+  // Redirect to public homepage
+  alert('Logged out successfully!');
+  window.location.href = 'index.html';
+}
+
+// Update navigation when page loads
+document.addEventListener('DOMContentLoaded', function() {
+  updateNavigation();
+});
+
+// Optional: Update navigation when auth status changes
+window.addEventListener('storage', function(e) {
+  if (e.key === 'isLoggedIn') {
+    updateNavigation();
+  }
+});
 	</script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>

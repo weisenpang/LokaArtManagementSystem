@@ -23,6 +23,11 @@ userRouter.use('/',express.static(filePathStatic, {
 
 userRouter.use("/:id", async (req, res, next) => {
     
+    // Validate that the ID is a proper MongoDB ObjectId (24 hex characters)
+    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
+        return res.status(404).send("Invalid user ID format! 😢");
+    }
+
     try {
         const user = await User.findOne({ _id: req.params.id, role: 'user' });
         if (!user) {
@@ -38,6 +43,7 @@ userRouter.use("/:id", async (req, res, next) => {
     catch (error) {
       console.error("Error in user route:", error);  
       res.status(500).send("Error loading user, pookie! 😢")
+      return;
     }
     next();
 });
