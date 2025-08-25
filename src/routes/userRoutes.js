@@ -7,8 +7,25 @@ const userRouter = express.Router();
 
 
 
+
 userRouter.get("/:id", async (req, res) => {
   try{
+    try {
+        const user = await User.findOne({ _id: req.params.id, role: 'user' , sessionToken: { $exists: true } });
+        if (!user || user.role !== 'user') {
+            res.status(404).send("Unauthorized User! 😢");
+            return;
+        }
+        if (!user.sessionToken) {
+            res.status(404).send("User session unverified! 😢");
+            return;
+        }
+        console.log("User found:", user);
+    }
+    catch (error) {
+      console.error("Error in user route:", error);  
+      res.status(500).send("Error loading staff dashboard, pookie! 😢")
+    }
     res.sendFile(filePath('home-03.html')); // Serve the staff dashboard
   }
   catch (error) {
@@ -28,8 +45,17 @@ userRouter.get("/:id/signout", async (req, res) => {
 });
 
 userRouter.get("/:id/profile", async (req, res) => {
+  
   try{
-    res.sendFile(filePath('Profile.html')); // Serve the staff dashboard
+    const user = await User.findById(req.params.id);
+    if (!user) {
+      return res.status(404).send("User not found! 😢");
+    }
+    res.render('Profile.ejs', {
+        firstname : user.firstname,
+        lastname : user.lastname,
+        email : user.email,
+    }) // Serve the staff dashboard
   }
   catch (error) {
     res.status(500).send("Error loading user profile, pookie! 😢");
@@ -75,6 +101,8 @@ userRouter.use('/:id',express.static(filePathStatic, {
   }
 }));
 
+
+
 userRouter.use('/',express.static(filePathStatic, {
   setHeaders: (res, path) => {
     if (path.endsWith('.css')) {
@@ -91,44 +119,6 @@ userRouter.use('/',express.static(filePathStatic, {
     }
   }
 }));
-
-
-userRouter.use("/:id", async (req, res, next) => {
-    if (req.path.includes('/vendor/') || 
-        req.path.includes('/css/') || 
-        req.path.includes('/js/') ||
-        req.path.includes('/img/') ||
-        req.path.includes('/images/') || 
-        req.path.includes('/png/') ||
-        req.path.includes('/jpg/')) {
-          
-        return next();
-    }
-    
-    // Validate that the ID is a proper MongoDB ObjectId (24 hex characters)
-    if (!req.params.id.match(/^[0-9a-fA-F]{24}$/)) {
-        return res.status(404).send("Invalid user ID format! 😢");
-    }
-
-    try {
-        const user = await User.findOne({ _id: req.params.id, role: 'user' });
-        if (!user) {
-            res.status(404).send("Unauthorized User! 😢");
-            return;
-        }
-        if (!user.sessionToken) {
-            res.status(404).send("User session unverified! 😢");
-            return;
-        }
-        console.log("User found:", user);
-    }
-    catch (error) {
-      console.error("Error in user route:", error);  
-      res.status(500).send("Error loading user, pookie! 😢")
-      return;
-    }
-    next();
-});
 
 
 

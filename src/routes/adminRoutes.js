@@ -5,11 +5,24 @@ import { UserTokenTerminate } from "../models/User.js";
 const adminRouter = express.Router();
 
 
-
-
-
 adminRouter.get("/:id", async (req, res) => {
   try{
+    try {
+        const user = await User.findOne({ _id: req.params.id, role: 'admin' , sessionToken: { $exists: true } });
+        if (!user || user.role !== 'admin') {
+            res.status(404).send("Unauthorized User! 😢");
+            return;
+        }
+        if (!user.sessionToken) {
+            res.status(404).send("User session unverified! 😢");
+            return;
+        }
+        console.log("User found:", user);
+    }
+    catch (error) {
+      console.error("Error in admin route:", error);  
+      res.status(500).send("Error loading staff dashboard, pookie! 😢")
+    }
     res.sendFile(filePathAdminDashboard('indexDashboard.html')); // Serve the staff dashboard
   }
   catch (error) {
@@ -28,8 +41,17 @@ adminRouter.get("/:id/signout", async (req, res) => {
 });
 
 adminRouter.get("/:id/profile", async (req, res) => {
+  
   try{
-    res.sendFile(filePathAdminDashboard('/html/Profile.html')); // Serve the staff dashboard
+    const user = await User.findById(req.params.id);
+      if (!user) {
+        return res.status(404).send("User not found! 😢");
+      }
+      res.render('Profile.ejs', {
+        firstname : user.firstname,
+        lastname : user.lastname,
+        email : user.email,
+      }) // Serve the staff dashboard
   }
   catch (error) {
     res.status(500).send("Error loading user profile, pookie! 😢");
@@ -57,6 +79,8 @@ adminRouter.get("/:id/contact", async (req, res) => {
   }
 });
 
+
+
 adminRouter.use('/:id',express.static(filePathStaticDashboard, {
   
   setHeaders: (res, path) => {
@@ -73,7 +97,38 @@ adminRouter.use('/:id',express.static(filePathStaticDashboard, {
         res.setHeader('Content-Type', 'image/png');
     }
   }
+}, async (req, res, next) => {
+  if (req.path.includes('/vendor/') || 
+        req.path.includes('/css/') || 
+        req.path.includes('/js/') ||
+        req.path.includes('/img/') ||
+        req.path.includes('/images/') || 
+        req.path.includes('/png/') ||
+        req.path.includes('/jpg/')) {
+          
+        return next();
+    }
+    try {
+        const user = await User.findOne({ _id: req.params.id, role: 'admin' , sessionToken: { $exists: true } });
+        if (!user || user.role !== 'admin') {
+            res.status(404).send("Unauthorized User! 😢");
+            return;
+        }
+        if (!user.sessionToken) {
+            res.status(404).send("User session unverified! 😢");
+            return;
+        }
+        console.log("User found:", user);
+    }
+    catch (error) {
+      console.error("Error in admin route:", error);  
+      res.status(500).send("Error loading staff dashboard, pookie! 😢")
+    }
+    next();
 }));
+
+
+
 
 adminRouter.use(express.static(filePathStaticDashboard, {
   
@@ -92,37 +147,5 @@ adminRouter.use(express.static(filePathStaticDashboard, {
     }
   }
 }));
-
-
-adminRouter.use("/:id", async (req, res, next) => {
-    if (req.path.includes('/vendor/') || 
-        req.path.includes('/css/') || 
-        req.path.includes('/js/') ||
-        req.path.includes('/img/') ||
-        req.path.includes('/images/') || 
-        req.path.includes('/png/') ||
-        req.path.includes('/jpg/')) {
-          
-        return next();
-    }
-    try {
-        const user = await User.findOne({ _id: req.params.id, role: 'admin' , sessionToken: { $exists: true } });
-        if (!user) {
-            res.status(404).send("Unauthorized User! 😢");
-            return;
-        }
-        if (!user.sessionToken) {
-            res.status(404).send("User session unverified! 😢");
-            return;
-        }
-        console.log("User found:", user);
-    }
-    catch (error) {
-      console.error("Error in admin route:", error);  
-      res.status(500).send("Error loading staff dashboard, pookie! 😢")
-    }
-    next();
-});
-
 
 export default adminRouter;

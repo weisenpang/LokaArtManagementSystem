@@ -42,11 +42,16 @@ app.use('/',express.static(filePathStatic, {
   }
 }));
 
+app.set('view engine', 'ejs');
+app.set('views', ['Dashboard-template', 'cozastore-master-template']);
+
 app.use("/", signupRoutes);// signup routes
 app.use("/", signInRouter);// signin routes
+app.use("/user", userRouter);// signin routes
+
 app.use("/staff", staffRouter); // staff routes
 app.use("/admin", adminRouter); // admin routes
-app.use("/user", userRouter);// signin routes
+
 app.post('/userSignOut.html/:id', async (req, res) => {
   
 });

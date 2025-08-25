@@ -709,7 +709,7 @@
       
       <!-- Profile Details and Bio -->
       <div class="profile-details">
-        <h2>John Doe</h2>
+        <h2><%= firstname %> <%= lastname %></h2>
         <div class="profile-meta">
 <!--          <span><i class="fas fa-briefcase" style="color: #6c7ae0;"></i> UI/UX Designer</span>
           <span><i class="fas fa-map-marker-alt" style="color: #e74c3c;"></i> San Francisco, CA</span>  -->
@@ -753,7 +753,7 @@
           </div> -->
           <div class="info-item">
             <span class="info-label">Username:</span>
-            <span class="info-value">johndoe_art</span>
+            <span class="info-value"><%= firstname %> <%= lastname %></span>
           </div>  
 <!--          <div class="info-item">
             <span class="info-label">Nationality:</span>
@@ -774,7 +774,7 @@
           <h4>Contact Information</h4>    -->
           <div class="info-item">
             <span class="info-label">Email:</span>
-            <span class="info-value">john.doe@example.com</span>
+            <span class="info-value"><%= email %></span>
           </div>
           <div class="info-item">
             <span class="info-label">Phone:</span>

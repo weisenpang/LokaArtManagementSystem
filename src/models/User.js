@@ -3,7 +3,12 @@ import { randomBytes } from "crypto";
 
 const userSchema = new mongoose.Schema(
     {
-        username: { 
+        firstname: { 
+            type: String, 
+            required: true, 
+            unique: false
+        },
+        lastname: { 
             type: String, 
             required: true, 
             unique: false
