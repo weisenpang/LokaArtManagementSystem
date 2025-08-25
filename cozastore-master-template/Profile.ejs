@@ -666,6 +666,28 @@
         margin-bottom: 5px;
       }
     }
+
+        /* Edit Profile Button */
+    .edit-profile-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 20px;
+      background: linear-gradient(45deg, #6c7ae0, #8d68c5);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s;
+      margin-bottom: 15px;
+      box-shadow: 0 3px 10px rgba(108, 122, 224, 0.3);
+    }
+    
+    .edit-profile-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 15px rgba(108, 122, 224, 0.4);
+    }
   </style>
 </head>
 <body>
@@ -716,8 +738,13 @@
           <span><i class="far fa-calendar-alt" style="color: #2ecc71;"></i> Member since <%= date %></span>
         </div>
         <div class="bio">
-          Passionate about art & design 💬 | Building digital experiences 💮 | Coffee lover 💯 | Exploring the intersection of technology and creativity at Loka Art Management System.
+<!--          Passionate about art & design 💬 | Building digital experiences 💮 | Coffee lover 💯 | Exploring the intersection of technology and creativity at Loka Art Management System. -->
         </div>
+
+                <button class="edit-profile-btn" onclick="editProfile()">
+          <i class="fas fa-user-edit"></i> Edit Profile
+        </button>
+
 <!--        <div class="social-links">
           <a href="#" title="Instagram"><i class="fab fa-instagram"></i></a>
           <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
@@ -763,12 +790,12 @@
        </div>  
                  <div class="info-item">
             <span class="info-label">Gender:</span>
-            <span class="info-value">Male</span>
+            <span class="info-value"><!--Male--></span>
           </div>
           
           <div class="info-item">
             <span class="info-label">Date of Birth:</span>
-            <span class="info-value">March 15, 1985</span>
+            <span class="info-value"><!--March 15, 1985--></span>
           </div> 
 <!--        <div class="info-card">
           <h4>Contact Information</h4>    -->
@@ -778,7 +805,7 @@
           </div>
           <div class="info-item">
             <span class="info-label">Phone:</span>
-            <span class="info-value">+1 (555) 123-4567</span>
+            <span class="info-value"><!--+1 (555) 123-4567--></span>
           </div>
 <!--          <div class="info-item">
             <span class="info-label">Address:</span>
@@ -834,6 +861,8 @@
       </div>
     </div>  --> 
 
+
+    
     <!-- Posts Section -->
     <div id="posts" class="section">
       <h3>Recent Posts</h3>
