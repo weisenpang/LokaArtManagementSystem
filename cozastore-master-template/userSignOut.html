@@ -1,29 +1,74 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Logout</title>
+  <style>
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      font-family: "Segoe UI", sans-serif;
+      background: linear-gradient(135deg, #cbd5e1 0%, #64748b 100%);
+    }
+
+    .logout-container {
+      text-align: center;
+      background: #fff;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .logout-container h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    button {
+      padding: 12px 30px;
+      font-size: 16px;
+      font-weight: bold;
+      color: #fff;
+      background: linear-gradient(135deg, #6c7ae0, #6c7ae0);
+      border: none;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    button:hover {
+      transform: scale(1.05);
+      background: linear-gradient(135deg, #6c7ae0, #424a88);
+    }
+  </style>
 </head>
 <body>
-    <button onclick="logout()">
-        Sign Out
-    </button>
+  <div class="logout-container">
+    <h2>Are you sure you want to sign out?</h2>
+    <button onclick="logout()">Sign Out</button>
+  </div>
 
-    <script>
+  <script>
     function logout() {
-        // Clear login status from localStorage
-        localStorage.removeItem('isLoggedIn');
-        localStorage.removeItem('userEmail');
-        
-        // Optional: Also call your backend logout endpoint
-        fetch('/userSignOut.html', { method: 'POST' })
-            .catch(err => console.log('Backend logout error:', err));
-        
-        // Redirect to public homepage
-        alert('Logged out successfully!');
-        window.location.href = 'index.html';
+      // Clear login status from localStorage
+      localStorage.removeItem('isLoggedIn');
+      localStorage.removeItem('userEmail');
+
+      // Optional: Also call your backend logout endpoint
+      fetch('/userSignOut.html', { method: 'POST' })
+        .catch(err => console.log('Backend logout error:', err));
+
+      // Redirect to public homepage
+      alert('Logged out successfully!');
+      window.location.href = 'index.html';
     }
-    </script>
+  </script>
 </body>
 </html>
+
+
