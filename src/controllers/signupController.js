@@ -4,10 +4,10 @@ import {transport, createVerificationEmail} from "../Utils/Email.js";
 export async function createUser(req,res){
     try{
         const {lastname, firstname,email,password} = req.body;
-        const username = `${firstname} ${lastname}`.trim();
+        
         
         // Validate input
-        if (!username || !email || !password) {
+        if (!lastname|| !firstname || !email || !password) {
             return res.status(400).json({ error: "Missing fields!" });
         }
         
@@ -18,7 +18,7 @@ export async function createUser(req,res){
         }
         
         // Create user
-        const user = new User({username,email,password});
+        const user = new User({firstname,lastname,email,password});
         await user.save();
         
         console.log("User created:", email);
