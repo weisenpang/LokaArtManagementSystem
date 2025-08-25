@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Email Verification Successful - Loka Art</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4e8f0 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 500px;
+            width: 100%;
+        }
+        
+        .success-card {
+            background: white;
+            border-radius: 16px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+            padding: 40px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .success-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .success-icon {
+            width: 100px;
+            height: 100px;
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            animation: pulse 2s infinite;
+        }
+        
+        .success-icon i {
+            font-size: 50px;
+            color: white;
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(75, 108, 183, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(75, 108, 183, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(75, 108, 183, 0);
+            }
+        }
+        
+        h1 {
+            color: #182848;
+            margin-bottom: 15px;
+            font-size: 28px;
+            font-weight: 700;
+        }
+        
+        p {
+            color: #566a7f;
+            line-height: 1.6;
+            margin-bottom: 25px;
+            font-size: 16px;
+        }
+        
+        .email-display {
+            background: #f0f4f9;
+            padding: 15px;
+            border-radius: 10px;
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        
+        .email-display i {
+            color: #4b6cb7;
+            font-size: 20px;
+        }
+        
+        .email-display span {
+            color: #182848;
+            font-weight: 600;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 14px 28px;
+            background: linear-gradient(135deg, #4b6cb7 0%, #3a5a9f 100%);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            box-shadow: 0 4px 15px rgba(75, 108, 183, 0.3);
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 7px 20px rgba(75, 108, 183, 0.4);
+        }
+        
+        .btn i {
+            margin-right: 8px;
+        }
+        
+        .secondary-btn {
+            background: transparent;
+            color: #4b6cb7;
+            border: 1px solid #4b6cb7;
+            margin-left: 15px;
+            box-shadow: none;
+        }
+        
+        .secondary-btn:hover {
+            background: #f0f4f9;
+        }
+        
+        .help-text {
+            margin-top: 25px;
+            font-size: 14px;
+            color: #6c757d;
+        }
+        
+        .help-text a {
+            color: #4b6cb7;
+            text-decoration: none;
+        }
+        
+        .help-text a:hover {
+            text-decoration: underline;
+        }
+        
+        .logo {
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .logo-text {
+            font-size: 28px;
+            font-weight: 800;
+            background: linear-gradient(135deg, #4b6cb7 0%, #182848 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+        
+        @media (max-width: 576px) {
+            .success-card {
+                padding: 30px 20px;
+            }
+            
+            .btn-container {
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .secondary-btn {
+                margin-left: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">
+            <div class="logo-text">Loka Art</div>
+        </div>
+        
+        <div class="success-card">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            
+            <h1>Email Verified Successfully!</h1>
+            
+            <p>Congratulations! Your email address has been successfully verified. You now have full access to all Loka Art features.</p>
+            
+            <div class="email-display">
+                <i class="fas fa-envelope"></i>
+                <span><!--john.doe@example.com--></span>
+            </div>
+            
+            <div class="btn-container">
+                <a href="#" class="btn">
+                    <i class="fas fa-user"></i>Go to My Profile
+                </a>
+                <a href="#" class="btn secondary-btn">
+                    <i class="fas fa-home"></i>Back to Home
+                </a>
+            </div>
+            
+<!--            <p class="help-text">
+                需要帮助？<a href="#">联系支持团队</a> 或 <a href="#">查看常见问题</a>
+            </p>-->
+        </div>
+    </div>
+
+    <script>
+        // 简单的动画效果
+        document.addEventListener('DOMContentLoaded', function() {
+            const card = document.querySelector('.success-card');
+            card.style.opacity = 0;
+            card.style.transform = 'translateY(20px)';
+            
+            setTimeout(() => {
+                card.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+                card.style.opacity = 1;
+                card.style.transform = 'translateY(0)';
+            }, 100);
+        });
+    </script>
+</body>
+</html>
