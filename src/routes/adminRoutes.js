@@ -47,10 +47,16 @@ adminRouter.get("/:id/profile", async (req, res) => {
       if (!user) {
         return res.status(404).send("User not found! 😢");
       }
+      const date = new Date(user.createdAt);
+      const formattedDate = date.toLocaleString('en-US', { 
+        month: 'long', 
+        day: 'numeric' 
+      });
       res.render('Profile.ejs', {
-        firstname : user.firstname,
-        lastname : user.lastname,
-        email : user.email,
+          firstname : user.firstname,
+          lastname : user.lastname,
+          email : user.email,
+          date : formattedDate,
       }) // Serve the staff dashboard
   }
   catch (error) {

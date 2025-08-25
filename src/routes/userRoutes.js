@@ -49,7 +49,7 @@ userRouter.get("/:id/profile", async (req, res) => {
   try{
     const user = await User.findById(req.params.id);
     if (!user) {
-      return res.status(404).send("User not found! 😢");
+      return res.render('Error.ejs', { message: "User not found! 😢" });
     }
     const date = new Date(user.createdAt);
     const formattedDate = date.toLocaleString('en-US', { 
