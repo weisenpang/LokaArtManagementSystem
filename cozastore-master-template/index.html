@@ -1,38 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>Loka Art</title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Loka Art</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
-	<link rel="icon" type="image/png" href="images/icons/favicon.png"/>
+    <link rel="icon" type="image/png" href="images/icons/favicon.png"/>
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/bootstrap/css/bootstrap.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/font-awesome-4.7.0/css/font-awesome.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/iconic/css/material-design-iconic-font.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
+    <link rel="stylesheet" type="text/css" href="fonts/linearicons-v1.0.0/icon-font.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
+    <link rel="stylesheet" type="text/css" href="vendor/animate/animate.css">
 <!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/css-hamburgers/hamburgers.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/animsition/css/animsition.min.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
+    <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
 <!--===============================================================================================-->	
-	<link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
+    <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
+    <link rel="stylesheet" type="text/css" href="vendor/slick/slick.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
+    <link rel="stylesheet" type="text/css" href="vendor/MagnificPopup/magnific-popup.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
+    <link rel="stylesheet" type="text/css" href="vendor/perfect-scrollbar/perfect-scrollbar.css">
 <!--===============================================================================================-->
-	<link rel="stylesheet" type="text/css" href="css/util.css">
-	<link rel="stylesheet" type="text/css" href="css/main.css">
+    <link rel="stylesheet" type="text/css" href="css/util.css">
+    <link rel="stylesheet" type="text/css" href="css/main.css">
 <!--===============================================================================================-->
 </head>
 <body class="animsition">
@@ -43,7 +43,8 @@
             z-index: 1000;
             left: 0; top: 0;
             width: 100%; height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);}
+            background-color: rgba(0, 0, 0, 0.5);
+        }
 
         .signin-content {
             background-color: #fff;
@@ -52,15 +53,17 @@
             width: 300px;
             border-radius: 10px;
             position: relative;
-            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);}
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+        }
         
         .close-btn {
-			position: absolute;
-			top: 10px; right: 15px;
-			cursor: pointer;
-			font-size: 20px;}
+            position: absolute;
+            top: 10px; right: 15px;
+            cursor: pointer;
+            font-size: 20px;
+        }
 
-		.close {
+        .close {
             color: #aaa;
             float: right;
             font-size: 28px;
@@ -74,53 +77,132 @@
             text-decoration: none;
             cursor: pointer;
         }
+
+        /* Enhanced modal styles */
+        #signinModal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background-color: #fff;
+            border-radius: 12px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+            max-width: 400px;
+            width: 90%;
+            max-height: 90vh;
+            overflow-y: auto;
+            position: relative;
+        }
+
+        .spinner {
+            display: none;
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 45px !important;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #64748b;
+            font-size: 18px;
+            user-select: none;
+            z-index: 10;
+        }
+
+        .password-toggle:hover {
+            color: #6c7ae0;
+        }
+
+        .message {
+            margin: 10px 0;
+            padding: 12px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 14px;
+        }
+
+        .btn-signin:disabled {
+            background-color: #cbd5e1 !important;
+            cursor: not-allowed !important;
+            opacity: 0.7;
+        }
     </style>
 
+    <!-- Header -->
+    <header>
+        <!-- Header desktop -->
+        <div class="container-menu-desktop">
+            <!-- Topbar -->
+            <div class="top-bar">
+                <div class="content-topbar flex-sb-m h-full container">
+                    <div class="left-top-bar">
+                        Where Malaysian creativity comes alive.
+                    </div>
+                    
+                    <div class="right-top-bar flex-w h-full">
+                        <a href="#" class="flex-c-m trans-04 p-lr-25">
+                            Help & FAQs
+                        </a>
 
-	<!-- Header -->
-	<header>
-		<!-- Header desktop -->
-		<div class="container-menu-desktop">
-			<!-- Topbar -->
-			<div class="top-bar">
-				<div class="content-topbar flex-sb-m h-full container">
-					<div class="left-top-bar">
-						Where Malaysian creativity comes alive.
-					</div>
-					
-					<div class="right-top-bar flex-w h-full">
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							Help & FAQs
-						</a>
+                        <a href="#" class="flex-c-m trans-04 p-lr-25" onclick="toggleSigninModal()">
+                            My Profile
+                        </a>
+                    </div>
+                </div>
+            </div>
 
-						<a href="#" class="flex-c-m trans-04 p-lr-25" onclick="toggleSigninModal()">
-							My Profile
-						</a>
-					</div>
-				</div>
-			</div>
+            <div class="wrap-menu-desktop">
+                <nav class="limiter-menu-desktop container">
 
-			<div class="wrap-menu-desktop">
-				<nav class="limiter-menu-desktop container">
-
-<!-- Sign In Modal -->
-<div id="signinModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.6); z-index:9999; align-items:center; justify-content:center;">
-    <div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md" style="background-color:#fff;">
+<!-- Enhanced Sign In Modal -->
+<div id="signinModal" class="modal">
+    <div class="modal-content size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
         <span class="close" id="closeModalBtn">&times;</span>
 
-		<form method="POST" action="/signin">
+        <form id="modalSigninForm">
             <h4 class="mtext-105 cl2 txt-center p-b-30">Sign In to LokaArt</h4>
 
             <!-- Email -->
             <div class="bor8 m-b-20 how-pos4-parent">
                 <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
-                       type="email" name="email" placeholder="Email" required>
+                       type="email" name="email" id="modalEmail" placeholder="Email" required>
             </div>
 
-            <!-- Password -->
-            <div class="bor8 m-b-20 how-pos4-parent">
+            <!-- Password with toggle -->
+            <div class="bor8 m-b-20 how-pos4-parent password-wrapper">
                 <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
-                       type="password" name="password" placeholder="Password" required>
+                       type="password" name="password" id="modalPassword" placeholder="Password" required>
+                <span class="password-toggle" onclick="toggleModalPassword()">👁</span>
             </div>
 
             <!-- Forgot Password -->
@@ -131,118 +213,245 @@
             </div>
 
             <!-- Submit Button -->
-            <button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
-                Sign In
+            <button type="submit" id="modalSigninBtn" class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer btn-signin">
+                <span id="modalSpinner" class="spinner"></span>
+                <span id="modalButtonText">Sign In</span>
             </button>
 
             <!-- Link to Signup -->
             <div class="m-t-20 txt-center">
-                <span class="stext-112 cl6">Don’t have an account?</span>
+                <span class="stext-112 cl6">Don't have an account?</span>
                 <a href="guest-signup.html" class="stext-112 cl1 hov-cl1">Sign up now</a>
             </div>
         </form>
     </div>
 </div>
 
-
 <!-- JavaScript to control modal -->
 <script>
+    function toggleModalPassword() {
+        const passwordInput = document.getElementById("modalPassword");
+        const toggle = document.querySelector(".password-toggle");
+        
+        if (passwordInput.getAttribute("type") === "password") {
+            passwordInput.setAttribute("type", "text");
+            toggle.textContent = "⌣";
+        } else {
+            passwordInput.setAttribute("type", "password");
+            toggle.textContent = "👁";
+        }
+    }
+
+    function setModalSigninLoading(isLoading) {
+        const modalSpinner = document.getElementById("modalSpinner");
+        const modalButtonText = document.getElementById("modalButtonText");
+        const modalSigninBtn = document.getElementById("modalSigninBtn");
+        
+        if (isLoading) {
+            modalSpinner.style.display = "inline-block";
+            modalButtonText.textContent = "Signing in...";
+            modalSigninBtn.disabled = true;
+        } else {
+            modalSpinner.style.display = "none";
+            modalButtonText.textContent = "Sign In";
+            modalSigninBtn.disabled = false;
+        }
+    }
+
+    function showModalMessage(message, type = 'error') {
+        // Remove existing messages
+        const existingMessage = document.querySelector('.message');
+        if (existingMessage) existingMessage.remove();
+        
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message';
+        
+        const colors = {
+            error: { bg: '#fef2f2', border: '#fecaca', text: '#dc2626' },
+            success: { bg: '#f0f9ff', border: '#bae6fd', text: '#0369a1' },
+            warning: { bg: '#fffbeb', border: '#fed7aa', text: '#d97706' }
+        };
+        
+        const color = colors[type] || colors.error;
+        
+        messageDiv.style.cssText = `
+            background: ${color.bg}; 
+            border: 1px solid ${color.border}; 
+            color: ${color.text}; 
+            padding: 12px; 
+            border-radius: 8px; 
+            margin: 10px 0; 
+            text-align: center;
+            font-size: 14px;
+        `;
+        messageDiv.textContent = message;
+        
+        const modalForm = document.getElementById("modalSigninForm");
+        modalForm.appendChild(messageDiv);
+        
+        setTimeout(() => {
+            if (messageDiv.parentNode) messageDiv.remove();
+        }, 6000);
+    }
+
     window.onload = function() {
         const modal = document.getElementById("signinModal");
         const closeBtn = document.getElementById("closeModalBtn");
+        const modalForm = document.getElementById("modalSigninForm");
 
-        document.querySelectorAll('[onclick="toggleSigninModal()"]').forEach(btn => {
-            btn.onclick = function () {
-                modal.style.display = "flex";
-            };
-        });
-
-        closeBtn.onclick = function () {
-            modal.style.display = "none";
+        // Open modal function
+        window.toggleSigninModal = function() {
+            modal.style.display = "flex";
         };
 
+        // Close modal
+        closeBtn.onclick = function () {
+            modal.style.display = "none";
+            // Clear form and messages
+            modalForm.reset();
+            const existingMessage = document.querySelector('.message');
+            if (existingMessage) existingMessage.remove();
+            setModalSigninLoading(false);
+        };
+
+        // Close on outside click
         window.onclick = function(event) {
             if (event.target === modal) {
                 modal.style.display = "none";
+                modalForm.reset();
+                const existingMessage = document.querySelector('.message');
+                if (existingMessage) existingMessage.remove();
+                setModalSigninLoading(false);
             }
         };
+
+        // Handle form submission
+        modalForm.addEventListener("submit", async function(e) {
+            e.preventDefault();
+            
+            if (document.getElementById("modalSigninBtn").disabled) return;
+            
+            setModalSigninLoading(true);
+
+            const formData = new FormData(modalForm);
+            const data = Object.fromEntries(formData);
+
+            try {
+                const res = await fetch("/signin", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await res.json();
+
+                if (res.ok && result.success) {
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userEmail', data.email);
+                    
+                    showModalMessage("✅ Login successful! Redirecting...", 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = result.redirectTo || "home-03.html";
+                    }, 1000);
+                    
+                } else {
+                    setModalSigninLoading(false);
+                    
+                    // Handle different error types
+                    if (result.type === 'unverified') {
+                        showModalMessage("📧 " + result.error, 'warning');
+                    } else if (result.redirectTo === 'guest-signup.html') {
+                        showModalMessage("❌ " + result.error, 'error');
+                        setTimeout(() => {
+                            const goToSignup = confirm("No account found with this email. Would you like to create a new account?");
+                            if (goToSignup) {
+                                window.location.href = "guest-signup.html";
+                            }
+                        }, 2000);
+                    } else {
+                        showModalMessage("❌ " + (result.error || "Login failed"), 'error');
+                    }
+                }
+            } catch (err) {
+                setModalSigninLoading(false);
+                console.error("Login error:", err);
+                showModalMessage("🌐 Connection error. Please check your internet and try again.", 'error');
+            }
+        });
     };
 </script>
 
+                    
+                    <!-- Logo desktop -->		
+                    <a href="#" class="logo">
+                        <img src="images/icons/logo-01.png" alt="IMG-LOGO">
+                    </a>
 
+                    <!-- Menu desktop -->
+                    <div class="menu-desktop">
+                        <ul class="main-menu">
+                            <li class="active-menu">
+                                <a href="index.html">Home</a>
+                            </li>
 
+                            <li>
+                                <a href="product.html">Shop</a>
+                            </li>
 
+                            <li>
+                                <a href="blog.html">Blog</a>
+                            </li>
 
-					
-					<!-- Logo desktop -->		
-					<a href="#" class="logo">
-						<img src="images/icons/logo-01.png" alt="IMG-LOGO">
-					</a>
+                            <li>
+                                <a href="about.html">About</a>
+                            </li>
 
-					<!-- Menu desktop -->
-					<div class="menu-desktop">
-						<ul class="main-menu">
-							<li class="active-menu">
-								<a href="index.html">Home</a>
-							</li>
+                            <li>
+                                <a href="contact.html">Contact</a>
+                            </li>
+                        </ul>
+                    </div>	
 
-							<li>
-								<a href="product.html">Shop</a>
-							</li>
+                    <!-- Icon header -->
+                    <div class="wrap-icon-header flex-w flex-r-m">
+                        <div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="2" onclick="toggleSigninModal()">
+                            <i class="zmdi zmdi-shopping-cart"></i>
+                        </div>
 
-							<li>
-								<a href="blog.html">Blog</a>
-							</li>
+                        <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0" onclick="toggleSigninModal()">
+                            <i class="zmdi zmdi-favorite-outline"></i>
+                        </a>
+                    </div>
+                </nav>
+            </div>	
+        </div>
 
-							<li>
-								<a href="about.html">About</a>
-							</li>
+        <!-- Header Mobile -->
+        <div class="wrap-header-mobile">
+            <!-- Logo moblie -->		
+            <div class="logo-mobile">
+                <a href="index.html"><img src="images/icons/logo-01.png" alt="IMG-LOGO"></a>
+            </div>
 
-							<li>
-								<a href="contact.html">Contact</a>
-							</li>
-						</ul>
-					</div>	
+            <!-- Icon header -->
+            <div class="wrap-icon-header flex-w flex-r-m m-r-15">
+                <div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="2" onclick="toggleSigninModal()">
+                    <i class="zmdi zmdi-shopping-cart"></i>
+                </div>
 
-					<!-- Icon header -->
-					<div class="wrap-icon-header flex-w flex-r-m">
-						<div class="icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti js-show-cart" data-notify="2" onclick="toggleSigninModal()">
-							<i class="zmdi zmdi-shopping-cart"></i>
-						</div>
+                <a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="0" onclick="toggleSigninModal()">
+                    <i class="zmdi zmdi-favorite-outline"></i>
+                </a>
+            </div>
 
-						<a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-l-22 p-r-11 icon-header-noti" data-notify="0" onclick="toggleSigninModal()">
-							<i class="zmdi zmdi-favorite-outline"></i>
-						</a>
-					</div>
-				</nav>
-			</div>	
-		</div>
-
-		<!-- Header Mobile -->
-		<div class="wrap-header-mobile">
-			<!-- Logo moblie -->		
-			<div class="logo-mobile">
-				<a href="index.html"><img src="images/icons/logo-01.png" alt="IMG-LOGO"></a>
-			</div>
-
-			<!-- Icon header -->
-			<div class="wrap-icon-header flex-w flex-r-m m-r-15">
-				<div class="icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti js-show-cart" data-notify="2" onclick="openSignin()">
-					<i class="zmdi zmdi-shopping-cart"></i>
-				</div>
-
-				<a href="#" class="dis-block icon-header-item cl2 hov-cl1 trans-04 p-r-11 p-l-10 icon-header-noti" data-notify="0" onclick="openSignin()">
-					<i class="zmdi zmdi-favorite-outline"></i>
-				</a>
-			</div>
-
-			<!-- Button show menu -->
-			<div class="btn-show-menu-mobile hamburger hamburger--squeeze">
-				<span class="hamburger-box">
-					<span class="hamburger-inner"></span>
-				</span>
-			</div>
-		</div>
+            <!-- Button show menu -->
+            <div class="btn-show-menu-mobile hamburger hamburger--squeeze">
+                <span class="hamburger-box">
+                    <span class="hamburger-inner"></span>
+                </span>
+            </div>
+        </div>
 
 
 		<!-- Menu Mobile -->
@@ -257,7 +466,7 @@
 				<li>
 					<div class="right-top-bar flex-w h-full">
 						<a href="#" class="flex-c-m p-lr-10 trans-04">Help & FAQs</a>
-						<a href="#" class="flex-c-m trans-04 p-lr-25" onclick="openSignin()">My Profile</a>
+						<a href="#" class="flex-c-m trans-04 p-lr-25" onclick="toggleSigninModal()">My Profile</a>
 					</div>
 				</li>
 			</ul>

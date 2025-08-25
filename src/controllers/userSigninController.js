@@ -13,7 +13,10 @@ export async function verifyUser(req, res) {
         const user = await User.findOne({ email });
         
         if (!user) {
-            return res.redirect('/guest-signup.html');
+            return res.status(404).json({ 
+                error: "No account found with this email address",
+                redirectTo: "guest-signup.html"
+            });
         }
 
         // Check if user is verified
@@ -39,7 +42,11 @@ export async function verifyUser(req, res) {
         const user_id = Object(user._id);
         
         // Return success with redirect URL instead of direct redirect
-        res.redirect(301, `/${user.role}/${user_id}`);
+       return res.status(200).json({
+            success: true,
+            message: "Login successful",
+            redirectTo: `/${user.role}/${user_id}`
+        });
 
     } catch (error) {
         console.error("Error during sign-in:", error);
