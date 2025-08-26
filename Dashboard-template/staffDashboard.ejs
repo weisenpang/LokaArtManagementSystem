@@ -405,8 +405,7 @@
 
             <li class="menu-item">
               <a
-                href="#"
-                target="_blank"
+                href="javascript:about();"
                 class="menu-link">
                 <i class="menu-icon tf-icons bx bx-file"></i>
                 <div class="text-truncate" data-i18n="Support">About Us</div>
@@ -414,8 +413,7 @@
             </li>
             <li class="menu-item">
               <a
-                href="#"
-                target="_blank"
+                href="javascript:contact();"
                 class="menu-link">
                 <i class="menu-icon tf-icons bx bx-support"></i>
                 <div class="text-truncate" data-i18n="Documentation">Contact Us</div>
@@ -464,7 +462,7 @@
                     href="javascript:void(0);"
                     data-bs-toggle="dropdown">
                     <div class="avatar avatar-online">
-                      <img src="assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                      <img src="assets/img/avatars/1.webp" alt class="w-px-40 h-auto rounded-circle" />
                     </div>
                   </a>
                   <ul class="dropdown-menu dropdown-menu-end">
@@ -473,7 +471,7 @@
                         <div class="d-flex">
                           <div class="flex-shrink-0 me-3">
                             <div class="avatar avatar-online">
-                              <img src="assets/img/avatars/1.png" alt class="w-px-40 h-auto rounded-circle" />
+                              <img src="assets/img/avatars/1.webp" alt class="w-px-40 h-auto rounded-circle" />
                             </div>
                           </div>
                           <div class="flex-grow-1">
@@ -951,7 +949,7 @@
                                 </div>
                                 <div class="profile-card-body">
                                     <div class="profile-avatar-section">
-                                        <img src="assets/img/avatars/1.png" alt="John Doe" class="profile-avatar">
+                                        <img src="assets/img/avatars/1.webp" alt="John Doe" class="profile-avatar">
                                         <div class="profile-avatar-upload">
                                             <button type="button" class="btn btn-secondary" onclick="document.getElementById('avatarUpload').click()">
                                                 Upload new photo
@@ -1037,19 +1035,19 @@
     <!-- Profile Modal Script -->
     <script>
       function signout(){
-        window.location.replace(window.location + "signout");
+        window.location.replace(window.location + "/signout");
         
       }
       function profile(){
-			  window.location.href = window.location + "profile";
+			  window.location.href = window.location + "/profile";
 			
 		  }
       function about(){
-			  window.location.href = window.location + "about";
+			  window.location.href = window.location + "/about";
 			
 		  }
       function contact(){
-			  window.location.href = window.location + "contact";
+			  window.location.href = window.location + "/contact";
 			
 		  }
     </script>
