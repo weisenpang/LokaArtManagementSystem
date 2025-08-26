@@ -56,6 +56,9 @@ staffRouter.get("/:id/profile", async (req, res) => {
           lastname : user.lastname,
           email : user.email,
           date : formattedDate,
+          artworks : user.artworks || [],
+          role: user.role === 'user' ? true : false
+          
       }) // Serve the staff dashboard
   }
   catch (error) {

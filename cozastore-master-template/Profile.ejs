@@ -760,8 +760,14 @@
       <button class="active" onclick="showTab(event,'profile')">Profile</button>
 <!--      <button onclick="showTab(event,'posts')">Posts</button>
       <button onclick="showTab(event,'products')">Products</button>  -->
-      <button onclick="showTab(event,'artworks')">Artworks</button>
-      <button onclick="showTab(event,'purchase-history')">Purchase History</button>
+      <% if(role){ %>
+        <button onclick="showTab(event,'artworks')">Artwork</button>
+      <% } %>  
+      <% if(role){ %>
+        <button onclick="showTab(event,'purchase-history')">Purchase History</button>
+      <% } %>  
+      
+      
     </div>
 
     <!-- Profile Section -->

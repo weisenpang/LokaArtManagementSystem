@@ -57,11 +57,14 @@ userRouter.get("/:id/profile", async (req, res) => {
       day: 'numeric' 
     });
     res.render('Profile.ejs', {
-        firstname : user.firstname,
-        lastname : user.lastname,
-        email : user.email,
-        date : formattedDate,
-    }) // Serve the staff dashboard
+          firstname : user.firstname,
+          lastname : user.lastname,
+          email : user.email,
+          date : formattedDate,
+          artworks : user.artworks || [],
+          role: user.role === 'user' ? true : false
+          
+      }) // Serve the staff dashboard
   }
   catch (error) {
     res.status(500).send("Error loading user profile, pookie! 😢");
