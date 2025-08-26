@@ -4,10 +4,6 @@ import { User } from "../models/User.js";
 import { UserTokenTerminate } from "../models/User.js";
 const userRouter = express.Router();
 
-
-
-
-
 userRouter.get("/:id", async (req, res) => {
   try{
     try {
@@ -49,7 +45,7 @@ userRouter.get("/:id/profile", async (req, res) => {
   try{
     const user = await User.findById(req.params.id);
     if (!user) {
-      return res.status(404).send("User not found! 😢");
+      return res.render('Error.ejs', { message: "User not found! 😢" });
     }
     const date = new Date(user.createdAt);
     const formattedDate = date.toLocaleString('en-US', { 
@@ -57,11 +53,14 @@ userRouter.get("/:id/profile", async (req, res) => {
       day: 'numeric' 
     });
     res.render('Profile.ejs', {
-        firstname : user.firstname,
-        lastname : user.lastname,
-        email : user.email,
-        date : formattedDate,
-    }) // Serve the staff dashboard
+          firstname : user.firstname,
+          lastname : user.lastname,
+          email : user.email,
+          date : formattedDate,
+          artworks : user.artworks || [],
+          role: user.role === 'user' ? true : false
+          
+      }) // Serve the staff dashboard
   }
   catch (error) {
     res.status(500).send("Error loading user profile, pookie! 😢");

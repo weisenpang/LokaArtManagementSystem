@@ -6,8 +6,9 @@ const staffRouter = express.Router();
 
 staffRouter.get("/:id", async (req, res) => {
   try{
+    const user = await User.findOne({ _id: req.params.id, role: 'staff' , sessionToken: { $exists: true } });
     try {
-        const user = await User.findOne({ _id: req.params.id, role: 'staff' , sessionToken: { $exists: true } });
+        
         if (!user) {
             res.status(404).send("Unauthorized User! 😢");
             return;
@@ -22,7 +23,11 @@ staffRouter.get("/:id", async (req, res) => {
       console.error("Error in admin route:", error);  
       res.status(500).send("Error loading staff dashboard, pookie! 😢")
     }
-    res.sendFile(filePathAdminDashboard('indexDashboard.html')); // Serve the staff dashboard
+    res.render('indexDashboard.ejs',{
+          firstname : user.firstname,
+          lastname : user.lastname,
+          role: user.role
+    }) // Serve the staff dashboard
   }
   catch (error) {
     res.status(500).send("Error loading staff dashboard, pookie! 😢");
@@ -46,10 +51,19 @@ staffRouter.get("/:id/profile", async (req, res) => {
       if (!user) {
         return res.status(404).send("User not found! 😢");
       }
+      const date = new Date(user.createdAt);
+      const formattedDate = date.toLocaleString('en-US', { 
+        month: 'long', 
+        day: 'numeric' 
+      });
       res.render('Profile.ejs', {
-        firstname : user.firstname,
-        lastname : user.lastname,
-        email : user.email,
+          firstname : user.firstname,
+          lastname : user.lastname,
+          email : user.email,
+          date : formattedDate,
+          artworks : user.artworks || [],
+          role: user.role === 'user' ? true : false
+          
       }) // Serve the staff dashboard
   }
   catch (error) {
