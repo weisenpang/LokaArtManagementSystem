@@ -74,7 +74,7 @@ staffRouter.get("/:id/profile", async (req, res) => {
 
 staffRouter.get("/:id/about", async (req, res) => {
   try{
-    res.sendFile(filePathAdminDashboard('about.html')); 
+    z
   }
   catch (error) {
     res.status(500).send("Error loading user profile, pookie! 😢");
