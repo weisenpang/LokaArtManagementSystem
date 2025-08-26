@@ -74,7 +74,15 @@ adminRouter.get("/:id/profile", async (req, res) => {
 
 adminRouter.get("/:id/about", async (req, res) => {
   try{
-    res.sendFile(filePathAdminDashboard('about.html')); 
+    const user = await User.findById(req.params.id);
+      if (!user) {
+        return res.status(404).send("User not found! 😢");
+      }
+      
+      res.render('about.ejs', {
+          id : user.id,
+          role: user.role
+      })
   }
   catch (error) {
     res.status(500).send("Error loading user profile, pookie! 😢");
@@ -84,7 +92,15 @@ adminRouter.get("/:id/about", async (req, res) => {
 
 adminRouter.get("/:id/contact", async (req, res) => {
   try{
-    res.sendFile(filePathAdminDashboard('contact.html')); // Serve the staff dashboard
+    const user = await User.findById(req.params.id);
+      if (!user) {
+        return res.status(404).send("User not found! 😢");
+      }
+      
+      res.render('contact.ejs', {
+          id : user.id,
+          role: user.role
+      })
   }
   catch (error) {
     res.status(500).send("Error loading user profile, pookie! 😢");
