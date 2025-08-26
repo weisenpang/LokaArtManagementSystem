@@ -22,7 +22,11 @@ userRouter.get("/:id", async (req, res) => {
       console.error("Error in user route:", error);  
       res.status(500).send("Error loading staff dashboard, pookie! 😢")
     }
-    res.sendFile(filePath('home-03.html')); // Serve the staff dashboard
+     const user = await User.findById(req.params.id);
+    res.render('home-03.ejs', {
+          id : user.id,
+          role: user.role
+    }) // Serve the staff dashboard
   }
   catch (error) {
     res.status(500).send("Error loading staff dashboard, pookie! 😢");
@@ -70,7 +74,11 @@ userRouter.get("/:id/profile", async (req, res) => {
 
 userRouter.get("/:id/about", async (req, res) => {
   try{
-    res.sendFile(filePath('about.html')); // Serve the staff dashboard
+    const user = await User.findById(req.params.id);
+    res.render('userAbout.ejs', {
+          id : user.id,
+          role: user.role
+    }) // Serve the staff dashboard
   }
   catch (error) {
     res.status(500).send("Error loading user profile, pookie! 😢");
@@ -80,7 +88,11 @@ userRouter.get("/:id/about", async (req, res) => {
 
 userRouter.get("/:id/contact", async (req, res) => {
   try{
-    res.sendFile(filePath('contact.html')); // Serve the staff dashboard
+    const user = await User.findById(req.params.id);
+    res.render('userContact.ejs', {
+          id : user.id,
+          role: user.role
+    })// Serve the staff dashboard
   }
   catch (error) {
     res.status(500).send("Error loading user profile, pookie! 😢");

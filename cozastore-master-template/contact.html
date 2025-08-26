@@ -162,27 +162,7 @@
 				</li>
 			</ul>
 
-			<ul class="main-menu-m">
-				<li>
-					<a href="index.html" id="navHomeLink">Home</a>
-				</li>
-
-				<li>
-					<a href="product.html">Shop</a>
-				</li>
-
-				<li>
-					<a href="blog.html">Blog</a>
-				</li>
-
-				<li>
-					<a href="about.html">About</a>
-				</li>
-
-				<li>
-					<a href="contact.html">Contact</a>
-				</li>
-			</ul>
+			
 		</div>
 
 		<!-- Modal Search -->
@@ -570,7 +550,7 @@ function updateNavigation() {
   if (homeLink) {
     if (isUserSignedIn()) {
       // User is logged in - go to member area 
-      homeLink.href = 'home-03.html'; 
+      homeLink.href = '/'; 
     } else {
       // User is not logged in - go to public homepage
       homeLink.href = 'index.html'; 

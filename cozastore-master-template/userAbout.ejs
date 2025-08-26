@@ -66,7 +66,7 @@
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li>
-								<a href="index.html" id="navHomeLink">Home</a>
+								<a href="/<%= role%>/<%= id %>" id="navHomeLink">Home</a>
 							</li>
 
 							<li>
@@ -541,7 +541,7 @@ function updateNavigation() {
   if (homeLink) {
     if (isUserSignedIn()) {
       // User is logged in - go to member area 
-      homeLink.href = '/'; 
+      homeLink.href = '/<%= role%>/<%= id %>'; 
     } else {
       // User is not logged in - go to public homepage
       homeLink.href = 'index.html'; 

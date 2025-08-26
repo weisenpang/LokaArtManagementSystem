@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<title>About</title>
+	<title>Contact</title>
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 <!--===============================================================================================-->	
@@ -42,12 +42,12 @@
 						Where Malaysian creativity comes alive.
 					</div>
 
-<!--				<div class="right-top-bar flex-w h-full">
+<!--					<div class="right-top-bar flex-w h-full">
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
 							Help & FAQs
-						</a>   -->
+						</a>  -->
 
-						<a href="Profile.html" class="flex-c-m trans-04 p-lr-25">
+						<a href="#" class="flex-c-m trans-04 p-lr-25">
 							My Profile
 						</a>
 					</div>
@@ -66,22 +66,26 @@
 					<div class="menu-desktop">
 						<ul class="main-menu">
 							<li>
-								<a href="index.html" id="navHomeLink">Home</a>
+								<a href="/<%= role%>/<%= id %>" id="navHomeLink">Home</a>
 							</li>
 
 							<li>
 								<a href="product.html">Shop</a>
 							</li>
 
+						<!---<li class="label1" data-label1="hot">
+								<a href="shoping-cart.html">Features</a>
+							</li> -->
+
 							<li>
 								<a href="blog.html">Blog</a>
 							</li>
 
-							<li class="active-menu">
+							<li>
 								<a href="about.html">About</a>
 							</li>
 
-							<li>
+							<li class="active-menu">
 								<a href="contact.html">Contact</a>
 							</li>
 						</ul>
@@ -141,16 +145,16 @@
 			<ul class="topbar-mobile">
 				<li>
 					<div class="left-top-bar">
-						Where Malaysian creativity comes alive.
+						Where Malaysian creativity comes alive
 					</div>
 				</li>
 
 				<li>
-<!--					<div class="right-top-bar flex-w h-full">
+<!--				<div class="right-top-bar flex-w h-full">
 						<a href="#" class="flex-c-m p-lr-10 trans-04">
 							Help & FAQs
-						</a>  -->
-
+						</a>  -->	
+						
 						<a href="#" class="flex-c-m trans-04 p-lr-25">
 							My Profile
 						</a>
@@ -267,84 +271,89 @@
 	<!-- Title page -->
 	<section class="bg-img1 txt-center p-lr-15 p-tb-92" style="background-image: url('images/bg-01.jpg');">
 		<h2 class="ltext-105 cl0 txt-center">
-			About
+			Contact
 		</h2>
 	</section>	
 
 
 	<!-- Content page -->
-	<section class="bg0 p-t-75 p-b-120">
+	<section class="bg0 p-t-104 p-b-116">
 		<div class="container">
-			<div class="row p-b-148">
-				<div class="col-md-7 col-lg-8">
-					<div class="p-t-7 p-r-85 p-r-15-lg p-r-0-md">
-						<h3 class="mtext-111 cl2 p-b-16">
-							Our Story
-						</h3>
+			<div class="flex-w flex-tr">
+				<div class="size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+					<form>
+						<h4 class="mtext-105 cl2 txt-center p-b-30">
+							Send Us A Message
+						</h4>
 
-						<p class="stext-113 cl6 p-b-26">
-							Loka Art Management System was created to connect art, culture, and technology in one platform. 
-            We aim to empower artists, collectors, and institutions with tools that make art management simple, 
-            accessible, and inspiring.
-						</p>
-
-						<p class="stext-113 cl6 p-b-26">
-							Whether you are an artist showcasing your portfolio, a collector managing your pieces, or 
-            an institution curating exhibitions, Loka provides the solutions you need. 
-						</p>
-
-						<p class="stext-113 cl6 p-b-26">
-							Any questions? Let us know  or call us on (+60) 11-716 6879
-						</p>
-					</div>
-				</div>
-
-				<div class="col-11 col-md-5 col-lg-4 m-lr-auto">
-					<div class="how-bor1 ">
-						<div class="hov-img0">
-							<img src="images/about-01.jpg" alt="IMG">
+						<div class="bor8 m-b-20 how-pos4-parent">
+							<input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30" type="text" name="email" placeholder="Your Email Address">
+							<img class="how-pos4 pointer-none" src="images/icons/icon-email.png" alt="ICON">
 						</div>
-					</div>
+
+						<div class="bor8 m-b-30">
+							<textarea class="stext-111 cl2 plh3 size-120 p-lr-28 p-tb-25" name="msg" placeholder="How Can We Help?"></textarea>
+						</div>
+
+						<button class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer">
+							Submit
+						</button>
+					</form>
 				</div>
-			</div>
-			
-			<div class="row">
-				<div class="order-md-2 col-md-7 col-lg-8 p-b-30">
-					<div class="p-t-7 p-l-85 p-l-15-lg p-l-0-md">
-						<h3 class="mtext-111 cl2 p-b-16">
-							Our Mission & Vision
-						</h3>
 
-						<p class="stext-113 cl6 p-b-26">
-							Our mission is to simplify art management through technology and design.  
-        Our vision is to become the most trusted platform for artists and institutions 
-        to showcase, manage, and celebrate creativity.
-						</p>
+				<div class="size-210 bor10 flex-w flex-col-m p-lr-93 p-tb-30 p-lr-15-lg w-full-md">
+					<div class="flex-w w-full p-b-42">
+						<span class="fs-18 cl5 txt-center size-211">
+							<span class="lnr lnr-map-marker"></span>
+						</span>
 
-						<div class="bor16 p-l-29 p-b-9 m-t-22">
-							<p class="stext-114 cl6 p-r-40 p-b-11">
-								Creativity is just connecting things. When you ask creative people how they did something, they feel a little guilty because they didn't really do it, they just saw something. It seemed obvious to them after a while.
-							</p>
-
-							<span class="stext-111 cl8">
-								- Steve Job’s 
+						<div class="size-212 p-t-2">
+							<span class="mtext-110 cl2">
+								Address
 							</span>
+
+							<p class="stext-115 cl6 size-213 p-t-18">
+								Loka Made (Studio Gallery)
+								35-2 (First floor), Jalan USJ 9/5s, Subang Business Centre, 47620 Subang Jaya, Selangor
+							</p>
 						</div>
 					</div>
-				</div>
 
-				<div class="order-md-1 col-11 col-md-5 col-lg-4 m-lr-auto p-b-30">
-					<div class="how-bor2">
-						<div class="hov-img0">
-							<img src="images/about-02.jpg" alt="IMG">
+					<div class="flex-w w-full p-b-42">
+						<span class="fs-18 cl5 txt-center size-211">
+							<span class="lnr lnr-phone-handset"></span>
+						</span>
+
+						<div class="size-212 p-t-2">
+							<span class="mtext-110 cl2">
+								Lets Talk
+							</span>
+
+							<p class="stext-115 cl1 size-213 p-t-18">
+								+60 3-8081 2611
+							</p>
+						</div>
+					</div>
+
+					<div class="flex-w w-full">
+						<span class="fs-18 cl5 txt-center size-211">
+							<span class="lnr lnr-envelope"></span>
+						</span>
+
+						<div class="size-212 p-t-2">
+							<span class="mtext-110 cl2">
+								General Support
+							</span>
+
+							<p class="stext-115 cl1 size-213 p-t-18">
+								thelokamade@gmail.com
+							</p>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
 	</section>	
-	
-		
 
 	<!-- Footer -->
 	<footer class="bg3 p-t-75 p-b-32">
@@ -477,7 +486,7 @@
 
 				<p class="stext-107 cl6 txt-center">
 					<!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
-Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Colorlib</a> &amp; distributed by <a href="https://themewagon.com" target="_blank">ThemeWagon</a>
+Copyright &copy;<script>document.write(new Date().getFullYear());</script> All rights reserved | Made with <i class="fa fa-heart-o" aria-hidden="true"></i> by <a href="https://colorlib.com" target="_blank">Loka Art</a> &amp; distributed by <a href="https://themewagon.com" target="_blank">Group 4</a>
 <!-- Link back to Colorlib can't be removed. Template is licensed under CC BY 3.0. -->
 
 				</p>
@@ -541,7 +550,7 @@ function updateNavigation() {
   if (homeLink) {
     if (isUserSignedIn()) {
       // User is logged in - go to member area 
-      homeLink.href = '/'; 
+      homeLink.href = '/<%= role%>/<%= id %>'; 
     } else {
       // User is not logged in - go to public homepage
       homeLink.href = 'index.html'; 
@@ -573,6 +582,6 @@ window.addEventListener('storage', function(e) {
 	</script>
 <!--===============================================================================================-->
 	<script src="js/main.js"></script>
-	
+
 </body>
 </html>
