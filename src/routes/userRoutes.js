@@ -4,10 +4,6 @@ import { User } from "../models/User.js";
 import { UserTokenTerminate } from "../models/User.js";
 const userRouter = express.Router();
 
-
-
-
-
 userRouter.get("/:id", async (req, res) => {
   try{
     try {

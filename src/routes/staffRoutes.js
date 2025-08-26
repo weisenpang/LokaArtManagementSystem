@@ -6,8 +6,9 @@ const staffRouter = express.Router();
 
 staffRouter.get("/:id", async (req, res) => {
   try{
+    const user = await User.findOne({ _id: req.params.id, role: 'staff' , sessionToken: { $exists: true } });
     try {
-        const user = await User.findOne({ _id: req.params.id, role: 'staff' , sessionToken: { $exists: true } });
+        
         if (!user) {
             res.status(404).send("Unauthorized User! 😢");
             return;
@@ -22,7 +23,11 @@ staffRouter.get("/:id", async (req, res) => {
       console.error("Error in admin route:", error);  
       res.status(500).send("Error loading staff dashboard, pookie! 😢")
     }
-    res.sendFile(filePathAdminDashboard('indexDashboard.html')); // Serve the staff dashboard
+    res.render('indexDashboard.ejs',{
+          firstname : user.firstname,
+          lastname : user.lastname,
+          role: user.role
+    }) // Serve the staff dashboard
   }
   catch (error) {
     res.status(500).send("Error loading staff dashboard, pookie! 😢");
