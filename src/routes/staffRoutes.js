@@ -23,7 +23,7 @@ staffRouter.get("/:id", async (req, res) => {
       console.error("Error in admin route:", error);  
       res.status(500).send("Error loading staff dashboard, pookie! 😢")
     }
-    res.render('indexDashboard.ejs',{
+    res.render('staffDashboard.ejs',{
           firstname : user.firstname,
           lastname : user.lastname,
           role: user.role
