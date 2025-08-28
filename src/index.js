@@ -3,7 +3,7 @@ import dotenv from "dotenv";
 import {connectDB} from "./config/db.js";
 import signupRoutes from "./routes/signupRoutes.js"
 import signInRouter from "./routes/signinRoutes.js";
-import {filePathStatic} from './config/filePath.js';
+import {filePath, filePathStatic} from './config/filePath.js';
 import { UserTokenTerminate } from "./models/User.js";
 import staffRouter from "./routes/staffRoutes.js";
 import adminRouter from "./routes/adminRoutes.js";
@@ -52,8 +52,15 @@ app.use("/user", userRouter);// signin routes
 app.use("/staff", staffRouter); // staff routes
 app.use("/admin", adminRouter); // admin routes
 
-app.post('/userSignOut.html/:id', async (req, res) => {
-  
+app.get('/about',  async (req,res) => {
+    res.sendFile(filePath('about.html'));
+});
+
+app.get('/contact',  async (req,res) => {
+    res.sendFile(filePath('about.html'));
+});
+app.get('/product',  async (req,res) => {
+    res.sendFile(filePath('product.html'));
 });
 
 app.post('/upload', async (req, res) => {

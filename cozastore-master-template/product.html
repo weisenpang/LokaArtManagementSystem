@@ -53,9 +53,9 @@
 							Help & FAQs
 						</a>  -->
 
-						<a href="#" class="flex-c-m trans-04 p-lr-25">
-							My Profile
-						</a>
+						<a href="#" class="flex-c-m trans-04 p-lr-25" onclick="toggleSigninModal()">
+                            Sign In
+                        </a>
 				</div>
 			</div>
 
@@ -78,16 +78,16 @@
 								<a href="product.html">Shop</a>
 							</li>
 
-							<li>
+							<!-- <li>
 								<a href="blog.html">Blog</a>
+							</li> -->
+
+							<li>
+								<a href="about">About</a>
 							</li>
 
 							<li>
-								<a href="about.html">About</a>
-							</li>
-
-							<li>
-								<a href="contact.html">Contact</a>
+								<a href="contact">Contact</a>
 							</li>
 						</ul>
 					</div>	
@@ -1488,7 +1488,7 @@ function updateNavigation() {
   if (homeLink) {
     if (isUserSignedIn()) {
       // User is logged in - go to member area 
-      homeLink.href = 'home-03.html'; 
+      homeLink.href = '/'; 
     } else {
       // User is not logged in - go to public homepage
       homeLink.href = 'index.html'; 
@@ -1522,4 +1522,158 @@ window.addEventListener('storage', function(e) {
 	<script src="js/main.js"></script>
 
 </body>
+
+<script>
+    function toggleModalPassword() {
+        const passwordInput = document.getElementById("modalPassword");
+        const toggle = document.querySelector(".password-toggle");
+        
+        if (passwordInput.getAttribute("type") === "password") {
+            passwordInput.setAttribute("type", "text");
+            toggle.textContent = "⌣";
+        } else {
+            passwordInput.setAttribute("type", "password");
+            toggle.textContent = "👁";
+        }
+    }
+
+    function setModalSigninLoading(isLoading) {
+        const modalSpinner = document.getElementById("modalSpinner");
+        const modalButtonText = document.getElementById("modalButtonText");
+        const modalSigninBtn = document.getElementById("modalSigninBtn");
+        
+        if (isLoading) {
+            modalSpinner.style.display = "inline-block";
+            modalButtonText.textContent = "Signing in...";
+            modalSigninBtn.disabled = true;
+        } else {
+            modalSpinner.style.display = "none";
+            modalButtonText.textContent = "Sign In";
+            modalSigninBtn.disabled = false;
+        }
+    }
+
+    function showModalMessage(message, type = 'error') {
+        // Remove existing messages
+        const existingMessage = document.querySelector('.message');
+        if (existingMessage) existingMessage.remove();
+        
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'message';
+        
+        const colors = {
+            error: { bg: '#fef2f2', border: '#fecaca', text: '#dc2626' },
+            success: { bg: '#f0f9ff', border: '#bae6fd', text: '#0369a1' },
+            warning: { bg: '#fffbeb', border: '#fed7aa', text: '#d97706' }
+        };
+        
+        const color = colors[type] || colors.error;
+        
+        messageDiv.style.cssText = `
+            background: ${color.bg}; 
+            border: 1px solid ${color.border}; 
+            color: ${color.text}; 
+            padding: 12px; 
+            border-radius: 8px; 
+            margin: 10px 0; 
+            text-align: center;
+            font-size: 14px;
+        `;
+        messageDiv.textContent = message;
+        
+        const modalForm = document.getElementById("modalSigninForm");
+        modalForm.appendChild(messageDiv);
+        
+        setTimeout(() => {
+            if (messageDiv.parentNode) messageDiv.remove();
+        }, 6000);
+    }
+
+    window.onload = function() {
+        const modal = document.getElementById("signinModal");
+        const closeBtn = document.getElementById("closeModalBtn");
+        const modalForm = document.getElementById("modalSigninForm");
+
+        // Open modal function
+        window.toggleSigninModal = function() {
+            modal.style.display = "flex";
+        };
+
+        // Close modal
+        closeBtn.onclick = function () {
+            modal.style.display = "none";
+            // Clear form and messages
+            modalForm.reset();
+            const existingMessage = document.querySelector('.message');
+            if (existingMessage) existingMessage.remove();
+            setModalSigninLoading(false);
+        };
+
+        // Close on outside click
+        window.onclick = function(event) {
+            if (event.target === modal) {
+                modal.style.display = "none";
+                modalForm.reset();
+                const existingMessage = document.querySelector('.message');
+                if (existingMessage) existingMessage.remove();
+                setModalSigninLoading(false);
+            }
+        };
+
+        // Handle form submission
+        modalForm.addEventListener("submit", async function(e) {
+            e.preventDefault();
+            
+            if (document.getElementById("modalSigninBtn").disabled) return;
+            
+            setModalSigninLoading(true);
+
+            const formData = new FormData(modalForm);
+            const data = Object.fromEntries(formData);
+
+            try {
+                const res = await fetch("/signin", {
+                    method: "POST",
+                    headers: {"Content-Type": "application/json"},
+                    body: JSON.stringify(data)
+                });
+                
+                const result = await res.json();
+
+                if (res.ok && result.success) {
+                    localStorage.setItem('isLoggedIn', 'true');
+                    localStorage.setItem('userEmail', data.email);
+                    
+                    showModalMessage("✅ Login successful! Redirecting...", 'success');
+                    
+                    setTimeout(() => {
+                        window.location.href = result.redirectTo || "home-03.html";
+                    }, 1000);
+                    
+                } else {
+                    setModalSigninLoading(false);
+                    
+                    // Handle different error types
+                    if (result.type === 'unverified') {
+                        showModalMessage("📧 " + result.error, 'warning');
+                    } else if (result.redirectTo === 'guest-signup.html') {
+                        showModalMessage("❌ " + result.error, 'error');
+                        setTimeout(() => {
+                            const goToSignup = confirm("No account found with this email. Would you like to create a new account?");
+                            if (goToSignup) {
+                                window.location.href = "guest-signup.html";
+                            }
+                        }, 2000);
+                    } else {
+                        showModalMessage("❌ " + (result.error || "Login failed"), 'error');
+                    }
+                }
+            } catch (err) {
+                setModalSigninLoading(false);
+                console.error("Login error:", err);
+                showModalMessage("🌐 Connection error. Please check your internet and try again.", 'error');
+            }
+        });
+    };
+</script>
 </html>
