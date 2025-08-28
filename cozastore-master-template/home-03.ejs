@@ -157,35 +157,36 @@
 
 			<div class="sidebar-content flex-w w-full p-lr-65 js-pscroll">
 				<ul class="sidebar-link w-full">
-					<li class="p-b-13">
-						<a href="home-03.html" class="stext-102 cl2 hov-cl1 trans-04">
-							Home
-						</a>
-					</li>
+                    <li class="p-b-13">
+                        <a href="home-03.html" class="stext-102 cl2 hov-cl1 trans-04">
+                            Home
+                        </a>
+                    </li>
 
-					<li class="p-b-13">
-						<a href="#" class="stext-102 cl2 hov-cl1 trans-04">
-							My Wishlist
-						</a>
-					</li>
+                    <li class="p-b-13">
+                        <a href="#" class="stext-102 cl2 hov-cl1 trans-04">
+                            My Wishlist
+                        </a>
+                    </li>
 
-					<li class="p-b-13">
-						<a href="javascript:profile();" class="stext-102 cl2 hov-cl1 trans-04">
-							My Account
-						</a>
-					</li>
+                    <li class="p-b-13">
+                        <a href="javascript:profile();" class="stext-102 cl2 hov-cl1 trans-04">
+                            My Account
+                        </a>
+                    </li>
 
-<!--				<li class="p-b-13">
-						<a href="#" class="stext-102 cl2 hov-cl1 trans-04">
-							Help & FAQs
-						</a>  -->
-					</li>
-					<li class="p-b-13">
-						<a href="javascript:signout();" class="stext-102 cl2 hov-cl1 trans-04" id="signout" action="/userSignOut.html">
-							Sign Out
-						</a>
-					</li>
-				</ul>
+                    <li class="p-b-13">
+                        <a href="javascript:toggleChangePasswordModal();" class="stext-102 cl2 hov-cl1 trans-04">
+                            Change Password
+                        </a>
+                    </li>
+
+                    <li class="p-b-13">
+                        <a href="javascript:signout();" class="stext-102 cl2 hov-cl1 trans-04" id="signout" action="/userSignOut.html">
+                            Sign Out
+                        </a>
+                    </li>
+                </ul>
 
 				<div class="sidebar-gallery w-full p-tb-30">
 					<span class="mtext-101 cl5">
@@ -220,7 +221,7 @@
 						<!-- item gallery sidebar -->
 						<div class="wrap-item-gallery m-b-10">
 							<a class="item-gallery bg-img1" href="images/gallery-05.jpg" data-lightbox="gallery" 
-							style="background-image: url('images/gallery-05.jpg');"></a>
+						 style="background-image: url('images/gallery-05.jpg');"></a>
 						</div>
 
 						<!-- item gallery sidebar -->
@@ -262,6 +263,158 @@
 			</div>
 		</div>
 	</aside>
+	 <!-- Change Password Modal -->
+    <div id="changePasswordModal" class="modal" style="display: none;">
+    <div class="modal-content size-210 bor10 p-lr-70 p-t-55 p-b-70 p-lr-15-lg w-full-md">
+        <span class="close" id="closeChangePasswordBtn">&times;</span>
+
+        <form id="changePasswordForm">
+            <h4 class="mtext-105 cl2 txt-center p-b-30">Change Password</h4>
+
+            <!-- Current Password -->
+            <div class="bor8 m-b-20 how-pos4-parent password-wrapper">
+                <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
+                       type="password" name="currentPassword" id="currentPassword" placeholder="Current Password" required>
+                <span class="password-toggle" onclick="toggleChangePassword('currentPassword', this)">👁</span>
+            </div>
+
+            <!-- New Password -->
+            <div class="bor8 m-b-20 how-pos4-parent password-wrapper">
+                <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
+                       type="password" name="newPassword" id="newPassword" placeholder="New Password" required>
+                <span class="password-toggle" onclick="toggleChangePassword('newPassword', this)">👁</span>
+            </div>
+
+            <!-- Password Criteria - back to original list format -->
+            <ul id="passwordCriteria" class="p-b-20">
+                <li id="lengthCheck">At least 8 characters</li>
+                <li id="letterCheck">Contains letters</li>
+                <li id="numberCheck">Contains numbers</li>
+                <li id="specialCheck">Contains special characters (!@#$%^&*)</li>
+                <li id="mixCheck">Mix of uppercase and lowercase</li>
+            </ul>
+
+            <!-- Confirm Password -->
+            <div class="bor8 m-b-20 how-pos4-parent password-wrapper">
+                <input class="stext-111 cl2 plh3 size-116 p-l-62 p-r-30"
+                       type="password" name="confirmPassword" id="confirmPassword" placeholder="Confirm New Password" required>
+                <span class="password-toggle" onclick="toggleChangePassword('confirmPassword', this)">👁</span>
+            </div>
+
+            <p class="error" id="passwordErrorMsg" style="display: none;">Passwords do not match.</p>
+
+            <!-- Submit Button -->
+            <button type="submit" id="changePasswordBtn" class="flex-c-m stext-101 cl0 size-121 bg3 bor1 hov-btn3 p-lr-15 trans-04 pointer btn-change-password" disabled>
+                <span id="changePasswordSpinner" class="spinner" style="display: none;"></span>
+                <span id="changePasswordText">Change Password</span>
+            </button>
+        </form>
+    </div>
+</div>
+	<style>
+        /* Modal styles similar to signin modal */
+        .modal {
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .password-wrapper {
+            position: relative;
+        }
+
+        .password-wrapper input {
+            padding-right: 45px !important;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: #64748b;
+            font-size: 18px;
+            user-select: none;
+            z-index: 10;
+        }
+
+        .password-toggle:hover {
+            color: #6c7ae0;
+        }
+
+        .spinner {
+            width: 20px;
+            height: 20px;
+            border: 2px solid #ffffff;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-right: 8px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .btn-change-password:disabled {
+            background-color: #cbd5e1 !important;
+            cursor: not-allowed !important;
+            opacity: 0.7;
+        }
+
+        .error {
+            color: #e11d48;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+
+        /* Compact Password Criteria Styling */
+        #passwordCriteria {
+        margin-bottom: 20px;
+        font-size: 14px;
+    }
+
+    #passwordCriteria li {
+        color: #e11d48;
+        margin-bottom: 4px;
+        list-style: none;
+        position: relative;
+        padding-left: 20px;
+    }
+
+    #passwordCriteria li.valid {
+        color: #10b981;
+    }
+
+    #passwordCriteria li::before {
+        content: "✗";
+        position: absolute;
+        left: 0;
+        color: #e11d48;
+    }
+
+    #passwordCriteria li.valid::before {
+        content: "✓";
+        color: #10b981;
+    }
+
+    .message {
+        margin: 10px 0;
+        padding: 12px;
+        border-radius: 8px;
+        text-align: center;
+        font-size: 14px;
+    }
+    </style>
 
 
 	<!-- Cart -->
@@ -1504,7 +1657,7 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 									</div>
 
 									<div class="size-204 respon6-next">
-										<div class="rs1-select2 bor8 bg0">
+																			<div class="rs1-select2 bor8 bg0">
 											<select class="js-select2" name="time">
 												<option>Choose an option</option>
 												<option>Red</option>
@@ -1564,6 +1717,229 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 			</div>
 		</div>
 	</div>
+	    <script>
+        // Change Password Modal Functions
+        function toggleChangePassword(inputId, toggleElement) {
+            const passwordInput = document.getElementById(inputId);
+            
+            if (passwordInput.getAttribute("type") === "password") {
+                passwordInput.setAttribute("type", "text");
+                toggleElement.textContent = "⌣";
+            } else {
+                passwordInput.setAttribute("type", "password");
+                toggleElement.textContent = "👁";
+            }
+        }
+
+        function toggleChangePasswordModal() {
+            const modal = document.getElementById("changePasswordModal");
+            modal.style.display = "flex";
+        }
+
+        function setChangePasswordLoading(isLoading) {
+            const spinner = document.getElementById("changePasswordSpinner");
+            const buttonText = document.getElementById("changePasswordText");
+            const changePasswordBtn = document.getElementById("changePasswordBtn");
+            
+            if (isLoading) {
+                spinner.style.display = "inline-block";
+                buttonText.textContent = "Changing...";
+                changePasswordBtn.disabled = true;
+            } else {
+                spinner.style.display = "none";
+                buttonText.textContent = "Change Password";
+                changePasswordBtn.disabled = !validateChangePasswordForm();
+            }
+        }
+
+        function showChangePasswordMessage(message, type = 'error') {
+            const existingMessage = document.querySelector('.message');
+            if (existingMessage) existingMessage.remove();
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.className = 'message';
+            
+            const colors = {
+                error: { bg: '#fef2f2', border: '#fecaca', text: '#dc2626' },
+                success: { bg: '#f0f9ff', border: '#bae6fd', text: '#0369a1' },
+                warning: { bg: '#fffbeb', border: '#fed7aa', text: '#d97706' }
+            };
+            
+            const color = colors[type] || colors.error;
+            
+            messageDiv.style.cssText = `
+                background: ${color.bg}; 
+                border: 1px solid ${color.border}; 
+                color: ${color.text}; 
+                padding: 12px; 
+                border-radius: 8px; 
+                margin: 10px 0; 
+                text-align: center;
+                font-size: 14px;
+            `;
+            messageDiv.textContent = message;
+            
+            const form = document.getElementById("changePasswordForm");
+            form.appendChild(messageDiv);
+            
+            setTimeout(() => {
+                if (messageDiv.parentNode) messageDiv.remove();
+            }, 6000);
+        }
+
+        // Password validation for change password
+        const passwordChecks = {
+            length: false,
+            letter: false,
+            number: false,
+            special: false,
+            mix: false,
+            match: false
+        };
+
+        function validateNewPassword() {
+            const newPassword = document.getElementById("newPassword").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+            const errorMsg = document.getElementById("passwordErrorMsg");
+            
+            // Length check
+            passwordChecks.length = newPassword.length >= 8;
+            document.getElementById('lengthCheck').classList.toggle('valid', passwordChecks.length);
+            
+            // Letter check
+            passwordChecks.letter = /[a-zA-Z]/.test(newPassword);
+            document.getElementById('letterCheck').classList.toggle('valid', passwordChecks.letter);
+            
+            // Number check
+            passwordChecks.number = /\d/.test(newPassword);
+            document.getElementById('numberCheck').classList.toggle('valid', passwordChecks.number);
+            
+            // Special character check
+            passwordChecks.special = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(newPassword);
+            document.getElementById('specialCheck').classList.toggle('valid', passwordChecks.special);
+            
+            // Mix check
+            passwordChecks.mix = /[a-z]/.test(newPassword) && /[A-Z]/.test(newPassword);
+            document.getElementById('mixCheck').classList.toggle('valid', passwordChecks.mix);
+            
+            // Match check
+            passwordChecks.match = newPassword === confirmPassword && newPassword.length > 0;
+            
+            if (confirmPassword.length > 0) {
+                errorMsg.style.display = passwordChecks.match ? 'none' : 'block';
+            } else {
+                errorMsg.style.display = 'none';
+            }
+            
+            document.getElementById("changePasswordBtn").disabled = !validateChangePasswordForm();
+        }
+
+        function validateChangePasswordForm() {
+            const currentPassword = document.getElementById("currentPassword").value;
+            return currentPassword.length > 0 && Object.values(passwordChecks).every(check => check === true);
+        }
+
+        // Get user ID from EJS template
+        const userId = '<%= id %>';
+
+        // Change Password Modal Setup
+        document.addEventListener('DOMContentLoaded', function() {
+            const changePasswordModal = document.getElementById("changePasswordModal");
+            const closeChangePasswordBtn = document.getElementById("closeChangePasswordBtn");
+            const changePasswordForm = document.getElementById("changePasswordForm");
+            const newPasswordInput = document.getElementById("newPassword");
+            const confirmPasswordInput = document.getElementById("confirmPassword");
+
+            // Close change password modal
+            closeChangePasswordBtn.onclick = function() {
+                changePasswordModal.style.display = "none";
+                changePasswordForm.reset();
+                const existingMessage = document.querySelector('.message');
+                if (existingMessage) existingMessage.remove();
+                setChangePasswordLoading(false);
+                
+                // Reset password criteria
+                Object.keys(passwordChecks).forEach(key => passwordChecks[key] = false);
+                document.querySelectorAll('.criteria-item').forEach(item => item.classList.remove('valid'));
+                document.getElementById("passwordErrorMsg").style.display = 'none';
+            };
+
+            // Close on outside click
+            window.onclick = function(event) {
+                if (event.target === changePasswordModal) {
+                    changePasswordModal.style.display = "none";
+                    changePasswordForm.reset();
+                    const existingMessage = document.querySelector('.message');
+                    if (existingMessage) existingMessage.remove();
+                    setChangePasswordLoading(false);
+                }
+            };
+
+            // Password validation listeners
+            newPasswordInput.addEventListener('input', validateNewPassword);
+            confirmPasswordInput.addEventListener('input', validateNewPassword);
+
+            // Handle change password form submission
+            changePasswordForm.addEventListener("submit", async function(e) {
+                e.preventDefault();
+                
+                if (document.getElementById("changePasswordBtn").disabled) return;
+                
+                setChangePasswordLoading(true);
+
+                const formData = new FormData(changePasswordForm);
+                const data = Object.fromEntries(formData);
+
+                try {
+                    const res = await fetch(`/user/${userId}/change-password`, {
+                        method: "POST",
+                        headers: {"Content-Type": "application/json"},
+                        body: JSON.stringify(data)
+                    });
+                    
+                    const result = await res.json();
+
+                    if (res.ok && result.success) {
+                        showChangePasswordMessage("✅ Password changed successfully!", 'success');
+                        
+                        setTimeout(() => {
+                            changePasswordModal.style.display = "none";
+                            changePasswordForm.reset();
+                            // Reset criteria
+                            Object.keys(passwordChecks).forEach(key => passwordChecks[key] = false);
+                            document.querySelectorAll('.criteria-item').forEach(item => item.classList.remove('valid'));
+                        }, 2000);
+                        
+                    } else {
+                        setChangePasswordLoading(false);
+                        
+                        // Handle specific error cases
+                        if (result.error && result.error.includes("Current password is incorrect")) {
+                            showChangePasswordMessage("❌ Current password is incorrect. Please try again.", 'error');
+                        } else if (result.error && result.error.includes("must be different")) {
+                            showChangePasswordMessage("❌ New password must be different from current password.", 'error');
+                        } else if (result.error && result.error.includes("8 characters")) {
+                            showChangePasswordMessage("❌ Password must be at least 8 characters long.", 'error');
+                        } else {
+                            showChangePasswordMessage("❌ " + (result.error || "Failed to change password"), 'error');
+                        }
+                    }
+                } catch (err) {
+                    setChangePasswordLoading(false);
+                    console.error("Change password error:", err);
+                    
+                    // Better error handling for network issues
+                    if (err.name === 'TypeError' && err.message.includes('fetch')) {
+                        showChangePasswordMessage("🌐 Unable to connect to server. Please check your connection.", 'error');
+                    } else if (err.message && err.message.includes('NetworkError')) {
+                        showChangePasswordMessage("🌐 Network error. Please try again.", 'error');
+                    } else {
+                        showChangePasswordMessage("⚠️ Connection error. Please try again.", 'error');
+                    }
+                }
+            });
+        });
+    </script>
 
 <!--===============================================================================================-->	
 	<script src="vendor/jquery/jquery-3.2.1.min.js"></script>

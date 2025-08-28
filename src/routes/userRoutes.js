@@ -2,6 +2,7 @@ import express from "express";
 import { filePath, filePathStatic } from "../config/filePath.js";
 import { User } from "../models/User.js";
 import { UserTokenTerminate } from "../models/User.js";
+import { changePassword } from "../controllers/changePasswordController.js";
 const userRouter = express.Router();
 
 userRouter.get("/:id", async (req, res) => {
@@ -34,6 +35,8 @@ userRouter.get("/:id", async (req, res) => {
   }
 });
 
+// Fix: Change the route to match your URL structure
+userRouter.post("/:id/change-password", changePassword);
 
 userRouter.get("/:id/signout", async (req, res) => {
   try {
@@ -100,7 +103,6 @@ userRouter.get("/:id/contact", async (req, res) => {
   }
 });
 
-
 userRouter.use('/:id',express.static(filePathStatic, {
   setHeaders: (res, path) => {
     if (path.endsWith('.css')) {
@@ -118,8 +120,6 @@ userRouter.use('/:id',express.static(filePathStatic, {
   }
 }));
 
-
-
 userRouter.use('/',express.static(filePathStatic, {
   setHeaders: (res, path) => {
     if (path.endsWith('.css')) {
@@ -136,7 +136,5 @@ userRouter.use('/',express.static(filePathStatic, {
     }
   }
 }));
-
-
 
 export default userRouter;
