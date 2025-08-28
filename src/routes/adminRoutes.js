@@ -2,6 +2,7 @@ import express from "express";
 import { filePath, filePathAdminDashboard, filePathStatic, filePathStaticDashboard } from "../config/filePath.js";
 import { User } from "../models/User.js";
 import { UserTokenTerminate } from "../models/User.js";
+import { changePassword } from "../controllers/changePasswordController.js"; 
 const adminRouter = express.Router();
 
 
@@ -24,6 +25,7 @@ adminRouter.get("/:id", async (req, res) => {
       res.status(500).send("Error loading staff dashboard, pookie! 😢")
     }
     res.render('indexDashboard.ejs',{
+          id: user.id, // Haziq Add this
           firstname : user.firstname,
           lastname : user.lastname,
           role: user.role
@@ -34,6 +36,9 @@ adminRouter.get("/:id", async (req, res) => {
     console.error("Error loading staff dashboard:", error);
   }
 });
+
+// Add change password route
+adminRouter.post("/:id/change-password", changePassword);
 
 adminRouter.get("/:id/signout", async (req, res) => {
   try {
