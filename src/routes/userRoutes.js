@@ -3,6 +3,7 @@ import { filePath, filePathStatic } from "../config/filePath.js";
 import { User } from "../models/User.js";
 import { UserTokenTerminate } from "../models/User.js";
 import { changePassword } from "../controllers/changePasswordController.js";
+import { editProfile } from "../controllers/editProfileController.js";
 const userRouter = express.Router();
 
 userRouter.get("/:id", async (req, res) => {
@@ -102,6 +103,8 @@ userRouter.get("/:id/contact", async (req, res) => {
     console.error("Error loading user profile:", error);
   }
 });
+
+userRouter.patch("/:id/edit-profile", editProfile);
 
 userRouter.use('/:id',express.static(filePathStatic, {
   setHeaders: (res, path) => {

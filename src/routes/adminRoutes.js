@@ -2,6 +2,7 @@ import express from "express";
 import { filePath, filePathAdminDashboard, filePathStatic, filePathStaticDashboard } from "../config/filePath.js";
 import { User } from "../models/User.js";
 import { UserTokenTerminate } from "../models/User.js";
+import { editProfile } from "../controllers/editProfileController.js";
 const adminRouter = express.Router();
 
 
@@ -108,7 +109,7 @@ adminRouter.get("/:id/contact", async (req, res) => {
   }
 });
 
-
+adminRouter.patch("/:id/edit-profile", editProfile);
 
 adminRouter.use('/:id',express.static(filePathStaticDashboard, {
   

@@ -2,6 +2,7 @@ import express from "express";
 import { filePath, filePathAdminDashboard, filePathStaticDashboard } from "../config/filePath.js";
 import { User } from "../models/User.js";
 import { UserTokenTerminate } from "../models/User.js";
+import { editProfile } from "../controllers/editProfileController.js";
 const staffRouter = express.Router();
 
 staffRouter.get("/:id", async (req, res) => {
@@ -107,6 +108,8 @@ staffRouter.get("/:id/contact", async (req, res) => {
     console.error("Error loading user profile:", error);
   }
 });
+
+staffRouter.patch("/:id/edit-profile", editProfile);
 
 staffRouter.use('/:id',express.static(filePathStaticDashboard, {
   setHeaders: (res, path) => {
