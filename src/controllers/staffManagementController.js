@@ -49,10 +49,17 @@ export const addStaff = async (req,res) => {
 export const editStaff = async (req,res) => {
     try {
         const updates = req.body; 
-        const email = req.body.email;
-        const user = await User.findOne({email});
+        const staff_id = req.body.id;
+        const staffExisted = await User.findOne({
+            _id : staff_id,
+            role : "staff"
+        });
+        if(!staffExisted){
+            return res.status(404).json({ message: 'user not found in user management, pookie! 😢' });
+        }
+
         const updatedStaff = await User.findByIdAndUpdate(
-            user,
+            staffExisted,
             { $set: updates }, // The magic happens here! $set only changes the provided fields
             { new: true, runValidators: true } // Options: return the updated object and run model validators
         );
@@ -72,9 +79,15 @@ export const editStaff = async (req,res) => {
 
 export const deleteStaff = async (req,res) => {
     try {
-        const staff = req.body;
-        const staffInQuestion = await User.findOne(staff);
-        const staffDeleted  = await User.findByIdAndDelete(staffInQuestion);
+        const staff_id = req.body.id;
+        const staffExisted = await User.findOne({
+            _id : staff_id,
+            role : "staff"
+        });
+        if(!staffExisted){
+            return res.status(404).json({ message: 'staff not found in staff management, pookie! 😢' });
+        }
+        const staffDeleted  = await User.findByIdAndDelete(staffExisted);
         if (!staffDeleted){
             res.status(404).json({ message: 'fail to find staff to delete 😢' });
         }

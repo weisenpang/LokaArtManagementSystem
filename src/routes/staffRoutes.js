@@ -4,6 +4,7 @@ import { User } from "../models/User.js";
 import { UserTokenTerminate } from "../models/User.js";
 import { editProfile } from "../controllers/editProfileController.js";
 import { changePassword } from "../controllers/changePasswordController.js"; 
+import { editUser, deleteUser } from "../controllers/userManagementController.js";
 const staffRouter = express.Router();
 
 staffRouter.get("/:id", async (req, res) => {
@@ -115,6 +116,8 @@ staffRouter.get("/:id/contact", async (req, res) => {
 });
 
 staffRouter.patch("/:id/edit-profile", editProfile);
+staffRouter.patch('/:id/edit-user',editUser);
+staffRouter.delete('/:id/delete-user',deleteUser);
 
 staffRouter.use('/:id',express.static(filePathStaticDashboard, {
   setHeaders: (res, path) => {

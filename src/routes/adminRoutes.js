@@ -5,6 +5,7 @@ import { UserTokenTerminate } from "../models/User.js";
 import { editProfile } from "../controllers/editProfileController.js";
 import { changePassword } from "../controllers/changePasswordController.js"; 
 import { addStaff, deleteStaff, editStaff } from "../controllers/staffManagementController.js";
+import { deleteUser, editUser } from "../controllers/userManagementController.js";
 const adminRouter = express.Router();
 
 
@@ -119,6 +120,8 @@ adminRouter.patch("/:id/edit-profile", editProfile);
 adminRouter.post('/:id/add-staff',addStaff);
 adminRouter.patch('/:id/edit-staff',editStaff);
 adminRouter.delete('/:id/delete-staff',deleteStaff);
+adminRouter.patch('/:id/edit-user',editUser);
+adminRouter.delete('/:id/delete-user',deleteUser);
 
 adminRouter.use('/:id',express.static(filePathStaticDashboard, {
   
