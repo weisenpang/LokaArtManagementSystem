@@ -4,6 +4,7 @@ import { User } from "../models/User.js";
 import { UserTokenTerminate } from "../models/User.js";
 import { editProfile } from "../controllers/editProfileController.js";
 import { changePassword } from "../controllers/changePasswordController.js"; 
+import { addStaff, deleteStaff, editStaff } from "../controllers/staffManagementController.js";
 const adminRouter = express.Router();
 
 
@@ -115,6 +116,9 @@ adminRouter.get("/:id/contact", async (req, res) => {
 });
 
 adminRouter.patch("/:id/edit-profile", editProfile);
+adminRouter.post('/:id/add-staff',addStaff);
+adminRouter.patch('/:id/edit-staff',editStaff);
+adminRouter.delete('/:id/delete-staff',deleteStaff);
 
 adminRouter.use('/:id',express.static(filePathStaticDashboard, {
   

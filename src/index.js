@@ -4,7 +4,7 @@ import {connectDB} from "./config/db.js";
 import signupRoutes from "./routes/signupRoutes.js"
 import signInRouter from "./routes/signinRoutes.js";
 import {filePath, filePathStatic} from './config/filePath.js';
-import { UserTokenTerminate } from "./models/User.js";
+import { User, UserTokenTerminate } from "./models/User.js";
 import staffRouter from "./routes/staffRoutes.js";
 import adminRouter from "./routes/adminRoutes.js";
 import userRouter from "./routes/userRoutes.js";
@@ -86,6 +86,16 @@ connectDB().then(()=>{
     app.listen(PORT, () => {
       
         console.log("server started on PORT:", PORT);
+
     });
 });
+// try {
+//   const bruh = "le";
+//   const findUser = await User.find({
+//     firstname : { $regex: new RegExp(bruh, "i") },
+//   });
+//   console.log(findUser);
+// } catch (error) {
+//   console.log(error);
+// }
 
